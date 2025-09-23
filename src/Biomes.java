@@ -226,16 +226,23 @@ public class Biomes {
                     xCord -= 30;
                 }
             }
-            if (this.content.equals("crumbs")) {
-                graphics.add(new Circle(usx + x - 6, usy + y - 8, 17, 10, Color.BEIGE));
-                graphics.add(new Circle(usx + x - 6 + 10, usy + y - 8 - 20, 17, 10, Color.BEIGE));
-                graphics.add(new Circle(usx + x - 6 - 18, usy + y - 8 - 30, 17, 10, Color.BEIGE));
-                graphics.add(new Circle(usx + x - 6 - 40, usy + y - 8 - 20, 17, 10, Color.BEIGE));
-                graphics.add(new Circle(usx + x - 6 - 5, usy + y - 8 + 20, 17, 10, Color.BEIGE));
-                graphics.add(new Circle(usx + x - 6 - 20, usy + y - 8 + 56, 17, 10, Color.BEIGE));
-                graphics.add(new Circle(usx + x - 6 + 5, usy + y - 8 + 35, 17, 10, Color.BEIGE));
-                graphics.add(new Circle(usx + x - 6 + 29, usy + y - 8 + 45, 17, 10, Color.BEIGE));
-                graphics.add(new Circle(usx + x - 6 + 35, usy + y - 8 + 25, 17, 10, Color.BEIGE));
+            if (this.content.equals("crumbs")){
+                graphics.add(new Circle(usx+x-6,usy+y-8,17,10,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+10,usy+y-8-20,17,10,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-18,usy+y-8-20,17,10,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-40,usy+y-8-20,17,10,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-5,usy+y-8+20,17,10,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-20,usy+y-8+56,17,10,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+5,usy+y-8+35,17,10,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+29,usy+y-8+45,17,10,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+11,usy+y-8+25,17,10,Color.BEIGE));
+            } else if (this.content.equals("beetles")){
+                graphics.add(new Circle(usx+x-25,usy+y-5,20,10,Color.BLACK));
+                graphics.add(new Circle(usx+x-30,usy+y-4,18,6,Color.GREEN));
+                graphics.add(new Circle(usx+x-6,usy+y-8,30,20,Color.BLACK));
+                graphics.add(new Rect(usx+x+10,usy+y+11, 2, 9, Color.BLACK));
+            } else if (this.content.equals("Human, stay away from them...")){
+
             }
             graphics.add(new Texts(usx+(x), usy+(y)-80, thisNumber, Color.BLACK));
         }
