@@ -7,7 +7,7 @@ public class Biomes {
 
     //variable to fix 'select' button
     private boolean nest = false;
-    //universal variables
+    //universal variables (location stuff and some graphics related things) (also the randomizer)
     private Random rand = new Random();
     private double usx;
     private double usy;
@@ -15,6 +15,7 @@ public class Biomes {
     private double ush;
     private double x;
     private double y;
+    private boolean found = false;
     private int thisNumber; // records which number was printed on it
     static int number;// this counts how many biomes there are so far in the list, so that it prints that number onto the current biome ( while its being generated or printed)... just don't touch it.
     //graphics
@@ -161,7 +162,7 @@ public class Biomes {
 
     }
 
-    //drawing everything
+    //drawing everything method (cycles through stuff)
     public void draw(GraphicsContext gc){
         for (int i = 0; i < graphics.size(); i++){
             graphics.get(i).draw(gc);
