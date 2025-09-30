@@ -504,12 +504,18 @@ public class AntGameView extends Application {
         if (!selected) { //selecting something
             num = (Integer) mapSelect.getValue();
             map.biome(num).selected(gc);
-            //displaying the biomes properties
-            new Rect((usx)+235,usy+5,220,80,Color.WHITE).draw(gc);
-            new RectS((usx)+235,usy+5,220,80,Color.BLACK).draw(gc);
-            new Texts((usx)+244,usy+24,map.biome(num).getType()).draw(gc);
+            //displaying square
+            new Rect((usx) + 235, usy + 5, 220, 80, Color.WHITE).draw(gc);
+            new RectS((usx) + 235, usy + 5, 220, 80, Color.BLACK).draw(gc);
+            new Texts((usx) + 244, usy + 24, map.biome(num).getType()).draw(gc);
+            //collecting and displaying info
+            if (!map.biome(num).getFound()){ //current statement for seeing if a biome is found yet.
+                new Rect((usx) + 235, usy + 5, 220, 80, Color.WHITE).draw(gc);
+                new RectS((usx) + 235, usy + 5, 220, 80, Color.BLACK).draw(gc);
+                new Texts((usx) + 244, usy + 24, "Area not yet Explored").draw(gc);
+                new Texts((usx) + 244, usy + 39, "Send 5 ants discover this area.").draw(gc); //currently all biomes only take 5 ants to explore
             // for spots that cannot be interacted with (whether that be changed later or not) (other than spots that contain nothing)
-            if (map.biome(num) instanceof AntHill || map.biome(num).getContent().equals("Human, stay away from them...")) {
+            } else if (map.biome(num) instanceof AntHill || map.biome(num).getContent().equals("Human, stay away from them...")) {
                 new Texts((usx) + 244, usy + 39, map.biome(num).getContent()).draw(gc);
             } else {//other spots typical display for their content.
                 new Texts((usx) + 244, usy + 39, map.biome(num).getContent() + " :  " + map.biome(num).getAmount()).draw(gc);
@@ -531,11 +537,19 @@ public class AntGameView extends Application {
             title = "";
             messege1 = "";
             messege2 = "";
-            if (nest.AddAntsInUse((Integer) mapSelect.getValue())){
+            if (!map.biome(num).getFound() && (int)mapSelect.getValue() == 5) { //for when the interaction is with an un-found/undiscovered biome/area
+                nest.AddAntsInUse((Integer) mapSelect.getValue());
+                title = "Area Explored";
+                messege1 = "Discovered a " + map.biome(num).getType() + ".";
+                //end of un-found area interaction
+
+                // for when the space is just empty
+            } else if (nest.AddAntsInUse((Integer) mapSelect.getValue())){
                 if (map.biome(num).getAmount() == 0){ //for when it is an empty space or has been used up
                     nest.minusAntsInUse((Integer) mapSelect.getValue());
                     title = "Empty Space";
                     messege1 = "Don't send ants here!";
+                    //end of empty space interaction
 
                     //this next if statement is for ALL battling bugs.
                 } else if (map.biome(num).getIsBug()) {
