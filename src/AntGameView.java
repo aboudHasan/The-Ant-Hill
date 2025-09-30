@@ -501,6 +501,7 @@ public class AntGameView extends Application {
     /// of these into the map file.
     public void sending(ActionEvent e){ // the action can be null, so don't program anything here that would need a non-null event...
         boolean complete = false; //tracts if the actual sending function is completed.
+        int exploreNum = 5; //the minimum number of ants it takes to explore an area
         if (!selected) { //selecting something
             num = (Integer) mapSelect.getValue();
             map.biome(num).selected(gc);
@@ -513,7 +514,7 @@ public class AntGameView extends Application {
                 new Rect((usx) + 235, usy + 5, 220, 80, Color.WHITE).draw(gc);
                 new RectS((usx) + 235, usy + 5, 220, 80, Color.BLACK).draw(gc);
                 new Texts((usx) + 244, usy + 24, "Area not yet Explored").draw(gc);
-                new Texts((usx) + 244, usy + 39, "Send 5 ants discover this area.").draw(gc); //currently all biomes only take 5 ants to explore
+                new Texts((usx) + 244, usy + 39, "Send "+exploreNum+" ants discover this area.").draw(gc);
             // for spots that cannot be interacted with (whether that be changed later or not) (other than spots that contain nothing)
             } else if (map.biome(num) instanceof AntHill || map.biome(num).getContent().equals("Human, stay away from them...")) {
                 new Texts((usx) + 244, usy + 39, map.biome(num).getContent()).draw(gc);
@@ -537,10 +538,22 @@ public class AntGameView extends Application {
             title = "";
             messege1 = "";
             messege2 = "";
-            if (!map.biome(num).getFound() && (int)mapSelect.getValue() == 5) { //for when the interaction is with an un-found/undiscovered biome/area
-                nest.AddAntsInUse((Integer) mapSelect.getValue());
-                title = "Area Explored";
-                messege1 = "Discovered a " + map.biome(num).getType() + ".";
+            if (!map.biome(num).getFound()) { //for when the interaction is with an un-found/undiscovered biome/area
+                if ((int)mapSelect.getValue() == exploreNum && nest.AddAntsInUse(exploreNum)) {
+                    title = "Area Explored";
+                    messege1 = "Discovered a " + map.biome(num).getType() + ".";
+                    map.biome(num).setFound(true);
+                } else if ((int)mapSelect.getValue() > exploreNum) {
+                    title = "To Many Ants!";
+                    messege1 = "You tried sending more ants then";
+                    messege2 = "needed";
+                } else if ((int)mapSelect.getValue() < exploreNum){
+                    title = "Cannot Send";
+                    messege1 = "Needs "+exploreNum+" ants to be explored";
+                } else { // the only other thing possible here now is if the player send the 'exploreNum' amount of ants.
+                    title = "Cannot Send";
+                    messege1 = "You don't have enough unused ants";
+                }
                 //end of un-found area interaction
 
                 // for when the space is just empty
