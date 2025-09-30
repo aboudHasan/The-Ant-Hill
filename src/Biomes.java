@@ -40,7 +40,6 @@ public class Biomes {
         thisNumber = number; //setting its number/ID
         number = number + 1;
         content = "Your ants live here";
-        loadGraphics(); //loading its graphics
     }
     // Picnic
     public Biomes(double usx,double usy,double x,double y, int antMultiplier){
@@ -68,7 +67,6 @@ public class Biomes {
         this.usy = usy;
         thisNumber = number;//setting its number/ID
         number = number + 1;
-        loadGraphics();//loading graphics
     }
     // grassy patch
     public Biomes(double usx,double usy,double x,double y, String content, int antMultiplier){
@@ -99,15 +97,13 @@ public class Biomes {
         this.usx = usx;
         this.usy = usy;
         graphics.add(new Circle( usx+(x)-100, usy+(y)-100,100, Color.GREEN));
-
-
         thisNumber = number;// saving the biomes number/ID
         number = number + 1;
-        loadGraphics(); // loading the graphics for the first time
     }
 
     //drawing everything method (cycles through stuff)
     public void draw(GraphicsContext gc){
+        loadGraphics(); //ensuring that what we print is the most up to date thing.
         for (int i = 0; i < graphics.size(); i++){
             graphics.get(i).draw(gc);
         }
@@ -150,12 +146,11 @@ public class Biomes {
                 graphics.add(new Rect(usx+x+10,usy+y+11, 2, 9, Color.BLACK));
             } else if (this.content.equals("grasshoppers")){
                 graphics.add(new Circle(usx+x,usy+y,20,10,Color.BLACK));
-            } else if (this.content.equals("protein")){
-                graphics.add(new Circle(usx+x-35,usy+y+35,10,Color.RED));
-                graphics.add(new Circle(usx+x+25,usy+y+40,10,Color.RED));
-                graphics.add(new Circle(usx+x-10,usy+y-10,10,Color.RED));
+            } else if (this.content.equals("protein")) {
+                graphics.add(new Circle(usx + x - 35, usy + y + 35, 10, Color.RED));
+                graphics.add(new Circle(usx + x + 25, usy + y + 40, 10, Color.RED));
+                graphics.add(new Circle(usx + x - 10, usy + y - 10, 10, Color.RED));
             }
-            graphics.add(new Texts(usx+(x), usy+(y)-80, thisNumber, Color.BLACK));
         } else if (this instanceof Picnic){
             graphics.add(new Circle( usx+(x)-100, usy+(y)-100,100, Color.GREEN));
             int yCord = 50;
@@ -191,9 +186,11 @@ public class Biomes {
             } else if (this.content.equals("Human, stay away from them...")){
 
             }
-            graphics.add(new Texts(usx+(x), usy+(y)-80, thisNumber, Color.BLACK));
         }
-
+        //printing the numbers, but not for the nest, which will handle it by itself, because otherwise it doesn't print right...
+        if (!this.nest) {
+            graphics.add(new Texts(usx + (x), usy + (y) - 80, thisNumber, Color.BLACK));
+        }
     }
 
     //battling and aftermath

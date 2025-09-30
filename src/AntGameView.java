@@ -543,6 +543,7 @@ public class AntGameView extends Application {
                     title = "Area Explored";
                     messege1 = "Discovered a " + map.biome(num).getType() + ".";
                     map.biome(num).setFound(true);
+                    map.draw(gc);
                 } else if ((int)mapSelect.getValue() > exploreNum) {
                     title = "To Many Ants!";
                     messege1 = "You tried sending more ants then";
