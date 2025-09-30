@@ -29,6 +29,7 @@ public class Biomes {
 
     // ant hill
     public Biomes(double usx,double usy,double usw,double ush){
+        this.found = true;
         this.nest = true;
         this.x = x;
         this.y = y;
@@ -36,14 +37,10 @@ public class Biomes {
         this.usy = usy;
         this.usw = usw;
         this.ush = ush;
-        loadGraphics(); //IDK why this is here, but im leaving it for now I guess.
-        graphics.add(new Circle( usx+(usw/2)-100 + x, usy+(ush/2)-100 + y,100, Color.GREEN));
-        graphics.add(new Circle( usx+(usw/2)-25 + x, usy+(ush/2)-25 + y,25, Color.rgb(61, 35, 13)));
-        graphics.add(new Rect(usx+(usw/2)-25 + x, usy+(ush/2),50 + y, 26, Color.GREEN));
-        graphics.add(new Texts(usx+(usw/2)-5 + x, usy+(ush/2) - 80 + y, number, Color.BLACK));
-        thisNumber = number;
+        thisNumber = number; //setting its number/ID
         number = number + 1;
         content = "Your ants live here";
+        loadGraphics(); //loading its graphics
     }
     // Picnic
     public Biomes(double usx,double usy,double x,double y, int antMultiplier){
@@ -69,46 +66,9 @@ public class Biomes {
         //where it is
         this.usx = usx;
         this.usy = usy;
-        graphics.add(new Circle( usx+(x)-100, usy+(y)-100,100, Color.GREEN));
-        int yCord = 50;
-        for (int i = 4; i <= 8; i++){
-            graphics.add(new Rect(usx+(x)-55, usy+(y)-yCord, 90, 15, Color.rgb(250,250,250)));
-            yCord -= 15;
-            //this next loop is for the red squares.
-            int xCord = 55;
-            if (i % 2 == 0) {
-                xCord -= 15;
-            }
-            for (int j = 0; j <= 2; j++){
-                graphics.add(new RectS(usx+(x)-xCord, usy+(y)-yCord - 15, 15, 15, Color.BLACK));
-                graphics.add(new Rect(usx+(x)-xCord, usy+(y)-yCord - 15, 15, 15, Color.rgb(250,5,10)));
-                xCord -= 30;
-            }
-        }
-
-        //here is where graphics change depending on contents
-        if (this.content.equals("crumbs")){
-            graphics.add(new Circle(usx+x-6,usy+y-8,17,10,Color.BEIGE));
-            graphics.add(new Circle(usx+x-6+10,usy+y-8-20,17,10,Color.BEIGE));
-            graphics.add(new Circle(usx+x-6-18,usy+y-8-20,17,10,Color.BEIGE));
-            graphics.add(new Circle(usx+x-6-40,usy+y-8-20,17,10,Color.BEIGE));
-            graphics.add(new Circle(usx+x-6-5,usy+y-8+20,17,10,Color.BEIGE));
-            graphics.add(new Circle(usx+x-6-20,usy+y-8+56,17,10,Color.BEIGE));
-            graphics.add(new Circle(usx+x-6+5,usy+y-8+35,17,10,Color.BEIGE));
-            graphics.add(new Circle(usx+x-6+29,usy+y-8+45,17,10,Color.BEIGE));
-            graphics.add(new Circle(usx+x-6+11,usy+y-8+25,17,10,Color.BEIGE));
-        } else if (this.content.equals("beetles")){
-            graphics.add(new Circle(usx+x-25,usy+y-5,20,10,Color.BLACK));
-            graphics.add(new Circle(usx+x-30,usy+y-4,18,6,Color.GREEN));
-            graphics.add(new Circle(usx+x-6,usy+y-8,30,20,Color.BLACK));
-            graphics.add(new Rect(usx+x+10,usy+y+11, 2, 9, Color.BLACK));
-        } else if (this.content.equals("Human, stay away from them...")){
-
-        }
-        //number location and stuff/ identifier
-        graphics.add(new Texts(usx+(x), usy+(y)-80, number, Color.BLACK));
-        thisNumber = number;
+        thisNumber = number;//setting its number/ID
         number = number + 1;
+        loadGraphics();//loading graphics
     }
     // grassy patch
     public Biomes(double usx,double usy,double x,double y, String content, int antMultiplier){
@@ -140,26 +100,10 @@ public class Biomes {
         this.usy = usy;
         graphics.add(new Circle( usx+(x)-100, usy+(y)-100,100, Color.GREEN));
 
-        //here is where graphics change depending on contents
-        if (this.content.equals("mushrooms")){
-            graphics.add(new Circle(usx+x-6,usy+y-8,17,10,Color.WHITE));
-            graphics.add(new Rect(usx+x,usy+y,5,10,Color.WHITE));
-            graphics.add(new Circle(usx+x-6+10,usy+y-8-20,17,10,Color.WHITE));
-            graphics.add(new Rect(usx+x+10,usy+y-20,5,10,Color.WHITE));
-            graphics.add(new Circle(usx+x-6-18,usy+y-8-20,17,10,Color.WHITE));
-            graphics.add(new Rect(usx+x-18,usy+y-20,5,10,Color.WHITE));
-        } else if (this.content.equals("beetles")){
-            graphics.add(new Circle(usx+x-25,usy+y-5,20,10,Color.BLACK));
-            graphics.add(new Circle(usx+x-30,usy+y-4,18,6,Color.GREEN));
-            graphics.add(new Circle(usx+x-6,usy+y-8,30,20,Color.BLACK));
-            graphics.add(new Rect(usx+x+10,usy+y+11, 2, 9, Color.BLACK));
-        } else if (this.content.equals("grasshoppers")){
-            graphics.add(new Circle(usx+x,usy+y,20,10,Color.BLACK));
-        }
-        graphics.add(new Texts(usx+(x), usy+(y)-80, number, Color.BLACK));
-        thisNumber = number;
-        number = number + 1;
 
+        thisNumber = number;// saving the biomes number/ID
+        number = number + 1;
+        loadGraphics(); // loading the graphics for the first time
     }
 
     //drawing everything method (cycles through stuff)
@@ -183,7 +127,9 @@ public class Biomes {
     //graphics
     public void loadGraphics(){
         graphics.clear();
-        if(this instanceof AntHill){
+        if(!this.found){
+            graphics.add(new Circle( usx+(usw/2)-100 + x, usy+(ush/2)-100 + y,100, Color.GREEN));
+        } else if(this instanceof AntHill){
             graphics.add(new Circle( usx+(usw/2)-100 + x, usy+(ush/2)-100 + y,100, Color.GREEN));
             graphics.add(new Circle( usx+(usw/2)-25 + x, usy+(ush/2)-25 + y,25, Color.rgb(61, 35, 13)));
             graphics.add(new Rect(usx+(usw/2)-25 + x, usy+(ush/2) + y,50, 26, Color.GREEN));
@@ -287,6 +233,9 @@ public class Biomes {
 
 
     //getters
+    public boolean getFound(){
+        return found;
+    }
     public int getStrength(){
         return strength;
     }
@@ -312,6 +261,11 @@ public class Biomes {
         } else {
             return "unknown";
         }
+    }
+
+    //setters
+    public void setFound(boolean found){
+        this.found = found;
     }
 
     //adders
