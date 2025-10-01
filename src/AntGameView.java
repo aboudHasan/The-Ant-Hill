@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -526,6 +527,11 @@ public class AntGameView extends Application {
                     new Texts((usx) + 244, usy + 69, "Total Bug Strength :  " + map.biome(num).getStrength()).draw(gc);
                 }
             }
+            //noinspection unchecked
+            mapSelect.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000000000));
+            //noinspection unchecked
+            mapSelect.getValueFactory().setValue(null); // resetting the spinner
+
             //end of selecting function
             new Rect(usx+5,usy+5,225,80,Color.WHITE).draw(gc);
             new RectS(usx+5,usy+5,225,80,Color.BLACK).draw(gc);
@@ -666,6 +672,10 @@ public class AntGameView extends Application {
             population.setText("population: "+(nest.getPopulation()));
             map.draw(gc);
             showTextBox();
+            //noinspection unchecked
+            mapSelect.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, map.biomes.size()-1));
+            //noinspection unchecked
+            mapSelect.getValueFactory().setValue(null); //resetting the spinner
         }
     }
 
@@ -847,6 +857,8 @@ public class AntGameView extends Application {
         /*map stuffs*/
         mapButton = new Button("Map");
         mapSelect = new Spinner(0,(map.biomes.size())-1,0);
+        //noinspection unchecked
+        mapSelect.getValueFactory().setValue(null); // ensuring there is no value in it.
         mapSelect.setEditable(true);
         mapSelectButton = new Button("Select");
         cancelSelection = new Button("Cancel");
