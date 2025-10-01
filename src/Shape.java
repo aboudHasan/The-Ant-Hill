@@ -13,11 +13,15 @@ public class Shape {
     private String oval = "not oval"; //this also gets reused for the text making thing.
     private boolean texts = false;
     private Image image;
+    private static Image clouds = new Image("image.jpeg");
 
     //image
-    public Shape(double x, double y, String URL){
-        this.oval = oval;
-        image = new Image(URL);
+    public Shape(double x, double y, String name){
+        if (name.equals("clouds")) {
+            image = clouds;
+        }
+        this.x = x;
+        this.y = y;
     }
     //square
     public Shape(double x, double y, double w, double h, Color color) {

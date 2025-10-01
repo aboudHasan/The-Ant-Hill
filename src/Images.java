@@ -1,6 +1,6 @@
 public class Images extends Shape{
 
-    public Images(double x, double y, String URL) {
-        super(x, y, URL);
+    public Images(double x, double y, String name) {
+        super(x, y, name);
     }
 }
