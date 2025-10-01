@@ -13,13 +13,12 @@ public class Shape {
     private String oval = "not oval"; //this also gets reused for the text making thing.
     private boolean texts = false;
     private Image image;
-    private static Image test = new Image("image.jpeg");
+    private static Image clouds = new Image("clouds.jpeg");
 
-    //images
+    //image
     public Shape(double x, double y, String name){
-        //these statements select which image we are going to use (allows us to not have to load multiple of the same image)
-        if (name.equals("test")) {
-            image = test;
+        if (name.equals("clouds")) {
+            image = clouds;
         }
         this.x = x;
         this.y = y;
