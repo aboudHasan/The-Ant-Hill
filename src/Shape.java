@@ -13,7 +13,7 @@ public class Shape {
     private String oval = "not oval"; //this also gets reused for the text making thing.
     private boolean texts = false;
     private Image image;
-    private static Image clouds = new Image("clouds.png"); // scale this thing...
+    private static Image clouds = new Image("clouds.png", 225, 225, true, true); // scale this thing...
 
     //image
     public Shape(double x, double y, String name){
