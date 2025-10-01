@@ -1,4 +1,5 @@
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class Shape {
@@ -11,7 +12,13 @@ public class Shape {
     private boolean stroke = false;
     private String oval = "not oval"; //this also gets reused for the text making thing.
     private boolean texts = false;
+    private Image image;
 
+    //image
+    public Shape(double x, double y, String URL){
+        this.oval = oval;
+        image = new Image(URL);
+    }
     //square
     public Shape(double x, double y, double w, double h, Color color) {
         this.color = color;
@@ -54,7 +61,9 @@ public class Shape {
     }
 
     public void draw(GraphicsContext gc) {
-        if (oval.equals("oval")) {
+        if (this.image != null) {
+            gc.drawImage(image, x, y);
+        } else if (oval.equals("oval")) {
             gc.setFill(color);
             gc.fillOval(x, y, w, h);
         }else if (texts){

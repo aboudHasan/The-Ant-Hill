@@ -1,4 +1,6 @@
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Random;
@@ -125,6 +127,7 @@ public class Biomes {
         graphics.clear();
         if(!this.found){
             graphics.add(new Circle( usx+(usw/2)-100 + x, usy+(ush/2)-100 + y,100, Color.GREEN));
+            graphics.add(new Images(usx+(usw/2) + x, usy+(ush/2) + y,"meme.jpeg"));
         } else if(this instanceof AntHill){
             graphics.add(new Circle( usx+(usw/2)-100 + x, usy+(ush/2)-100 + y,100, Color.GREEN));
             graphics.add(new Circle( usx+(usw/2)-25 + x, usy+(ush/2)-25 + y,25, Color.rgb(61, 35, 13)));
