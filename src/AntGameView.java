@@ -419,7 +419,7 @@ public class AntGameView extends Application {
         int remainingFood = nest.getFood();
         if (!nest.minusFood(nest.getAnts().size())){
             nest.minusFood(nest.getFood());
-            food.setText("food: " + nest.getFood() + " / " + nest.getMaxFood());
+            //checking for dead ants and a loss of the game.
             int deaths =  nest.getAnts().size() - remainingFood;
             if (!nest.minusAnts(deaths)){
                 gc.setFill(Color.BLACK);
@@ -434,6 +434,16 @@ public class AntGameView extends Application {
                 requirements1.setText("YOU LOSE");
             } else {
                 reDraw();
+            }
+        }
+        //checking for the dead larva
+        if (!nest.getAnts().isEmpty()) { //basically checking that the nest still alive
+            if (!nest.minusFood(nest.getLarva().size())) {
+                remainingFood = nest.getFood();
+                nest.minusFood(nest.getFood()); // removes all the food to feed what we could.
+                int death = nest.getLarva().size() - remainingFood; //calculating total deaths
+                nest.minusLarva(death); // actually getting rid of the larva handled elegantly by nest class)
+                reDraw(); //redraws for when larva graphics are included.
             }
         }
         updateStats();

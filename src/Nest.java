@@ -231,10 +231,25 @@ public class Nest {
             return true;
         }
     }
+    //for when we remove the oldest larva because he is being made into an ant.
     public void minusLarva(){
         for (int i = 0; i < buildings.size(); i++){
-            if (!buildings.get(i).getLarva().isEmpty()){ //this is basically asking 'as long as the building isn't empty of larva'
+            if (!buildings.get(i).getLarva().isEmpty()) { //this is basically asking 'as long as the building isn't empty of larva'
                 buildings.get(i).getLarva().removeFirst();
+            }
+        }
+    }
+    //for when we are removing the youngest larva, because we don't have enough food.
+    public void minusLarva(int num){
+        for (int j = 0; j < num; j ++) {
+            try {
+                for (int i = 0; i < buildings.size(); i++) {
+                    if (!buildings.get(i).getLarva().isEmpty()) { //this is basically asking 'as long as the building isn't empty of larva'
+                        buildings.get(i).getLarva().removeLast();
+                    }
+                }
+            } catch (Exception e){
+                j = num;
             }
         }
     }
