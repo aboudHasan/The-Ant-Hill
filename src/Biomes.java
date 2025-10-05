@@ -212,20 +212,20 @@ public class Biomes {
     }
 
     //methods for movement of the map
-    public void right(){
-        this.x = this.x - 7;
+    public void right(int num){
+        this.x = this.x - num;
         loadGraphics();
     }
-    public void left(){
-        this.x = this.x + 7;
+    public void left(int num){
+        this.x = this.x + num;
         loadGraphics();
     }
-    public void up(){
-        this.y = this.y + 7;
+    public void up(int num){
+        this.y = this.y + num;
         loadGraphics();
     }
-    public void down(){
-        this.y = this.y - 7;
+    public void down(int num){
+        this.y = this.y - num;
         loadGraphics();
     }
 

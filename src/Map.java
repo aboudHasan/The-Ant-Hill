@@ -78,27 +78,27 @@ public class Map {
         new RectS(usx+5,usy+5,225,80,Color.BLACK).draw(gc);
     }
 
-    public void right(GraphicsContext gc){
+    public void right(GraphicsContext gc, int num){
         for (int i = 0; i < biomes.size(); i++){
-            biome(i).right();
+            biome(i).right(num);
         }
         draw(gc);
     }
-    public void left(GraphicsContext gc){
+    public void left(GraphicsContext gc, int num){
         for (int i = 0; i < biomes.size(); i++){
-            biome(i).left();
+            biome(i).left(num);
         }
         draw(gc);
     }
-    public void up(GraphicsContext gc){
+    public void up(GraphicsContext gc, int num){
         for (int i = 0; i < biomes.size(); i++){
-            biome(i).up();
+            biome(i).up(num);
         }
         draw(gc);
     }
-    public void down(GraphicsContext gc){
+    public void down(GraphicsContext gc, int num){
         for (int i = 0; i < biomes.size(); i++){
-            biome(i).down();
+            biome(i).down(num);
         }
         draw(gc);
     }

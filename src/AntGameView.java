@@ -689,6 +689,12 @@ public class AntGameView extends Application {
         }
     }
 
+    /// detects when the mouse first goes down.
+    public void mousePressed(MouseEvent me){
+        mousex = me.getX();
+        mousey = me.getY();
+    }
+
     /// cancels the selecting that you've made on the map.
     public void cancelSelectionMethod(ActionEvent e){
         mapSelectButton.setText("Select");
@@ -711,21 +717,22 @@ public class AntGameView extends Application {
 
         ///making the map move using the mouse... does work right YET
         if (mapDrawn) {
+
             if (mousex > me.getX()) {
-                map.right(gc);
+                map.right(gc, (int) (mousex - me.getX()));
                 mousex = me.getX();
                 map.draw(gc);
             } else if (mousex < me.getX()) {
-                map.left(gc);
+                map.left(gc, (int) (me.getX() - mousex));
                 mousex = me.getX();
                 map.draw(gc);
             }
             if (mousey < me.getY()) {
-                map.up(gc);
+                map.up(gc, (int) (me.getY() - mousey));
                 mousey = me.getY();
                 map.draw(gc);
             } else if (mousey > me.getY()) {
-                map.down(gc);
+                map.down(gc, (int) (mousey - me.getY()));
                 mousey = me.getY();
                 map.draw(gc);
             }
@@ -933,7 +940,8 @@ public class AntGameView extends Application {
         cancelSelection.setOnAction(this::cancelSelectionMethod);
         layEggButton.setOnAction(this::layingEgg);
         createAntButton.setOnAction(this::hatchingLarva);
-        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::mouseMoving); //was part of discarded screen movement...
+        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, this::mousePressed);
+        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::mouseMoving);
         buildButton.setOnAction(this::build);
         barracksButton.setOnAction(this::buildABarrack);
         pathsButton.setOnAction(this::buildAPath);
