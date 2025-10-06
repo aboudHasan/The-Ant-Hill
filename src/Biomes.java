@@ -16,7 +16,7 @@ public class Biomes {
     private double x;
     private double y;
     private boolean found = false;
-    private int thisNumber; // records which number was printed on it
+    private final int thisNumber; // records which number was printed on it
     static int number;// this counts how many biomes there are so far in the list, so that it prints that number onto the current biome ( while its being generated or printed)... just don't touch it.
     //graphics
     ArrayList<Shape> graphics = new ArrayList<Shape>();
@@ -28,15 +28,13 @@ public class Biomes {
     private int strength = 0;
 
     // ant hill
-    public Biomes(double usx,double usy,double usw,double ush){
+    public Biomes(double usx,double usy,double x,double y){
         this.found = true;
         this.nest = true;
         this.x = x;
         this.y = y;
         this.usx = usx;
         this.usy = usy;
-        this.usw = usw;
-        this.ush = ush;
         thisNumber = number; //setting its number/ID
         number = number + 1;
         content = "Your ants live here";
@@ -112,11 +110,7 @@ public class Biomes {
 
     //selected method
     public void selected(GraphicsContext gc){
-        if (this.nest == true){
-            new Circle(usx+(usw/2)-103 + x, usy+(ush/2)-103 + y, 103, Color.WHITE).draw(gc);
-        }else {
-            new Circle(usx + (x) - 103, usy + (y) - 103, 103, Color.WHITE).draw(gc);
-        }
+        new Circle(usx + (x) - 103, usy + (y) - 103, 103, Color.WHITE).draw(gc);
         draw(gc);
     }
 
@@ -124,10 +118,10 @@ public class Biomes {
     public void loadGraphics(){
         graphics.clear();
         if(!this.found){
-            graphics.add(new Circle( usx+(usw/2)-100 + x, usy+(ush/2)-100 + y,100, Color.GREEN));
-            graphics.add(new Images(usx+(usw/2)-110 + x, usy+(ush/2)-100 + y,"clouds"));
+            graphics.add(new Circle( usx-100 + x, usy-100 + y,100, Color.GREEN));
+            graphics.add(new Images(usx-110 + x, usy-100 + y,"clouds"));
         } else if(this instanceof AntHill){
-            graphics.add(new Circle( usx+(usw/2)-100 + x, usy+(ush/2)-100 + y,100, Color.GREEN));
+            graphics.add(new Circle( usx-100 + x, usy-100 + y,100, Color.GREEN));
             graphics.add(new Circle( usx+(usw/2)-25 + x, usy+(ush/2)-25 + y,25, Color.rgb(61, 35, 13)));
             graphics.add(new Rect(usx+(usw/2)-25 + x, usy+(ush/2) + y,50, 26, Color.GREEN));
             graphics.add(new Texts(usx+(usw/2)-5 + x, usy+(ush/2) - 80 + y, thisNumber, Color.BLACK));

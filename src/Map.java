@@ -22,50 +22,73 @@ public class Map {
         this.usy = usy;
         this.usw = usw;
         this.ush = ush;
-        //this is where all biomes get added
 
-        //this is for like "story mode" (a map with set biomes everytime (un-efficient)
-
+        //the below can be put all into one for loop that contains a for loop, but it may be easier to keep them separate for now.
         //row 1
-        biomes.add(new Picnic(usx,usy,60,(ush/2-440)));
-        biomes.add(new GrassyPatch(usx,usy,280,(ush/2-440)));
-        biomes.add(new GrassyPatch(usx,usy,500,(ush/2-440)));
-        biomes.add(new GrassyPatch(usx,usy,720,(ush/2-440)));
-        biomes.add(new GrassyPatch(usx,usy,940,(ush/2-440)));
-        biomes.add(new GrassyPatch(usx,usy,1160,(ush/2-440)));
-        biomes.add(new GrassyPatch(usx,usy,1380,(ush/2-440)));
+        double x = -10280; //first column
+        double y = (ush/2-660); //first row
+        for (int j = 50; j > 0; j--){
+            x = -10280;
+            y += 220;
+            for (int i = 100; i > 0; i--){
+                if (j == 25 && i == 50) {
+                    biomes.add(new AntHill(usx,usy,x,y));
+                } else if (rand.nextInt(0,3) <= 1){
+                    biomes.add(new Picnic(usx,usy,x,y));
+                } else {
+                    biomes.add(new GrassyPatch(usx,usy,x,y));
+                }
+                x += 220;
+            }
+        }
+        /*
         //row 2
-        biomes.add(new GrassyPatch(usx,usy,60,(ush/2-220)));
-        biomes.add(new GrassyPatch(usx,usy,280,(ush/2-220)));
-        biomes.add(new GrassyPatch(usx,usy,500,(ush/2-220)));
-        biomes.add(new GrassyPatch(usx,usy,720,(ush/2-220)));
-        biomes.add(new GrassyPatch(usx,usy,940,(ush/2-220)));
-        biomes.add(new GrassyPatch(usx,usy,1160,(ush/2-220)));
-        biomes.add(new GrassyPatch(usx,usy,1380,(ush/2-220)));
+        x = -10280;
+        y += 220;
+        for (int i = 100; i > 0; i--){
+            if (rand.nextInt(0,3) <= 1){
+                biomes.add(new Picnic(usx,usy,x,y));
+            } else {
+                biomes.add(new GrassyPatch(usx,usy,x,y));
+            }
+            x += 220;
+        }
         //row 3
-        biomes.add(new GrassyPatch(usx,usy,60,ush/2));
-        biomes.add(new GrassyPatch(usx,usy,280,ush/2));
-        biomes.add(new Picnic(usx,usy,500,ush/2));
-        biomes.add(new AntHill(usx,usy,usw,ush));
-        biomes.add(new GrassyPatch(usx,usy,940,ush/2));
-        biomes.add(new GrassyPatch(usx,usy,1160,ush/2));
-        biomes.add(new GrassyPatch(usx,usy,1380,ush/2));
+        x = -10280;
+        y += 220;
+        for (int i = 100; i > 0; i--){
+            if (i == 50) {
+                biomes.add(new AntHill(usx,usy,x,y));
+            } else if (rand.nextInt(0,3) <= 1){
+                biomes.add(new Picnic(usx,usy,x,y));
+            } else {
+                biomes.add(new GrassyPatch(usx,usy,x,y));
+            }
+            x += 220;
+        }
         //row 4
-        biomes.add(new GrassyPatch(usx,usy,60,(ush/2+220)));
-        biomes.add(new GrassyPatch(usx,usy,280,(ush/2+220)));
-        biomes.add(new GrassyPatch(usx,usy,500,(ush/2+220)));
-        biomes.add(new GrassyPatch(usx,usy,720,(ush/2+220)));
-        biomes.add(new GrassyPatch(usx,usy,940,(ush/2+220)));
-        biomes.add(new GrassyPatch(usx,usy,1160,(ush/2+220)));
-        biomes.add(new GrassyPatch(usx,usy,1380,(ush/2+220)));
+        x = -10280;
+        y += 220;
+        for (int i = 100; i > 0; i--){
+            if (rand.nextInt(0,3) <= 1){
+                biomes.add(new Picnic(usx,usy,x,y));
+            } else {
+                biomes.add(new GrassyPatch(usx,usy,x,y));
+            }
+            x += 220;
+        }
         //row 5
-        biomes.add(new GrassyPatch(usx,usy,60,(ush/2+440)));
-        biomes.add(new GrassyPatch(usx,usy,280,(ush/2+440)));
-        biomes.add(new GrassyPatch(usx,usy,500,(ush/2+440)));
-        biomes.add(new GrassyPatch(usx,usy,720,(ush/2+440)));
-        biomes.add(new GrassyPatch(usx,usy,940,(ush/2+440)));
-        biomes.add(new GrassyPatch(usx,usy,1160,(ush/2+440)));
-        biomes.add(new GrassyPatch(usx,usy,1380,(ush/2+440)));
+        x = -10280;
+        y += 220;
+        for (int i = 100; i > 0; i--){
+            if (rand.nextInt(0,3) <= 1){
+                biomes.add(new Picnic(usx,usy,x,y));
+            } else {
+                biomes.add(new GrassyPatch(usx,usy,x,y));
+            }
+            x += 220;
+        }
+         */
     }
 
     //this is simply the map getting drawn... I wouldn't touch this.

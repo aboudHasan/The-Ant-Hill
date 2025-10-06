@@ -1,8 +1,8 @@
 
 public class AntHill extends Biomes{
 
-    public AntHill(double usx,double usy,double usw,double ush){
-        super(usx, usy, usw, ush);
+    public AntHill(double usx,double usy,double x,double y){
+        super(usx, usy, x, y);
     }
 
 
