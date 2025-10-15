@@ -90,10 +90,17 @@ public class Map {
          */
     }
 
-    //this is simply the map getting drawn... I wouldn't touch this.
+    //this is the map getting drawn, adn for the adjacency of biomes/areas getting checked (not super efficient, but... ill fix it later so that it doesn't check for adjacency here.
     public void draw(GraphicsContext gc){
         new Rect(usx,usy,usw,ush, Color.rgb(10,160,10)).draw(gc);
         for (int i = 0; i < biomes.size(); i++){
+            //checking if its adjacency should be set to true
+            if (!biomes.get(i).isAdjacent()) {
+                if (biomes.get(i - 1).getFound() || biomes.get(i + 1).getFound() ||
+                        biomes.get(i + 100).getFound() || biomes.get(i - 100).getFound()) {
+                    biomes.get(i).adjacent(true);
+                }
+            }
             //the following 2 if statements optimize the system by only drawing the places 'in frame'.
             if (biomes.get(i).getY() >= usy - 200 && biomes.get(i).getX() >= usx - 200) {
                 if ( biomes.get(i).getY() <= ush + 200 && biomes.get(i).getX() <= usw + 200) {
