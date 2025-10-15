@@ -25,13 +25,12 @@ public class Map {
 
         //the below can be put all into one for loop that contains a for loop, but it may be easier to keep them separate for now.
         //row 1
-        double x = -10280; //first column
-        double y = (ush/2-660); //first row
-        for (int j = 50; j > 0; j--){
-            x = -10280;
+        double y = (ush/2-11235); //first row
+        for (int j = 100; j > 0; j--){
+            double x = -10280; //first column
             y += 220;
             for (int i = 100; i > 0; i--){
-                if (j == 25 && i == 50) {
+                if (j == 50 && i == 50) {
                     biomes.add(new AntHill(usx,usy,x,y));
                 } else if (rand.nextInt(0,3) <= 1){
                     biomes.add(new Picnic(usx,usy,x,y));
@@ -95,7 +94,12 @@ public class Map {
     public void draw(GraphicsContext gc){
         new Rect(usx,usy,usw,ush, Color.rgb(10,160,10)).draw(gc);
         for (int i = 0; i < biomes.size(); i++){
-            biomes.get(i).draw(gc);
+            //the following 2 if statements optimize the system by only drawing the places 'in frame'.
+            if (biomes.get(i).getY() >= usy - 200 && biomes.get(i).getX() >= usx - 200) {
+                if ( biomes.get(i).getY() <= ush + 200 && biomes.get(i).getX() <= usw + 200) {
+                    biomes.get(i).draw(gc);
+                }
+            }
         }
         new Rect(usx+5,usy+5,225,80,Color.WHITE).draw(gc);
         new RectS(usx+5,usy+5,225,80,Color.BLACK).draw(gc);

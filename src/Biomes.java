@@ -184,7 +184,7 @@ public class Biomes {
         }
         //printing the numbers, but not for the nest, which will handle it by itself, because otherwise it doesn't print right...
         if (!this.nest) {
-            graphics.add(new Texts(usx + (x), usy + (y) - 80, thisNumber, Color.BLACK));
+            graphics.add(new Texts(usx + (x)-10, usy + (y) - 80, thisNumber, Color.BLACK));
         }
     }
 
@@ -225,6 +225,12 @@ public class Biomes {
 
 
     //getters
+    public double getY() {
+        return this.y;
+    }
+    public double getX() {
+        return this.x;
+    }
     public boolean getFound(){
         return found;
     }
