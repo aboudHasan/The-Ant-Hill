@@ -123,22 +123,25 @@ public class Nest {
     }
 
     // setters/adders/next day function? why did I put that there.
-    public void nextDay(){ //next day also carries out the 'add larva' function that would have been created, but is instead integrated here.
+    public int nextDay(){ //next day also carries out the 'add larva' function that would have been created, but is instead integrated here.
         this.days++;
+        int numEggsHatched = 0;
         //this is scanning through each building
         for (int j = 0; j < buildings.size(); j++) {
-            int numEggsHatched = 0;
+            int numEggsHatching = 0;
             for (int i = 0; i < buildings.get(j).getEggs().size(); i++) { //this will only run if the building contains eggs
                 //for each egg, check if it can turn into a larva;
                 if (buildings.get(j).getEggs().get(i).getDaysAlive() >= 2) {
-                    numEggsHatched++;
+                    numEggsHatching++;
                     buildings.get(j).addLarva(new Larva());
                 } else {
                     buildings.get(j).getEggs().get(i).addDaysAlive();
                 }
             }
-            buildings.get(j).deleteEgg(numEggsHatched);
+            buildings.get(j).deleteEgg(numEggsHatching);
+            numEggsHatched += numEggsHatching;
         }
+        return numEggsHatched;
     }
     public void addBuilding(Building building){
         buildings.add(building);

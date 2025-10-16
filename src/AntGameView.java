@@ -412,10 +412,11 @@ public class AntGameView extends Application {
         cancelSelectionMethod(e);
         showButtons();
         //actual end day function
+        int previousAnts = nest.getAnts().size();//recording how many ants we had
         mapDrawn = false;
         doneBuilding();
         nest.clearAntsInUse();
-        /*calculating, how many ants should die (if any)*/ //(and eventually larva... but im lazy right now...)
+        /*calculating, how many ants should die (if any)*/
         int remainingFood = nest.getFood();
         if (!nest.minusFood(nest.getAnts().size())){
             nest.minusFood(nest.getFood());
@@ -448,7 +449,11 @@ public class AntGameView extends Application {
         }
         updateStats();
         //the next day method also handles whether an egg will hatch.
-        nest.nextDay();
+        messege2 = "Larva hatched : " + nest.nextDay();;
+        title = "DAY : " + (nest.getDays()-1) + " ~> " + nest.getDays();
+        messege1 = "Total Ants : " + (nest.getAnts().size() - previousAnts);
+
+        showTextBox();
         new Texts(usx + usw - 40, usy + ush - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc);
     }
     /// this updates all the states being displayed on the screen, to match the nests stats.
