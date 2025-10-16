@@ -256,29 +256,33 @@ public class Nest {
             }
         }
     }
-    public void addProtein(int num){
+    public int addProtein(int num){
         int numLeft = num;
         for (int i = 0; i < buildings.size(); i++) {
             int max = buildings.get(i).getMaxProtein() - buildings.get(i).getProtein();
             if (numLeft <= max){
                 buildings.get(i).addProtein(numLeft);
+                numLeft = 0;
             } else {
                 buildings.get(i).addProtein(max);
                 numLeft -= max;
             }
         }
+        return numLeft;
     }
-    public void addFood(int num){
+    public int addFood(int num){
         int numLeft = num;
         for (int i = 0; i < buildings.size(); i++) {
-            int max = buildings.get(i).getMaxFood() - buildings.get(i).getFood();
+            int max = buildings.get(i).getMaxFood() - buildings.get(i).getFood(); //max amount more that a building can take
             if (numLeft <= max){
                 buildings.get(i).addFood(numLeft);
+                numLeft = 0;
             } else {
                 buildings.get(i).addFood(max);
                 numLeft -= max;
             }
         }
+        return numLeft;
     }
     public Boolean addEgg(){
         for (int i = 0; i < buildings.size(); i++) {
