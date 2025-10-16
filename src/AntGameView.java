@@ -555,7 +555,10 @@ public class AntGameView extends Application {
             messege1 = "";
             messege2 = "";
             if (!map.biome(num).getFound()) { //for when the interaction is with an un-found/undiscovered biome/area
-                if ((int)mapSelect.getValue() == exploreNum && nest.AddAntsInUse(exploreNum)) {
+                if (!map.biome(num).isAdjacent()){//for if the place isn't adjacent to anything
+                    title = "Cannot explore";
+                    messege1 = "This area is next to a discovered tile.";
+                } else if ((int)mapSelect.getValue() == exploreNum && nest.AddAntsInUse(exploreNum)) { //for when it is adjacent.
                     title = "Area Explored";
                     messege1 = "Discovered a " + map.biome(num).getType() + ".";
                     map.biome(num).setFound(true);

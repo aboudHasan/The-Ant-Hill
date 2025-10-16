@@ -3,7 +3,6 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.TimerTask;
 
 public class Map {
     Random rand = new Random();
@@ -14,7 +13,7 @@ public class Map {
     private final double usw;
     private final double ush;
 
-    ArrayList<Biomes> biomes = new ArrayList<Biomes>(); //this will be a list to contain the maps biomes
+    ArrayList<Biomes> biomes = new ArrayList<>(); //this will be a list to contain the maps biomes
 
 
     public Map(double usx,double usy,double usw,double ush){
@@ -94,10 +93,26 @@ public class Map {
     public void draw(GraphicsContext gc){
         new Rect(usx,usy,usw,ush, Color.rgb(10,160,10)).draw(gc);
         for (int i = 0; i < biomes.size(); i++){
-            //checking if its adjacency should be set to true
+            //checking if its adjacency should be set to true (needs to be fixed at some point to be better...
             if (!biomes.get(i).isAdjacent()) {
-                if (biomes.get(i - 1).getFound() || biomes.get(i + 1).getFound() ||
-                        biomes.get(i + 100).getFound() || biomes.get(i - 100).getFound()) {
+                if (i == 0) {//first area/biome
+                    if (biomes.get(i + 1).getFound() || biomes.get(i + 100).getFound()) {
+                        biomes.get(i).adjacent(true);
+                    }
+                }else if (i < 100){//top row (first row)
+                    if (biomes.get(i - 1).getFound() || biomes.get(i + 1).getFound() || biomes.get(i + 100).getFound()){
+                        biomes.get(i).adjacent(true);
+                    }
+                } else if (i == biomes.size() - 1) {//last area/biome
+                    if (biomes.get(i - 1).getFound() || biomes.get(i - 100).getFound()) {
+                        biomes.get(i).adjacent(true);
+                    }
+                }else if (i >= 9900){//bottom row (last row)
+                    if (biomes.get(i - 1).getFound() || biomes.get(i - 100).getFound() || biomes.get(i + 1).getFound()){
+                        biomes.get(i).adjacent(true);
+                    }
+                } else if (biomes.get(i - 1).getFound() || biomes.get(i + 1).getFound() || //all the rest of the areas/biomes
+                         biomes.get(i + 100).getFound() || biomes.get(i - 100).getFound()) {
                     biomes.get(i).adjacent(true);
                 }
             }
