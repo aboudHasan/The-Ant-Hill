@@ -22,7 +22,7 @@ public class Map {
         this.usw = usw;
         this.ush = ush;
 
-        //the loop that generates the map. currently, we aren't recording its /9seed)
+        //the loop that generates the map. currently, we aren't recording its seeds
         double y = (ush/2-11235); //first row
         for (int j = 100; j > 0; j--){
             double x = -10280; //first column

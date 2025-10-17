@@ -16,7 +16,7 @@ public class Biomes {
     private double ush;
     private double x;
     private double y;
-    private boolean found = false;
+    private boolean found = true;
     private boolean adjacent = false;
     private final int thisNumber; // records which number was printed on it
     static int number;// this counts how many biomes there are so far in the list, so that it prints that number onto the current biome ( while its being generated or printed)... just don't touch it.
@@ -110,7 +110,7 @@ public class Biomes {
         this.y = y;
         this.antMultiplier = antMultiplier;
         //selecting what it contains
-        String[] contents = {"nectar"/*food*/, "pollen"/*protein*/,"seeds"/*food, but heavy */ /*aphids eventually*/};
+        String[] contents = {"nectar"/*food*/, "pollen"/*protein*/,"seeds"/*food and protein*/ /*aphids eventually*/};
         int selector = rand.nextInt(0,3);
         this.content = contents[selector];
         //selecting how many or how much it contains
