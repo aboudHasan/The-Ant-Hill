@@ -530,10 +530,20 @@ public class AntGameView extends Application {
             new Texts((usx) + 244, usy + 24, map.biome(num).getType()).draw(gc);
             //collecting and displaying info
             if (!map.biome(num).getFound()){ //current statement for seeing if a biome is found yet.
-                new Rect((usx) + 235, usy + 5, 220, 80, Color.WHITE).draw(gc);
-                new RectS((usx) + 235, usy + 5, 220, 80, Color.BLACK).draw(gc);
-                new Texts((usx) + 244, usy + 24, "Area not yet Explored").draw(gc);
-                new Texts((usx) + 244, usy + 39, "Send "+exploreNum+" ants discover this area.").draw(gc);
+                if (map.biome(num).isAdjacent()) {
+                    new Rect((usx) + 235, usy + 5, 220, 80, Color.WHITE).draw(gc);
+                    new RectS((usx) + 235, usy + 5, 220, 80, Color.BLACK).draw(gc);
+                    new Texts((usx) + 244, usy + 24, "Area not yet Explored").draw(gc);
+                    new Texts((usx) + 244, usy + 39, "Send " + exploreNum + " ants to explore this tile?").draw(gc);
+                    mapSelect.relocate(-100, -100);
+                    mapSelectButton.relocate(usx + 675,usy + 10);
+                } else {
+                    new Rect((usx) + 235, usy + 5, 220, 80, Color.WHITE).draw(gc);
+                    new RectS((usx) + 235, usy + 5, 220, 80, Color.BLACK).draw(gc);
+                    new Texts((usx) + 244, usy + 24, "Cannot Explore").draw(gc);
+                    new Texts((usx) + 244, usy + 39, "Area not next to an explored tile.").draw(gc);
+                }
+
             // for spots that cannot be interacted with (whether that be changed later or not) (other than spots that contain nothing)
             } else if (map.biome(num) instanceof AntHill || map.biome(num).getContent().equals("Human, stay away from them...")) {
                 new Texts((usx) + 244, usy + 39, map.biome(num).getContent()).draw(gc);
@@ -555,7 +565,11 @@ public class AntGameView extends Application {
             new RectS(usx+5,usy+5,225,80,Color.BLACK).draw(gc);
             mapSelectButton.setText("Send");
             selected = true;
-            cancelSelection.relocate(usx+835,usy+10);
+            if (map.biome(num).isAdjacent() && !map.biome(num).getFound()){
+                cancelSelection.relocate(usx + 725, usy + 10);
+            } else {
+                cancelSelection.relocate(usx + 835, usy + 10);
+            }
             //start of sending function
         } else {
             //actual function for interaction //(could prolly be stored somewhere else other than in this file)... willllll I change it? prolly not.
@@ -564,24 +578,20 @@ public class AntGameView extends Application {
             messege2 = "";
             if (!map.biome(num).getFound()) { //for when the interaction is with an un-found/undiscovered biome/area
                 if (!map.biome(num).isAdjacent()){//for if the place isn't adjacent to anything
-                    title = "Cannot explore";
-                    messege1 = "This area is next to a discovered tile.";
-                } else if ((int)mapSelect.getValue() == exploreNum && nest.AddAntsInUse(exploreNum)) { //for when it is adjacent.
+                    title = "Cannot Explore!!!";
+                    messege1 = "Area not next to an explored tile!";
+                } else if (nest.AddAntsInUse(exploreNum)) { //for when it is adjacent.
                     title = "Area Explored";
-                    messege1 = "Discovered a " + map.biome(num).getType() + ".";
+                    messege1 = "Explored a " + map.biome(num).getType() + ".";
                     map.biome(num).setFound(true);
                     map.draw(gc);
-                } else if ((int)mapSelect.getValue() > exploreNum) {
-                    title = "To Many Ants!";
-                    messege1 = "You tried sending more ants then";
-                    messege2 = "needed";
-                } else if ((int)mapSelect.getValue() < exploreNum){
-                    title = "Cannot Send";
-                    messege1 = "Needs "+exploreNum+" ants to be explored";
                 } else { // the only other thing possible here now is if the player send the 'exploreNum' amount of ants.
                     title = "Cannot Send";
                     messege1 = "You don't have enough unused ants";
                 }
+                //ensuring returning buttons to normal
+                mapSelectButton.relocate(775,10);
+                mapSelect.relocate(600,10);
                 //end of un-found area interaction
 
                 // for when the space is just empty
@@ -725,6 +735,9 @@ public class AntGameView extends Application {
             map.draw(gc);
         }
         cancelSelection.relocate(-100,-100);
+        //ensuring returning buttons to normal
+        mapSelectButton.relocate(775,10);
+        mapSelect.relocate(600,10);
     }
 
     /// detects when the mouse pointer has been pressed, and records that
