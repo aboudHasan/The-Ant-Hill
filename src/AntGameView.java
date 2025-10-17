@@ -115,6 +115,9 @@ public class AntGameView extends Application {
         nest.getBuildings().get(1).addAnts(new Ant());
         nest.getBuildings().get(1).addAnts(new Ant());
         nest.getBuildings().get(1).addAnts(new Ant());
+        nest.getBuildings().get(1).addAnts(new Ant());
+        nest.getBuildings().get(1).addAnts(new Ant());
+        nest.getBuildings().get(1).addAnts(new Ant());
         nest.calcAll();
         //the background (don't touch unless your improving graphics)
         background.add(new Rect(usx,usy,usw,ush,Color.rgb(135, 206, 235)));

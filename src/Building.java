@@ -31,8 +31,8 @@ public class Building {
         this.maxProtein = maxProtein;
         this.maxEggs = maxEggs;
         this.maxLarva = maxLarva;
-        this.protein = 5;
-        this.food = 10;
+        this.protein = 0;
+        this.food = 25;
         this.x = x;
         this.y = y;
         //below is where you create its graphics
