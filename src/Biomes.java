@@ -216,6 +216,11 @@ public class Biomes {
                 graphics.add(new Circle(usx + x + 25, usy + y + 40, 10, Color.RED));
                 graphics.add(new Circle(usx + x - 10, usy + y - 10, 10, Color.RED));
             }
+        } else if (this instanceof FlowerField){
+            graphics.add(new Circle( usx+(x)-100, usy+(y)-100,100, Color.GREEN));
+            graphics.add(new Circle(usx + x - 35, usy + y + 35, 10, Color.PINK));
+            graphics.add(new Circle(usx + x + 25, usy + y + 40, 10, Color.YELLOW));
+            graphics.add(new Circle(usx + x - 10, usy + y - 10, 10, Color.MISTYROSE));
         }
         //for the clouds when a place isn't discovered yet.
         if(!this.found) {
