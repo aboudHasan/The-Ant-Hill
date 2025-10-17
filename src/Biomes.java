@@ -15,7 +15,7 @@ public class Biomes {
     private double ush;
     private double x;
     private double y;
-    private boolean found = true;
+    private boolean found = false;
     private boolean adjacent = false;
     private final int thisNumber; // records which number was printed on it
     static int number;// this counts how many biomes there are so far in the list, so that it prints that number onto the current biome ( while its being generated or printed)... just don't touch it.
@@ -46,14 +46,17 @@ public class Biomes {
         this.y = y;
         this.antMultiplier = antMultiplier;
         //selecting what it contains
-        String[] contents = {"crumbs" /*food*/, "human", "beetles"};
-        int selector = rand.nextInt(0,3);
+        String[] contents = {"crumbs" /*food*/, "human", "beetles","protein"};
+        int selector = rand.nextInt(0,4);
         this.content = contents[selector];
         //selecting how much it contains... except if its human... then the spot just doesn't work.
         if (this.content.equals("crumbs")){
             selector = rand.nextInt(25,50);
             this.amount = selector;
-        } else if (this.content.equals("beetles")){
+        } else if (this.content.equals("protein")){
+            selector = rand.nextInt(15,35);
+            this.amount = selector;
+        }else if (this.content.equals("beetles")){
             selector = rand.nextInt(1,5);
             this.amount = selector;
             this.isBug = true;
@@ -178,6 +181,10 @@ public class Biomes {
                 graphics.add(new Rect(usx+x+10,usy+y+11, 2, 9, Color.BLACK));
             } else if (this.content.equals("Human, stay away from them...")){
 
+            } else if (this.content.equals("protein") && this.amount != 0) {
+                graphics.add(new Circle(usx + x - 35, usy + y + 35, 10, Color.RED));
+                graphics.add(new Circle(usx + x + 25, usy + y + 40, 10, Color.RED));
+                graphics.add(new Circle(usx + x - 10, usy + y - 10, 10, Color.RED));
             }
         }
         //for the clouds when a place isn't discovered yet.

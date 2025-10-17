@@ -117,9 +117,6 @@ public class AntGameView extends Application {
         nest.getBuildings().get(1).addAnts(new Ant());
         nest.getBuildings().get(1).addAnts(new Ant());
         nest.getBuildings().get(1).addAnts(new Ant());
-        nest.getBuildings().get(1).addAnts(new Ant());
-        nest.getBuildings().get(1).addAnts(new Ant());
-        nest.getBuildings().get(1).addAnts(new Ant());
         nest.calcAll();
         //the background (don't touch unless your improving graphics)
         background.add(new Rect(usx,usy,usw,ush,Color.rgb(135, 206, 235)));
@@ -349,7 +346,6 @@ public class AntGameView extends Application {
     }
     /// the method for building a protein storage.
     public void buildAProteinStorage(ActionEvent e){
-        System.out.println("here");
         if (nest.AddAntsInUse(5)) {
             if (nest.minusFood(5)) {
                 if (nest.minusProtein(5)) {

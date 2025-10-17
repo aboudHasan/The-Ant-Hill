@@ -22,8 +22,7 @@ public class Map {
         this.usw = usw;
         this.ush = ush;
 
-        //the below can be put all into one for loop that contains a for loop, but it may be easier to keep them separate for now.
-        //row 1
+        //the loop that generates the map. currently, we aren't recording its /9seed)
         double y = (ush/2-11235); //first row
         for (int j = 100; j > 0; j--){
             double x = -10280; //first column
@@ -31,7 +30,8 @@ public class Map {
             for (int i = 100; i > 0; i--){
                 if (j == 50 && i == 50) {
                     biomes.add(new AntHill(usx,usy,x,y));
-                } else if (rand.nextInt(0,3) <= 1){
+                } else if (rand.nextInt(0,6) == 5){
+                    System.out.println(rand.nextInt(0,5));
                     biomes.add(new Picnic(usx,usy,x,y));
                 } else {
                     biomes.add(new GrassyPatch(usx,usy,x,y));
