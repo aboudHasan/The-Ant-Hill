@@ -557,6 +557,7 @@ public class AntGameView extends Application {
     /// It also handles all the interactions between the nest and map, and all prints concerning that... will move SOME
     /// of these into the map file.
     public void sending(ActionEvent e){ // the action can be null, so don't program anything here that would need a non-null event...
+        map.draw(gc); // just ensuring that all graphics are correct... for if a bug occurred... (one was occurring, but putting this here fixed it)
         boolean complete = false; //tracts if the actual sending function is completed.
         int exploreNum = 5; //the minimum number of ants it takes to explore an area
         if (!selected) { //selecting something
@@ -580,11 +581,17 @@ public class AntGameView extends Application {
                     new RectS((usx) + 235, usy + 5, 220, 80, Color.BLACK).draw(gc);
                     new Texts((usx) + 244, usy + 24, "Cannot Explore").draw(gc);
                     new Texts((usx) + 244, usy + 39, "Area not next to an explored tile.").draw(gc);
+                    selected = true; // causes the whole interaction to reset early. (not go through with the sending)
                 }
 
             // for spots that cannot be interacted with (whether that be changed later or not) (other than spots that contain nothing)
-            } else if (map.biome(num) instanceof AntHill || map.biome(num).getContent().equals("Human, stay away from them...")) {
+            } else if (map.biome(num) instanceof AntHill || map.biome(num).getContent().equals("Human, stay away from them...")
+                    || map.biome(num).getContent().equals("nothing") || map.biome(num).getAmount() == 0) {
                 new Texts((usx) + 244, usy + 39, map.biome(num).getContent()).draw(gc);
+                if (map.biome(num).getAmount() == 0){
+                    new Texts((usx) + 244, usy + 54, "Empty").draw(gc);
+                }
+                selected = true;
             } else {//other spots typical display for their content.
                 new Texts((usx) + 244, usy + 39, map.biome(num).getContent() + " :  " + map.biome(num).getAmount()).draw(gc);
                 new Texts((usx) + 244, usy + 54, "items per ant :  " + map.biome(num).getAntMultiplier()).draw(gc);
@@ -599,14 +606,18 @@ public class AntGameView extends Application {
             mapSelect.getValueFactory().setValue(null); // resetting the spinner
 
             //end of selecting function
-            new Rect(usx+5,usy+5,225,80,Color.WHITE).draw(gc);
-            new RectS(usx+5,usy+5,225,80,Color.BLACK).draw(gc);
-            mapSelectButton.setText("Send");
-            selected = true;
-            if (map.biome(num).isAdjacent() && !map.biome(num).getFound()){
-                cancelSelection.relocate(usx + 725, usy + 10);
+            if (!selected) {
+                new Rect(usx + 5, usy + 5, 225, 80, Color.WHITE).draw(gc);
+                new RectS(usx + 5, usy + 5, 225, 80, Color.BLACK).draw(gc);
+                mapSelectButton.setText("Send");
+                selected = true;
+                if (map.biome(num).isAdjacent() && !map.biome(num).getFound()) {
+                    cancelSelection.relocate(usx + 725, usy + 10);
+                } else {
+                    cancelSelection.relocate(usx + 835, usy + 10);
+                }
             } else {
-                cancelSelection.relocate(usx + 835, usy + 10);
+                selected = false;
             }
             //start of sending function
         } else {
@@ -615,10 +626,7 @@ public class AntGameView extends Application {
             messege1 = "";
             messege2 = "";
             if (!map.biome(num).getFound()) { //for when the interaction is with an un-found/undiscovered biome/area
-                if (!map.biome(num).isAdjacent()){//for if the place isn't adjacent to anything
-                    title = "Cannot Explore!!!";
-                    messege1 = "Area not next to an explored tile!";
-                } else if (nest.AddAntsInUse(exploreNum)) { //for when it is adjacent.
+                if (nest.AddAntsInUse(exploreNum)) { //for when it is adjacent.
                     title = "Area Explored";
                     messege1 = "Explored a " + map.biome(num).getType() + ".";
                     map.biome(num).setFound(true);
