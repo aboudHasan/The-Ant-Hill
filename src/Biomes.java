@@ -16,7 +16,7 @@ public class Biomes {
     private double ush;
     private double x;
     private double y;
-    private boolean found = false;
+    private boolean found = true;
     private boolean adjacent = false;
     private final int thisNumber; // records which number was printed on it
     static int number;// this counts how many biomes there are so far in the list, so that it prints that number onto the current biome ( while its being generated or printed)... just don't touch it.
@@ -221,6 +221,53 @@ public class Biomes {
             graphics.add(new Circle(usx + x - 35, usy + y + 35, 10, Color.PINK));
             graphics.add(new Circle(usx + x + 25, usy + y + 40, 10, Color.YELLOW));
             graphics.add(new Circle(usx + x - 10, usy + y - 10, 10, Color.MISTYROSE));
+            if (this.content.equals("pollen") && this.amount != 0) {
+                graphics.add(new Circle(usx+x-25,usy+y-25,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+-19,usy+y-39,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-7,usy+y-8-20,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+10,usy+y-8-25,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-15,usy+y-8-40,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-15,usy+y-8+20,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+15,usy+y-8+56,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+5,usy+y-8+35,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+29,usy+y-8+45,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+11,usy+y-8+25,5,3,Color.BEIGE));
+                x+=60;
+                graphics.add(new Circle(usx+x-25,usy+y-25,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+-19,usy+y-39,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-7,usy+y-8-20,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+10,usy+y-8-25,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-15,usy+y-8-40,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-15,usy+y-8+20,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+15,usy+y-8+56,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+5,usy+y-8+35,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+29,usy+y-8+45,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+11,usy+y-8+25,5,3,Color.BEIGE));
+                x-=110;
+                y -= 30;
+                graphics.add(new Circle(usx+x-25,usy+y-25,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+-19,usy+y+59,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-7,usy+y-8-20,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+10,usy+y-8-25,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-15,usy+y-8+80,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6-15,usy+y-8+20,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+15,usy+y-8+56,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+5,usy+y-8+35,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+29,usy+y-8+45,5,3,Color.BEIGE));
+                graphics.add(new Circle(usx+x-6+11,usy+y-8+25,5,3,Color.BEIGE));
+                x+=50;
+                y += 30;
+            } else if (this.content.equals("nectar") && this.amount != 0){
+                graphics.add(new Circle(usx+x-25,usy+y-25,5,9,Color.DARKGOLDENROD));
+                graphics.add(new Circle(usx+x-50,usy+y-37,5,9,Color.DARKGOLDENROD));
+                graphics.add(new Circle(usx+x+30,usy+y-56,5,9,Color.DARKGOLDENROD));
+                graphics.add(new Circle(usx+x-50,usy+y+37,5,9,Color.DARKGOLDENROD));
+                graphics.add(new Circle(usx+x+37,usy+y+25,5,9,Color.DARKGOLDENROD));
+            } else if (this.content.equals("seeds") && this.amount != 0){
+                graphics.add(new Circle(usx+x-25,usy+y-25,5,9,Color.BROWN));
+                graphics.add(new Circle(usx+x+35,usy+y+30,5,9,Color.BROWN));
+                graphics.add(new Circle(usx+x+43,usy+y-47,5,9,Color.BROWN));
+            }
         }
         //for the clouds when a place isn't discovered yet.
         if(!this.found) {
