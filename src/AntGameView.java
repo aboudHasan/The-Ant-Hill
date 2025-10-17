@@ -450,11 +450,11 @@ public class AntGameView extends Application {
         mapSelectButton.relocate(-100,-100);
         mapSelect.relocate(-100,-100);
         mapButton.setText("Map");
-        cancelSelectionMethod(e);
         showButtons();
         //actual end day function
         int previousAnts = nest.getAnts().size();//recording how many ants we had
         mapDrawn = false;
+        cancelSelectionMethod(e);
         doneBuilding();
         nest.clearAntsInUse();
         /*calculating, how many ants should die (if any)*/
@@ -507,6 +507,8 @@ public class AntGameView extends Application {
         eggs.setText("eggs: "+(nest.getEggs().size())+" / "+nest.getMaxEggs());
         antsInUse.setText("ants-in-use: "+(nest.getAntsInUse())+" / "+(nest.getAnts().size()-1));
     }
+
+
 
 
 
