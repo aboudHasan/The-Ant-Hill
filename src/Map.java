@@ -31,7 +31,6 @@ public class Map {
                 if (j == 50 && i == 50) {
                     biomes.add(new AntHill(usx,usy,x,y));
                 } else if (rand.nextInt(0,6) == 5){
-                    System.out.println(rand.nextInt(0,5));
                     biomes.add(new Picnic(usx,usy,x,y));
                 } else {
                     biomes.add(new GrassyPatch(usx,usy,x,y));

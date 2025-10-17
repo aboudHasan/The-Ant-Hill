@@ -1,6 +1,7 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Biomes {
@@ -93,6 +94,35 @@ public class Biomes {
             this.amount = selector;
             this.isBug = true;
             this.strength = 2 * selector;
+        }
+
+        //where it is
+        this.usx = usx;
+        this.usy = usy;
+        graphics.add(new Circle( usx+(x)-100, usy+(y)-100,100, Color.GREEN));
+        thisNumber = number;// saving the biomes number/ID
+        number = number + 1;
+    }
+    // Flower Field
+    //will eventually have multiple colours of flowers.
+    public Biomes(double usx, double usy, double x, double y, int antMultiplier, Color colour){
+        this.x = x;
+        this.y = y;
+        this.antMultiplier = antMultiplier;
+        //selecting what it contains
+        String[] contents = {"nectar"/*food*/, "pollen"/*protein*/,"seeds"/*food, but heavy */ /*aphids eventually*/};
+        int selector = rand.nextInt(0,3);
+        this.content = contents[selector];
+        //selecting how many or how much it contains
+        if (this.content.equals("nectar")){
+            selector = rand.nextInt(10,35);
+            this.amount = selector;
+        } else if(this.content.equals("pollen")){
+            selector = rand.nextInt(3,10);
+            this.amount = selector;
+        } else if(this.content.equals("seeds")) {
+            selector = rand.nextInt(1,15);
+            this.amount = selector;
         }
 
         //where it is
