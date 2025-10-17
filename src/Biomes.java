@@ -1,7 +1,6 @@
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Biomes {
@@ -16,7 +15,7 @@ public class Biomes {
     private double ush;
     private double x;
     private double y;
-    private boolean found = true;
+    private boolean found = false;
     private boolean adjacent = false;
     private final int thisNumber; // records which number was printed on it
     static int number;// this counts how many biomes there are so far in the list, so that it prints that number onto the current biome ( while its being generated or printed)... just don't touch it.
