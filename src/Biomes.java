@@ -194,7 +194,7 @@ public class Biomes {
                     xCord -= 30;
                 }
             }
-            if (this.content.equals("crumbs")){
+            if (this.content.equals("crumbs") && this.amount != 0){
                 graphics.add(new Circle(usx+x-6,usy+y-8,17,10,Color.BEIGE));
                 graphics.add(new Circle(usx+x-6+10,usy+y-8-20,17,10,Color.BEIGE));
                 graphics.add(new Circle(usx+x-6-18,usy+y-8-20,17,10,Color.BEIGE));

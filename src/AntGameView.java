@@ -100,10 +100,11 @@ public class AntGameView extends Application {
 
 
 
-
-
-
-
+    //all stuff for prior to the game starting (for now)
+    /// erasing the text for collecting the name
+    public void nameErase(MouseEvent me){
+        name.setText("");
+    }
 
     /// start new game method, for when you are starting a brand-new game.
     public void startNewGame(ActionEvent e){
@@ -1022,6 +1023,7 @@ public class AntGameView extends Application {
         // 5. Add Event Handlers and do final setup
         nextDay.setOnAction(this::nextDayMethod);
         confName.setOnAction(this::startNewGame);
+        name.addEventHandler(MouseEvent.MOUSE_PRESSED, this::nameErase);
         mapButton.setOnAction(this::drawMap);
         mapSelectButton.setOnAction(this::sending);
         cancelSelection.setOnAction(this::cancelSelectionMethod);
