@@ -16,7 +16,7 @@ public class Biomes {
     private double ush;
     private double x;
     private double y;
-    private boolean found = false;
+    private boolean found = true;
     private boolean adjacent = false;
     private final int thisNumber; // records which number was printed on it
     static int number;// this counts how many biomes there are so far in the list, so that it prints that number onto the current biome ( while its being generated or printed)... just don't touch it.
@@ -300,8 +300,10 @@ public class Biomes {
             return "Grassy Patch";
         } else if (this instanceof AntHill){
             return "Ant Hill";
-        } else if (this instanceof Picnic){
+        } else if (this instanceof Picnic) {
             return "Picnic Spot";
+        } else if (this instanceof FlowerField){
+            return "Flower Field";
         } else {
             return "unknown";
         }

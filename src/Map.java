@@ -32,6 +32,8 @@ public class Map {
                     biomes.add(new AntHill(usx,usy,x,y));
                 } else if (rand.nextInt(0,6) == 5){
                     biomes.add(new Picnic(usx,usy,x,y));
+                } else if (rand.nextInt(0,3)==2){
+                    biomes.add(new FlowerField(usx,usy,x,y));
                 } else {
                     biomes.add(new GrassyPatch(usx,usy,x,y));
                 }

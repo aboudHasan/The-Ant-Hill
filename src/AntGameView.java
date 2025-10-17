@@ -638,7 +638,7 @@ public class AntGameView extends Application {
                 mapSelect.relocate(600,10);
                 //end of un-found area interaction
 
-                // for when the space is just empty
+
             } else if (nest.AddAntsInUse((Integer) mapSelect.getValue())){
                 if (map.biome(num).getAmount() == 0){ //for when it is an empty space or has been used up
                     nest.minusAntsInUse((Integer) mapSelect.getValue());
@@ -667,7 +667,7 @@ public class AntGameView extends Application {
                     //end of bug interaction
 
                     //this statement is for mushrooms
-                }else if (map.biome(num).getContent().equals("mushrooms")) {
+                }else if (map.biome(num).getContent().equals("mushrooms") || map.biome(num).getContent().equals("seeds")) {
                         for (int i = 0; i <= map.biome(num).getAntMultiplier(); i++) {
                             if (map.biome(num).getAmount() >= ((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) {
                                 map.biome(num).subtractAmount((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
@@ -691,7 +691,7 @@ public class AntGameView extends Application {
                         //end of mushroom interactions
 
                         //this next statement is for crumbs
-                } else if (map.biome(num).getContent().equals("crumbs")) {
+                } else if (map.biome(num).getContent().equals("crumbs") || map.biome(num).getContent().equals("nectar")) {
                         for (int i = 0; i <= map.biome(num).getAntMultiplier(); i++) {
                             if (map.biome(num).getAmount() >= ((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) {
                                 map.biome(num).subtractAmount((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
@@ -715,7 +715,7 @@ public class AntGameView extends Application {
                         //end of crumbs interactions
 
                         //start of protein interaction
-                    } else if (map.biome(num).getContent().equals("protein")) {
+                } else if (map.biome(num).getContent().equals("protein") || map.biome(num).getContent().equals("pollen")) {
                         for (int i = 0; i <= map.biome(num).getAntMultiplier(); i++) {
                             if (map.biome(num).getAmount() >= ((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) {
                                 map.biome(num).subtractAmount((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
@@ -737,11 +737,11 @@ public class AntGameView extends Application {
                             messege2 = "needed";
                         }
                         //end of protein interaction
-                    } else { // end of interactions, catching if a 'bug' occurs and returning your ants (not using them up)
+                } else { // end of interactions, catching if a 'bug' occurs and returning your ants (not using them up)
                         nest.minusAntsInUse((Integer) mapSelect.getValue());
                         title = "Error";
                         messege1 = "'Bug' occurred, all ants returned";
-                    }
+                }
             } else { //nothing could be done, as you don't have enough ants
                 title = "Cannot Send";
                 messege1 = "You don't have enough unused ants";
