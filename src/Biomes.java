@@ -125,7 +125,7 @@ public class Biomes {
             graphics.add(new Texts(usx+(usw/2)-5 + x, usy+(ush/2) - 80 + y, thisNumber, Color.BLACK));
         } else if (this instanceof GrassyPatch){
             graphics.add(new Circle( usx+(x)-100, usy+(y)-100,100, Color.GREEN));
-            if (this.content.equals("mushrooms")){
+            if (this.content.equals("mushrooms") && this.amount != 0){
                 graphics.add(new Circle(usx+x-6,usy+y-8,17,10,Color.WHITE));
                 graphics.add(new Rect(usx+x,usy+y,5,10,Color.WHITE));
                 graphics.add(new Circle(usx+x-6+10,usy+y-8-20,17,10,Color.WHITE));
@@ -139,7 +139,7 @@ public class Biomes {
                 graphics.add(new Rect(usx+x+10,usy+y+11, 2, 9, Color.BLACK));
             } else if (this.content.equals("grasshoppers")){
                 graphics.add(new Circle(usx+x,usy+y,20,10,Color.BLACK));
-            } else if (this.content.equals("protein")) {
+            } else if (this.content.equals("protein") && this.amount != 0) {
                 graphics.add(new Circle(usx + x - 35, usy + y + 35, 10, Color.RED));
                 graphics.add(new Circle(usx + x + 25, usy + y + 40, 10, Color.RED));
                 graphics.add(new Circle(usx + x - 10, usy + y - 10, 10, Color.RED));
