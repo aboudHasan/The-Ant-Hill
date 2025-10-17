@@ -14,11 +14,14 @@ public class Shape {
     private boolean texts = false;
     private Image image;
     private static Image clouds = new Image("clouds.png", 225, 225, true, true); // scale this thing...
-
+    private static Image clouds_transparent = new Image("clouds_transparent.png", 225, 225, true, true);
     //image
     public Shape(double x, double y, String name){
         if (name.equals("clouds")) {
             image = clouds;
+        }
+        if (name.equals("clouds_transparent")) {
+            image = clouds_transparent;
         }
         this.x = x;
         this.y = y;

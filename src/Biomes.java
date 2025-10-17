@@ -118,10 +118,7 @@ public class Biomes {
     //graphics
     public void loadGraphics(){
         graphics.clear();
-        if(!this.found){
-            graphics.add(new Circle( usx-100 + x, usy-100 + y,100, Color.GREEN));
-            graphics.add(new Images(usx-110 + x, usy-100 + y,"clouds"));
-        } else if(this instanceof AntHill){
+        if(this instanceof AntHill){
             graphics.add(new Circle( usx-100 + x, usy-100 + y,100, Color.GREEN));
             graphics.add(new Circle( usx+(usw/2)-25 + x, usy+(ush/2)-25 + y,25, Color.rgb(61, 35, 13)));
             graphics.add(new Rect(usx+(usw/2)-25 + x, usy+(ush/2) + y,50, 26, Color.GREEN));
@@ -181,6 +178,14 @@ public class Biomes {
                 graphics.add(new Rect(usx+x+10,usy+y+11, 2, 9, Color.BLACK));
             } else if (this.content.equals("Human, stay away from them...")){
 
+            }
+        }
+        //for the clouds when a place isn't discovered yet.
+        if(!this.found) {
+            if(this.isAdjacent()){
+                graphics.add(new Images(usx - 110 + x, usy - 100 + y, "clouds_transparent"));
+            } else {
+                graphics.add(new Images(usx - 110 + x, usy - 100 + y, "clouds"));
             }
         }
         //printing the numbers, but not for the nest, which will handle it by itself, because otherwise it doesn't print right...
