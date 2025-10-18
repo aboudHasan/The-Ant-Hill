@@ -377,4 +377,18 @@ public class Biomes {
     public void subtractAmount(int num) {
         amount -= num;
     }
+    public int getThisNumber(){
+        return this.thisNumber;
+    }
+
+    //location
+    public double[] location(){
+        double[] location = new double[4];
+        location[0] = this.x - 100;
+        location[1] = this.x + 100;
+        location[2] = this.y - 100;
+        location[3] = this.y + 100;
+        return location;
+    }
+
 }

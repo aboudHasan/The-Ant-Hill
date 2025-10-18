@@ -109,6 +109,7 @@ public class AntGameView extends Application {
 
     /// start new game method, for when you are starting a brand-new game.
     public void startNewGame(ActionEvent e){
+        confName.setDisable(true);
         nest = new Nest(name.getText());
         //starter buildings
         nest.addBuilding(new ThroneRoom(usx+550,usy+350));
@@ -831,6 +832,21 @@ public class AntGameView extends Application {
         }
     }
 
+    /**
+     *  this method allows us to select biome/area tiles by clicking them
+     * @param me (mouseEvent)
+     */
+    public void selecting(MouseEvent me){
+        if (confName.isDisabled()){
+        int select = map.selected(me.getX(),me.getY());
+        if (select != -1) {
+            mapSelect.getValueFactory().setValue(select);
+            cancelSelectionMethod(null);
+            sending(null);
+        }
+        }
+    }
+
 
 
 
@@ -1042,6 +1058,7 @@ public class AntGameView extends Application {
         createAntButton.setOnAction(this::hatchingLarva);
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, this::mousePressed);
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::mouseMoving);
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, this::selecting);
         buildButton.setOnAction(this::build);
         barracksButton.setOnAction(this::buildABarrack);
         pathsButton.setOnAction(this::buildAPath);

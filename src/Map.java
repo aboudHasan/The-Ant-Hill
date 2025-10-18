@@ -128,6 +128,30 @@ public class Map {
         new RectS(usx+5,usy+5,225,80,Color.BLACK).draw(gc);
     }
 
+    /**
+     *
+     * @param x mouse position
+     * @param y mouse position
+     * @return int, the 'number'/ID/placement within the array of a biome/area/tile.
+     */
+    public int selected(double x, double y){
+        //only searching through the visible biomes on screen
+        for(int i = 0; i < biomes.size(); i++){
+            if (biomes.get(i).getY() >= usy - 200 && biomes.get(i).getX() >= usx - 200) {
+                if (biomes.get(i).getY() <= ush + 200 && biomes.get(i).getX() <= usw + 200) {
+                    double[] location = biomes.get(i).location();
+                    //checking if the biome was tapped
+                    if (x > location[0] && x < location[1]){
+                        if (y > location[2] && y < location[3]){
+                            return biomes.get(i).getThisNumber();
+                        }
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
     public void right(GraphicsContext gc, int num){
         for (int i = 0; i < biomes.size(); i++){
             biome(i).right(num);
