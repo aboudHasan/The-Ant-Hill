@@ -309,12 +309,14 @@ public class Nest {
             graphics.add(new Circle(usx+700,usy+193,30,Color.rgb(61, 35, 13)));
             graphics.add(new Rect(usx+720,usy+193,20,211,Color.rgb(186, 155, 74)));
             graphics.add(new Rect(usx+700,usy+185,60,10,Color.rgb(135, 206, 235)));
-            return graphics;
         } else if (buildings.size() <= 5){
             graphics.add(new Circle(usx+697,usy+186,65,85,Color.rgb(61, 35, 13)));
             graphics.add(new Rect(usx+720,usy+183,20,221,Color.rgb(186, 155, 74)));
             graphics.add(new Rect(usx+700,usy+180,60,10,Color.rgb(135, 206, 235)));
-            return graphics;
+        } else {
+            graphics.add(new Circle(usx+697,usy+186,65,85,Color.rgb(61, 35, 13)));
+            graphics.add(new Rect(usx+720,usy+183,20,221,Color.rgb(186, 155, 74)));
+            graphics.add(new Rect(usx+700,usy+180,60,10,Color.rgb(135, 206, 235)));
         }
         return graphics;
     }
