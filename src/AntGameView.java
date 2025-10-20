@@ -837,13 +837,13 @@ public class AntGameView extends Application {
      */
     public void selecting(MouseEvent me){
         mapSelect.requestFocus();
-        if (confName.isDisabled()){
-        int select = map.selected(me.getX(),me.getY());
-        if (select != -1) {
-            mapSelect.getValueFactory().setValue(select);
-            cancelSelectionMethod(null);
-            sending(null);
-        }
+        if (mapDrawn) {
+            int select = map.selected(me.getX(), me.getY());
+            if (select != -1) {
+                mapSelect.getValueFactory().setValue(select);
+                cancelSelectionMethod(null);
+                sending(null);
+            }
         }
     }
 
