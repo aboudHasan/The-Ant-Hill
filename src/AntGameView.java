@@ -487,12 +487,11 @@ public class AntGameView extends Application {
                 reDraw(); //redraws for when larva graphics are included.
             }
         }
-        updateStats();
         //the next day method also handles whether an egg will hatch.
-        messege2 = "Larva hatched : " + nest.nextDay();;
+        messege2 = "Larva hatched : " + nest.nextDay();
         title = "DAY : " + (nest.getDays()-1) + " ~> " + nest.getDays();
         messege1 = "Total Ants : " + (nest.getAnts().size() - previousAnts);
-
+        updateStats();
         showTextBox();
         new Texts(usx + usw - 40, usy + ush - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc);
     }
