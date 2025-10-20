@@ -837,6 +837,7 @@ public class AntGameView extends Application {
      * @param me (mouseEvent)
      */
     public void selecting(MouseEvent me){
+        mapSelect.requestFocus();
         if (confName.isDisabled()){
         int select = map.selected(me.getX(),me.getY());
         if (select != -1) {
