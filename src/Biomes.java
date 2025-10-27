@@ -15,7 +15,7 @@ public class Biomes {
     private double ush;
     private double x;
     private double y;
-    private boolean found = false;
+    private boolean found = true;
     private boolean adjacent = false;
     private final int thisNumber; // records which number was printed on it
     static int number;// this counts how many biomes there are so far in the list, so that it prints that number onto the current biome ( while its being generated or printed)... just don't touch it.
@@ -76,8 +76,8 @@ public class Biomes {
         this.y = y;
         this.antMultiplier = antMultiplier;
         //selecting what it contains
-        String[] contents = {"mushrooms" /*food*/, "nothing", "nothing", "beetles", "grasshoppers", "grasshoppers" /* aphids eventually */};
-        int selector = rand.nextInt(0,6);
+        String[] contents = {"mushrooms" /*food*/, "nothing", "nothing", "beetles", "grasshoppers", "grasshoppers", "aphids"};
+        int selector = rand.nextInt(0,7);
         this.content = contents[selector];
         //selecting how many or how much it contains
         if (this.content.equals("mushrooms")){
@@ -93,6 +93,8 @@ public class Biomes {
             this.amount = selector;
             this.isBug = true;
             this.strength = 2 * selector;
+        } else if (this.content.equals("aphids")){
+            this.amount =  1; //you can only ever find 1 aphid in a grass patch
         }
 
         //where it is
@@ -109,8 +111,8 @@ public class Biomes {
         this.y = y;
         this.antMultiplier = antMultiplier;
         //selecting what it contains
-        String[] contents = {"nectar"/*food*/, "pollen"/*protein*/,"seeds"/*food and protein*/ /*aphids eventually*/};
-        int selector = rand.nextInt(0,3);
+        String[] contents = {"nectar"/*food*/, "pollen"/*protein*/,"seeds"/*food and protein*/, "aphids"};
+        int selector = rand.nextInt(0,4);
         this.content = contents[selector];
         //selecting how many or how much it contains
         if (this.content.equals("nectar")){
@@ -121,6 +123,9 @@ public class Biomes {
             this.amount = selector;
         } else if(this.content.equals("seeds")) {
             selector = rand.nextInt(1,15);
+            this.amount = selector;
+        } else if(this.content.equals("aphids")) {
+            selector = rand.nextInt(1,4);
             this.amount = selector;
         }
 
@@ -175,6 +180,8 @@ public class Biomes {
                 graphics.add(new Circle(usx + x - 35, usy + y + 35, 10, Color.RED));
                 graphics.add(new Circle(usx + x + 25, usy + y + 40, 10, Color.RED));
                 graphics.add(new Circle(usx + x - 10, usy + y - 10, 10, Color.RED));
+            } else if (this.content.equals("aphids")&& this.amount !=0){
+                graphics.add(new Circle(usx + x -25, usy + y -25, 5, 10, Color.YELLOWGREEN));
             }
         } else if (this instanceof Picnic){
             graphics.add(new Circle( usx+(x)-100, usy+(y)-100,100, Color.GREEN));
@@ -266,6 +273,10 @@ public class Biomes {
                 graphics.add(new Circle(usx+x-25,usy+y-25,5,9,Color.BROWN));
                 graphics.add(new Circle(usx+x+35,usy+y+30,5,9,Color.BROWN));
                 graphics.add(new Circle(usx+x+43,usy+y-47,5,9,Color.BROWN));
+            }else if (this.content.equals("aphids") && this.amount != 0){
+                graphics.add(new Circle(usx+x-25,usy+y-25,5,10,Color.YELLOWGREEN));
+                graphics.add(new Circle(usx+x+35,usy+y+30,5,10,Color.YELLOWGREEN));
+                graphics.add(new Circle(usx+x+43,usy+y-47,5,10,Color.YELLOWGREEN));
             }
         }
         //for the clouds when a place isn't discovered yet.

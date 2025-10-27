@@ -6,6 +6,8 @@ import java.util.ArrayList;
 //this class is for grouping buildings. (using extends)
 public class Building {
     //storage related stats
+    private int aphids = 0;
+    private int maxAphids = 0;
     private int maxAnts = 0;
     private int population = 0; // general population including all living things in Nest
     private int maxFood = 0;
@@ -181,6 +183,8 @@ public class Building {
     public PathSpot getPathSpot(){
         return this.pathSpot;
     }
+    public int getMaxAphids(){return this.maxAphids;}
+    public int getAphids(){return this.aphids;}
 
 
     //setters/adders/subtractors
@@ -227,12 +231,14 @@ public class Building {
     public void addFood(int x){
         this.food += x;
     }
+    public void addAphids(int x){this.aphids += x;}
     public void minusFood(double num){
         this.food -= (int) num;
     }
     public void minusProtein(double num){
         this.protein -= (int) num;
     }
+    public void minusAphids(int num){this.aphids -= (int) num;}
 
 
 
