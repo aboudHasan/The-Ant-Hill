@@ -65,6 +65,7 @@ public class AntGameView extends Application {
     private Button layEggButton;
     private Button createAntButton;
     private Text population;
+    private Text aphids;
     private Text food;
     private Text protein;
     private Text ants;
@@ -132,8 +133,8 @@ public class AntGameView extends Application {
         background.add(new Circle(-20,-20,50,Color.YELLOW));
         background.add(new Rect(usx+5,usy+5,225,80,Color.WHITE));
         background.add(new RectS(usx+5,usy+5,225,80,Color.BLACK));
-        background.add(new Texts(usw-usx - 95,usy + 264,"             5 Protein",Color.WHITE)); //don't touch this.
-        background.add(new Texts(usw-usx - 147,usy + 324,"1 Larva, 5 Protein, 5 Food",Color.WHITE));
+        background.add(new Texts(usw-usx - 95,usy + 264,"             5 Protein",Color.WHITE)); //don't touch this. (it's for egg laying)
+        background.add(new Texts(usw-usx - 147,usy + 324,"1 Larva, 5 Protein, 5 Food",Color.WHITE)); // hatching larva
                 //drawing background first
         reDraw();
         new Texts(usx + usw - 40, usy + ush - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc); // this changes all everyday, so we don't add it to the background.
@@ -143,8 +144,9 @@ public class AntGameView extends Application {
         buildButton.relocate(usx+1310,usy+10);
         mapButton.relocate(usx+1258,usy+10);
         nextDay.relocate(usx+1365,usy+10);
+        aphids.relocate(usx + 15, usy+30);
         population.relocate(usx+15,usy+10);
-        food.relocate(usx+15,usy+40);
+        food.relocate(usx+15,usy+45);
         protein.relocate(usx+15,usy+60);
         ants.relocate(usx+125,usy+30);
         larvas.relocate(usx+125,usy+45);
@@ -498,6 +500,7 @@ public class AntGameView extends Application {
     /// this updates all the states being displayed on the screen, to match the nests stats.
     public void updateStats(){
         population.setText("population: "+(nest.getPopulation()));
+        aphids.setText("aphids: " + nest.getAphids() + " / "+nest.getMaxAphids());
         food.setText("food: "+nest.getFood()+" / "+nest.getMaxFood());
         protein.setText("protein: "+nest.getProtein()+" / "+nest.getMaxProtein());
         ants.setText("ants: "+(nest.getAnts().size())+" / "+nest.getMaxAnts());
@@ -529,8 +532,6 @@ public class AntGameView extends Application {
             }
             map.draw(gc);
             hideButtons();
-            //mapSelectButton.relocate(775,10);
-            //mapSelect.relocate(600,10);
             mapDrawn = true;
             mapButton.setText("Nest");
         } else { //closing map
@@ -596,7 +597,11 @@ public class AntGameView extends Application {
                 mapSelectButton.relocate(775,10);
                 mapSelect.relocate(600,10);
                 new Texts((usx) + 244, usy + 39, map.biome(num).getContent() + " :  " + map.biome(num).getAmount()).draw(gc);
-                new Texts((usx) + 244, usy + 54, "items per ant :  " + map.biome(num).getAntMultiplier()).draw(gc);
+                if (map.biome(num).getContent().equals("aphids")){
+                    new Texts((usx) + 244, usy + 54, "items per ant :  " + 1).draw(gc);
+                } else {
+                    new Texts((usx) + 244, usy + 54, "items per ant :  " + map.biome(num).getAntMultiplier()).draw(gc);
+                }
                 // extra info for when a bug is on the space
                 if (map.biome(num).getIsBug()){
                     new Texts((usx) + 244, usy + 69, "Total Bug Strength :  " + map.biome(num).getStrength()).draw(gc);
@@ -641,8 +646,8 @@ public class AntGameView extends Application {
                 //end of un-found area interaction
 
 
-            } else if (nest.AddAntsInUse((Integer) mapSelect.getValue())){
-                if (map.biome(num).getAmount() == 0){ //for when it is an empty space or has been used up
+            } else if (nest.AddAntsInUse((Integer) mapSelect.getValue())) {
+                if (map.biome(num).getAmount() == 0) { //for when it is an empty space or has been used up
                     nest.minusAntsInUse((Integer) mapSelect.getValue());
                     title = "Empty Space";
                     messege1 = "Don't send ants here!";
@@ -669,84 +674,105 @@ public class AntGameView extends Application {
                     //end of bug interaction
 
                     //this statement is for seeds
-                }else if ( map.biome(num).getContent().equals("seeds")) {
-                        for (int i = 0; i <= map.biome(num).getAntMultiplier(); i++) {
-                            if (map.biome(num).getAmount() >= ((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) {
-                                map.biome(num).subtractAmount((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
-                                int foodLeft = nest.addFood((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
-                                int proteinLeft = nest.addProtein((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
-                                title = "Ants Sent :  " + mapSelect.getValue();
-                                messege1 = "You collected " + ((((int) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) - foodLeft) + " food";
-                                messege2 = "You collected " + ((((int) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) - proteinLeft) + " protein";
-                                if (foodLeft > 0 && proteinLeft > 0){
-                                    if (foodLeft < proteinLeft) {
-                                        map.biome(num).addAmount(foodLeft);
-                                        messege3 = foodLeft + " seeds left behind. (storage is full)";
-                                    } else {
-                                        map.biome(num).addAmount(proteinLeft);
-                                        messege3 = proteinLeft + " seeds left behind. (storage is full)";
-                                    }
-
-                                }
-                                complete = true;
-                                break;
-                            }
-                        }
-                        if (!complete) {
-                            nest.minusAntsInUse((Integer) mapSelect.getValue());
-                            title = "To Many Ants!";
-                            messege1 = "You tried sending more ants then";
-                            messege2 = "needed";
-                        }
-                        //end of seeds interactions
-
-                        //this next statement is for food
-                } else if (map.biome(num).getContent().equals("mushrooms") || map.biome(num).getContent().equals("crumbs") || map.biome(num).getContent().equals("nectar")) {
-                        for (int i = 0; i <= map.biome(num).getAntMultiplier(); i++) {
-                            if (map.biome(num).getAmount() >= ((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) {
-                                map.biome(num).subtractAmount((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
-                                int foodLeft = nest.addFood((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
-                                title = "Ants Sent :  " + mapSelect.getValue();
-                                messege1 = "You collected " + ((((int) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) - foodLeft) + " food";
-                                if (foodLeft > 0){
+                } else if (map.biome(num).getContent().equals("seeds")) {
+                    for (int i = 0; i <= map.biome(num).getAntMultiplier(); i++) {
+                        if (map.biome(num).getAmount() >= ((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) {
+                            map.biome(num).subtractAmount((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
+                            int foodLeft = nest.addFood((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
+                            int proteinLeft = nest.addProtein((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
+                            title = "Ants Sent :  " + mapSelect.getValue();
+                            messege1 = "You collected " + ((((int) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) - foodLeft) + " food";
+                            messege2 = "You collected " + ((((int) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) - proteinLeft) + " protein";
+                            if (foodLeft > 0 && proteinLeft > 0) {
+                                if (foodLeft < proteinLeft) {
                                     map.biome(num).addAmount(foodLeft);
-                                    messege2 = foodLeft + " food left behind. (storage is full)";
-                                }
-                                complete = true;
-                                break;
-                            }
-                        }
-                        if (!complete) {
-                            nest.minusAntsInUse((Integer) mapSelect.getValue());
-                            title = "To Many Ants!";
-                            messege1 = "You tried sending more ants then";
-                            messege2 = "needed";
-                        }
-                        //end of food interactions
-
-                        //start of protein interaction
-                } else if (map.biome(num).getContent().equals("protein") || map.biome(num).getContent().equals("pollen")) {
-                        for (int i = 0; i <= map.biome(num).getAntMultiplier(); i++) {
-                            if (map.biome(num).getAmount() >= ((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) {
-                                map.biome(num).subtractAmount((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
-                                int proteinLeft = nest.addProtein((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
-                                title = "Ants Sent :  " + mapSelect.getValue();
-                                messege1 = "You collected " + ((((int) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) - proteinLeft) + " protein";
-                                if (proteinLeft > 0){
+                                    messege3 = foodLeft + " seeds left behind. (storage is full)";
+                                } else {
                                     map.biome(num).addAmount(proteinLeft);
-                                    messege2 = proteinLeft + " protein left behind. (storage is full)";
+                                    messege3 = proteinLeft + " seeds left behind. (storage is full)";
                                 }
-                                complete = true;
-                                break;
+
                             }
+                            complete = true;
+                            break;
                         }
-                        if (!complete) {
-                            nest.minusAntsInUse((Integer) mapSelect.getValue());
-                            title = "To Many Ants!";
-                            messege1 = "You tried sending more ants then";
-                            messege2 = "needed";
+                    }
+                    if (!complete) {
+                        nest.minusAntsInUse((Integer) mapSelect.getValue());
+                        title = "To Many Ants!";
+                        messege1 = "You tried sending more ants then";
+                        messege2 = "needed";
+                    }
+                    //end of seeds interactions
+
+                    //this next statement is for food
+                } else if (map.biome(num).getContent().equals("mushrooms") || map.biome(num).getContent().equals("crumbs") || map.biome(num).getContent().equals("nectar")) {
+                    for (int i = 0; i <= map.biome(num).getAntMultiplier(); i++) {
+                        if (map.biome(num).getAmount() >= ((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) {
+                            map.biome(num).subtractAmount((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
+                            int foodLeft = nest.addFood((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
+                            title = "Ants Sent :  " + mapSelect.getValue();
+                            messege1 = "You collected " + ((((int) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) - foodLeft) + " food";
+                            if (foodLeft > 0) {
+                                map.biome(num).addAmount(foodLeft);
+                                messege2 = foodLeft + " food left behind. (storage is full)";
+                            }
+                            complete = true;
+                            break;
                         }
-                        //end of protein interaction
+                    }
+                    if (!complete) {
+                        nest.minusAntsInUse((Integer) mapSelect.getValue());
+                        title = "To Many Ants!";
+                        messege1 = "You tried sending more ants then";
+                        messege2 = "needed";
+                    }
+                    //end of food interactions
+
+                    //start of protein interaction
+                } else if (map.biome(num).getContent().equals("protein") || map.biome(num).getContent().equals("pollen")) {
+                    for (int i = 0; i <= map.biome(num).getAntMultiplier(); i++) {
+                        if (map.biome(num).getAmount() >= ((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) {
+                            map.biome(num).subtractAmount((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
+                            int proteinLeft = nest.addProtein((Integer) mapSelect.getValue() * map.biome(num).getAntMultiplier() - i);
+                            title = "Ants Sent :  " + mapSelect.getValue();
+                            messege1 = "You collected " + ((((int) mapSelect.getValue() * map.biome(num).getAntMultiplier()) - i) - proteinLeft) + " protein";
+                            if (proteinLeft > 0) {
+                                map.biome(num).addAmount(proteinLeft);
+                                messege2 = proteinLeft + " protein left behind. (storage is full)";
+                            }
+                            complete = true;
+                            break;
+                        }
+                    }
+                    if (!complete) {
+                        nest.minusAntsInUse((Integer) mapSelect.getValue());
+                        title = "To Many Ants!";
+                        messege1 = "You tried sending more ants then";
+                        messege2 = "needed";
+                    }
+                    //end of protein interaction
+
+                    //start of aphid interaction
+                } else if (map.biome(num).getContent().equals("aphids")) {
+                    if (map.biome(num).getAmount() >= ((Integer) mapSelect.getValue())) {
+                    map.biome(num).subtractAmount((Integer) mapSelect.getValue());
+                    int aphidsLeft = nest.addAphids((Integer) mapSelect.getValue());
+                    title = "Ants Sent :  " + mapSelect.getValue();
+                    messege1 = "You collected " + ((int) mapSelect.getValue() - aphidsLeft) + " protein";
+                    if (aphidsLeft > 0) {
+                        map.biome(num).addAmount(aphidsLeft);
+                        messege2 = aphidsLeft + " protein left behind. (storage is full)";
+                    }
+                    complete = true;
+                }
+                if (!complete) {
+                    nest.minusAntsInUse((Integer) mapSelect.getValue());
+                    title = "To Many Ants!";
+                    messege1 = "You tried sending more ants then";
+                    messege2 = "needed";
+                }
+                    //end of aphids interaction
                 } else { // end of interactions, catching if a 'bug' occurs and returning your ants (not using them up)
                         nest.minusAntsInUse((Integer) mapSelect.getValue());
                         title = "Error";
@@ -762,6 +788,7 @@ public class AntGameView extends Application {
             mapSelectButton.relocate(-100,-100);
             cancelSelection.relocate(-100,-100);
             selected = false;
+            aphids.setText("aphids: " + nest.getAphids()+" / "+nest.getMaxAphids());
             food.setText("food: " + nest.getFood() + " / " + nest.getMaxFood());
             protein.setText("protein: " + nest.getProtein() + " / " + nest.getMaxProtein());
             antsInUse.setText("ants-in-use: " + (nest.getAntsInUse()) + " / " + (nest.getAnts().size() - 1));
@@ -994,6 +1021,7 @@ public class AntGameView extends Application {
         barracksButton = new Button("Barrack");
         pathsButton = new Button("Path");
         population = new Text(-100,-100,"");
+        aphids = new Text (-100,-100,"");
         food = new Text(-100,-100,"");
         protein = new Text(-100,-100,"");
         larvas= new Text();
@@ -1007,7 +1035,7 @@ public class AntGameView extends Application {
         requirements3 = new Text();
 
         // 3. Add components to the root
-        root.getChildren().addAll(canvas,food,population,protein,buildButton,nextDay,name,confName,ants,eggs,larvas,
+        root.getChildren().addAll(canvas,aphids,food,population,protein,buildButton,nextDay,name,confName,ants,eggs,larvas,
                 barracksButton,build1.getBuildButton(), build2.getBuildButton(), build3.getBuildButton(),mapButton,
                 build4.getBuildButton(), pathsButton, build5.getBuildButton(), build6.getBuildButton(),
                 build7.getBuildButton(), requirements1, antsInUse, foodStorageButton, requirements2, mapSelect,

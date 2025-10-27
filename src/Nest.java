@@ -13,6 +13,8 @@ public class Nest {
     //basic stats
     private int antsInUse = 0; //increase this, but it cant get higher than you amount of ants (ant.size())
     private int population; //stores the population of everything (ants, eggs, and larva)
+    private int maxAphids = 0;
+    private int aphids = 0;
     private int food; //carbohydrates for feeding ants (mostly)
     private int protein; //protein for creating new ants (mostly)
     private int maxFood;
@@ -47,16 +49,21 @@ public class Nest {
             this.population += buildings.get(i).getPopulation();
         }
     }
+
     public void calcFood(){
+        this.aphids = 0;
         this.food = 0;
         this.protein = 0;
         this.maxFood = 0;
         this.maxProtein = 0;
+        this.maxAphids = 0;
         for (int i = 0; i < buildings.size(); i++) {
+            this.aphids += buildings.get(i).getAphids();
             this.food += buildings.get(i).getFood();
             this.protein += buildings.get(i).getProtein();
             this.maxProtein += buildings.get(i).getMaxProtein();
             this.maxFood += buildings.get(i).getMaxFood();
+            this.maxAphids += buildings.get(i).getMaxAphids();
         }
     }
     public void calcMaxAnts(){
@@ -121,6 +128,12 @@ public class Nest {
     public int getDays() {
         return days;
     }
+    public int getAphids() {
+        return this.aphids;
+    }
+    public int getMaxAphids(){
+        return this.maxAphids;
+    }
 
     // setters/adders/next day function? why did I put that there.
     public int nextDay(){ //next day also carries out the 'add larva' function that would have been created, but is instead integrated here.
@@ -167,6 +180,27 @@ public class Nest {
     }
     public void minusAntsInUse(int num){
         this.antsInUse -= num;
+    }
+    public boolean minusAphids(int num){
+        if (aphids - num < 0 ){
+            return false;
+        } else {
+            int numLeft = num;
+            for (int i = 0; i < buildings.size(); i++) {
+                if (numLeft != 0) {
+                    if (buildings.get(i).getAphids() >= 1) {
+                        if (buildings.get(i).getAphids() >= numLeft) {
+                            buildings.get(i).minusAphids(numLeft);
+                        } else {
+                            buildings.get(i).minusAphids(buildings.get(i).getAphids());
+                            numLeft -= buildings.get(i).getAphids();
+                        }
+                    }
+                }
+            }
+            calcFood();
+            return true;
+        }
     }
     public boolean minusFood(int num){
         if (food - num < 0 ){
@@ -279,6 +313,20 @@ public class Nest {
                 numLeft = 0;
             } else {
                 buildings.get(i).addFood(max);
+                numLeft -= max;
+            }
+        }
+        return numLeft;
+    }
+    public int addAphids(int num){
+        int numLeft = num;
+        for (int i = 0; i < buildings.size(); i++) {
+            int max = buildings.get(i).getMaxAphids() - buildings.get(i).getAphids(); //max amount more that a building can take
+            if (numLeft <= max){
+                buildings.get(i).addAphids(numLeft);
+                numLeft = 0;
+            } else {
+                buildings.get(i).addAphids(max);
                 numLeft -= max;
             }
         }
