@@ -36,7 +36,7 @@ public class AntGameView extends Application {
     private final double usy = (screenY - ush)/2;//the amount of space between the black and usable background (y)
 
     //variables for drawings and images and stuff like that.
-    private ArrayList<Shape> background = new ArrayList<Shape>();
+    private ArrayList<Shape> background = new ArrayList<>();
 
     //main variables that NEED to be saved for sure (the main objects)
     private Nest nest;
@@ -483,7 +483,7 @@ public class AntGameView extends Application {
                 remainingFood = nest.getFood();
                 nest.minusFood(nest.getFood()); // removes all the food to feed what we could.
                 int death = nest.getLarva().size() - remainingFood; //calculating total deaths
-                nest.minusLarva(death); // actually getting rid of the larva handled elegantly by nest class)
+                nest.minusLarva(death); // actually getting rid of the larva handled elegantly by nest class
                 reDraw(); //redraws for when larva graphics are included.
             }
         }
@@ -529,8 +529,8 @@ public class AntGameView extends Application {
             }
             map.draw(gc);
             hideButtons();
-            mapSelectButton.relocate(775,10);
-            mapSelect.relocate(600,10);
+            //mapSelectButton.relocate(775,10);
+            //mapSelect.relocate(600,10);
             mapDrawn = true;
             mapButton.setText("Nest");
         } else { //closing map
@@ -593,6 +593,8 @@ public class AntGameView extends Application {
                 }
                 selected = true;
             } else {//other spots typical display for their content.
+                mapSelectButton.relocate(775,10);
+                mapSelect.relocate(600,10);
                 new Texts((usx) + 244, usy + 39, map.biome(num).getContent() + " :  " + map.biome(num).getAmount()).draw(gc);
                 new Texts((usx) + 244, usy + 54, "items per ant :  " + map.biome(num).getAntMultiplier()).draw(gc);
                 // extra info for when a bug is on the space
@@ -625,6 +627,7 @@ public class AntGameView extends Application {
             title = "";
             messege1 = "";
             messege2 = "";
+            messege3 = "";
             if (!map.biome(num).getFound()) { //for when the interaction is with an un-found/undiscovered biome/area
                 if (nest.AddAntsInUse(exploreNum)) { //for when it is adjacent.
                     title = "Area Explored";
@@ -635,9 +638,6 @@ public class AntGameView extends Application {
                     title = "Cannot Send";
                     messege1 = "You don't have enough unused ants";
                 }
-                //ensuring returning buttons to normal
-                mapSelectButton.relocate(775,10);
-                mapSelect.relocate(600,10);
                 //end of un-found area interaction
 
 
@@ -758,8 +758,9 @@ public class AntGameView extends Application {
             }
 
             //end of sending function (drawing an updated version of everything)
+            mapSelect.relocate(-100, -100);
+            mapSelectButton.relocate(-100,-100);
             cancelSelection.relocate(-100,-100);
-            mapSelectButton.setText("Select");
             selected = false;
             food.setText("food: " + nest.getFood() + " / " + nest.getMaxFood());
             protein.setText("protein: " + nest.getProtein() + " / " + nest.getMaxProtein());
@@ -779,6 +780,7 @@ public class AntGameView extends Application {
     public void mousePressed(MouseEvent me){
         mousex = me.getX();
         mousey = me.getY();
+        cancelSelectionMethod(null);
     }
 
     /// cancels the selecting that you've made on the map.
@@ -788,11 +790,9 @@ public class AntGameView extends Application {
         if (mapDrawn) {
             map.draw(gc);
         }
-        if(mapDrawn) {
-            //ensuring returning buttons to normal
-            mapSelectButton.relocate(775,10);
-            mapSelect.relocate(600,10);
-        }
+        //returning buttons to normal
+        mapSelectButton.relocate(-100,-100);
+        mapSelect.relocate(-100,-100);
         cancelSelection.relocate(-100,-100);
     }
 

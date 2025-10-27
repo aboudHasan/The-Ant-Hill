@@ -129,14 +129,14 @@ public class Map {
     }
 
     /**
-     *
+     * checks to see if a biome has been clicked on in the map.
      * @param x mouse position
      * @param y mouse position
      * @return int, the 'number'/ID/placement within the array of a biome/area/tile.
      */
     public int selected(double x, double y){
         //only searching through the visible biomes on screen
-        for(int i = 0; i < biomes.size(); i++){
+        for (int i = 0; i < biomes.size(); i++){
             if (biomes.get(i).getY() >= usy - 200 && biomes.get(i).getX() >= usx - 200) {
                 if (biomes.get(i).getY() <= ush + 200 && biomes.get(i).getX() <= usw + 200) {
                     double[] location = biomes.get(i).location();
