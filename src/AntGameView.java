@@ -318,7 +318,7 @@ public class AntGameView extends Application {
         doneBuilding();
         food.setText("food: " + nest.getFood() + " / " + nest.getMaxFood());
         antsInUse.setText("ants-in-use: " + (nest.getAntsInUse()) + " / " + (nest.getAnts().size() - 1));
-        ants.setText("ants: " + (nest.getAnts().size()) + " / " + nest.getMaxAnts());
+        ants.setText("ants: " + (nest.getAnts().size()-1) + " / " + (nest.getMaxAnts()-1));
     }
     /// the method for building a FoodStorage
     public void buildAFoodStorage(ActionEvent e){
@@ -503,7 +503,7 @@ public class AntGameView extends Application {
         aphids.setText("aphids: " + nest.getAphids() + " / "+nest.getMaxAphids());
         food.setText("food: "+nest.getFood()+" / "+nest.getMaxFood());
         protein.setText("protein: "+nest.getProtein()+" / "+nest.getMaxProtein());
-        ants.setText("ants: "+(nest.getAnts().size())+" / "+nest.getMaxAnts());
+        ants.setText("ants: "+(nest.getAnts().size()-1)+" / "+(nest.getMaxAnts()-1));
         larvas.setText("larva: "+(nest.getLarva().size())+" / "+nest.getMaxLarva());
         eggs.setText("eggs: "+(nest.getEggs().size())+" / "+nest.getMaxEggs());
         antsInUse.setText("ants-in-use: "+(nest.getAntsInUse())+" / "+(nest.getAnts().size()-1));
@@ -646,7 +646,7 @@ public class AntGameView extends Application {
                 //end of un-found area interaction
 
 
-            } else if (nest.AddAntsInUse((Integer) mapSelect.getValue())) {
+            } else if (mapSelect.getValue() != null && nest.AddAntsInUse((Integer) mapSelect.getValue())) {
                 if (map.biome(num).getAmount() == 0) { //for when it is an empty space or has been used up
                     nest.minusAntsInUse((Integer) mapSelect.getValue());
                     title = "Empty Space";
@@ -792,7 +792,7 @@ public class AntGameView extends Application {
             food.setText("food: " + nest.getFood() + " / " + nest.getMaxFood());
             protein.setText("protein: " + nest.getProtein() + " / " + nest.getMaxProtein());
             antsInUse.setText("ants-in-use: " + (nest.getAntsInUse()) + " / " + (nest.getAnts().size() - 1));
-            ants.setText("ants: "+(nest.getAnts().size())+" / "+nest.getMaxAnts());
+            ants.setText("ants: "+(nest.getAnts().size()-1)+" / "+(nest.getMaxAnts()-1));
             population.setText("population: "+(nest.getPopulation()));
             map.draw(gc);
             showTextBox();

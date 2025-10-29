@@ -223,7 +223,7 @@ public class Building {
         calcPopulation();
     }
     public void calcPopulation(){
-        this.population = ants.size() + eggs.size() + larva.size();
+        this.population = ants.size() + larva.size();
     }
     public void addProtein(int x){
         this.protein += x;

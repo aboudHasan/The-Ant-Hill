@@ -12,7 +12,7 @@ public class Nest {
     private ArrayList<Larva> larva = new ArrayList<Larva>();
     //basic stats
     private int antsInUse = 0; //increase this, but it cant get higher than you amount of ants (ant.size())
-    private int population; //stores the population of everything (ants, eggs, and larva)
+    private int population; //stores the population of everything that eats food(ants, and larva)
     private int maxAphids = 0;
     private int aphids = 0;
     private int food; //carbohydrates for feeding ants (mostly)
