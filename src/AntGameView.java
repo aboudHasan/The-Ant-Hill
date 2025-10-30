@@ -87,6 +87,8 @@ public class AntGameView extends Application {
     private Text requirements2; //for just food storage so far
     private Button proteinStorageButton;
     private Text requirements3; //just for protein storage so far
+    private Button aphidFarmButton;
+    private Text requirements4; //just for protein storage so far
 
 
 
@@ -121,6 +123,12 @@ public class AntGameView extends Application {
         nest.getBuildings().get(1).addAnts(new Ant());
         nest.getBuildings().get(1).addAnts(new Ant());
         nest.getBuildings().get(1).addAnts(new Ant());
+        nest.getBuildings().get(1).addAnts(new Ant());
+        nest.getBuildings().get(1).addAnts(new Ant());
+        nest.getBuildings().get(1).addAnts(new Ant());
+        nest.getBuildings().get(1).addAnts(new Ant());
+        nest.getBuildings().get(1).addAnts(new Ant());
+        nest.addProtein(10);
         nest.calcAll();
         //the background (don't touch unless your improving graphics)
         background.add(new Rect(usx,usy,usw,ush,Color.rgb(135, 206, 235)));
@@ -257,6 +265,8 @@ public class AntGameView extends Application {
         requirements2.setText("5 Ants not working, 5 Food, 5 Protein");
         proteinStorageButton.relocate(usx+10,usy + 340);
         requirements3.setText("5 Ants not working, 5 Food, 5 Protein");
+        aphidFarmButton.relocate(usx+10,usy+400);
+        requirements4.setText("10 Ants not working, 10 protein");
         pathsButton.relocate(-100,-100);
         flip = building.getFlip();
         spot = building;
@@ -270,8 +280,10 @@ public class AntGameView extends Application {
         requirements1.setText("5 Ants not working, 5 Food");
         foodStorageButton.relocate(-100,-100);
         requirements2.setText("");
-        proteinStorageButton.relocate(-100,usy -100);
+        proteinStorageButton.relocate(-100, -100);
         requirements3.setText("");
+        aphidFarmButton.relocate(-100,-100);
+        requirements4.setText("");
         pathSpot = building;
     }
 
@@ -317,7 +329,7 @@ public class AntGameView extends Application {
         }
         doneBuilding();
         food.setText("food: " + nest.getFood() + " / " + nest.getMaxFood());
-        antsInUse.setText("ants-in-use: " + (nest.getAntsInUse()) + " / " + (nest.getAnts().size() - 1));
+        antsInUse.setText("available ants: " + ((nest.getAnts().size() - 1 ) - (nest.getAntsInUse())) + " / " + (nest.getAnts().size() - 1));
         ants.setText("ants: " + (nest.getAnts().size()-1) + " / " + (nest.getMaxAnts()-1));
     }
     /// the method for building a FoodStorage
@@ -347,7 +359,7 @@ public class AntGameView extends Application {
         doneBuilding();
         food.setText("food: " + nest.getFood() + " / " + nest.getMaxFood());
         protein.setText("protein: " + nest.getProtein() + " / " + nest.getMaxProtein());
-        antsInUse.setText("ants-in-use: " + (nest.getAntsInUse()) + " / " + (nest.getAnts().size() - 1));
+        antsInUse.setText("available ants: " + ((nest.getAnts().size() - 1 ) - (nest.getAntsInUse())) + " / " + (nest.getAnts().size() - 1));
     }
     /// the method for building a protein storage.
     public void buildAProteinStorage(ActionEvent e){
@@ -376,7 +388,29 @@ public class AntGameView extends Application {
         doneBuilding();
         food.setText("food: " + nest.getFood() + " / " + nest.getMaxFood());
         protein.setText("protein: " + nest.getProtein() + " / " + nest.getMaxProtein());
-        antsInUse.setText("ants-in-use: " + (nest.getAntsInUse()) + " / " + (nest.getAnts().size() - 1));
+        antsInUse.setText("available ants: " + ((nest.getAnts().size() - 1 ) - (nest.getAntsInUse())) + " / " + (nest.getAnts().size() - 1));
+    }
+    /// the method for building an aphid farm.
+    public void buildAAphidFarm(ActionEvent e){
+        if (nest.AddAntsInUse(10)) {
+            if (nest.minusProtein(10)) {
+                nest.addBuilding(new AphidFarm(buildingX, buildingY, flip, spot));
+                title = "Building Completed";
+                messege1 = "You built an aphid farm";
+                messege2 = "+5 aphid storage space";
+            } else {
+                nest.minusAntsInUse(10);
+                title = "Insufficient Resources";
+                messege1 = "Not enough protein";
+            }
+        } else {
+            title = "Not Enough Ants";
+            messege1 = "You don't have enough unused ants";
+        }
+        doneBuilding();
+        aphids.setText("aphids: " + nest.getAphids() + " / "+nest.getMaxAphids());
+        protein.setText("protein: " + nest.getProtein() + " / " + nest.getMaxProtein());
+        antsInUse.setText("available ants: " + ((nest.getAnts().size() - 1 ) - (nest.getAntsInUse())) + " / " + (nest.getAnts().size() - 1));
     }
     /// the method for building a Path
     public void buildAPath(ActionEvent e){
@@ -397,7 +431,7 @@ public class AntGameView extends Application {
         }
         doneBuilding();
         food.setText("food: " + nest.getFood() + " / " + nest.getMaxFood());
-        antsInUse.setText("ants-in-use: " + (nest.getAntsInUse()) + " / " + (nest.getAnts().size() - 1));
+        antsInUse.setText("available ants: " + ((nest.getAnts().size() - 1 ) - (nest.getAntsInUse())) + " / " + (nest.getAnts().size() - 1));
     }
     ///universal shut down for building
     public void doneBuilding(){
@@ -414,6 +448,8 @@ public class AntGameView extends Application {
         requirements2.setText("");
         proteinStorageButton.relocate(-100,usy -100);
         requirements3.setText("");
+        aphidFarmButton.relocate(-100,-100);
+        requirements4.setText("");
         build2.relocate();
         build1.relocate();
         build3.relocate();
@@ -506,7 +542,7 @@ public class AntGameView extends Application {
         ants.setText("ants: "+(nest.getAnts().size()-1)+" / "+(nest.getMaxAnts()-1));
         larvas.setText("larva: "+(nest.getLarva().size())+" / "+nest.getMaxLarva());
         eggs.setText("eggs: "+(nest.getEggs().size())+" / "+nest.getMaxEggs());
-        antsInUse.setText("ants-in-use: "+(nest.getAntsInUse())+" / "+(nest.getAnts().size()-1));
+        antsInUse.setText("available ants: " + ((nest.getAnts().size() - 1 ) - (nest.getAntsInUse())) + " / " + (nest.getAnts().size() - 1));
     }
 
 
@@ -594,8 +630,8 @@ public class AntGameView extends Application {
                 }
                 selected = true;
             } else {//other spots typical display for their content.
-                mapSelectButton.relocate(775,10);
-                mapSelect.relocate(600,10);
+                mapSelectButton.relocate(usx + 775,usy + 10);
+                mapSelect.relocate(usx + 600, usy + 10);
                 new Texts((usx) + 244, usy + 39, map.biome(num).getContent() + " :  " + map.biome(num).getAmount()).draw(gc);
                 if (map.biome(num).getContent().equals("aphids")){
                     new Texts((usx) + 244, usy + 54, "items per ant :  " + 1).draw(gc);
@@ -759,7 +795,7 @@ public class AntGameView extends Application {
                     map.biome(num).subtractAmount((Integer) mapSelect.getValue());
                     int aphidsLeft = nest.addAphids((Integer) mapSelect.getValue());
                     title = "Ants Sent :  " + mapSelect.getValue();
-                    messege1 = "You collected " + ((int) mapSelect.getValue() - aphidsLeft) + " protein";
+                    messege1 = "You collected " + ((int) mapSelect.getValue() - aphidsLeft) + " aphids";
                     if (aphidsLeft > 0) {
                         map.biome(num).addAmount(aphidsLeft);
                         messege2 = aphidsLeft + " protein left behind. (storage is full)";
@@ -791,7 +827,7 @@ public class AntGameView extends Application {
             aphids.setText("aphids: " + nest.getAphids()+" / "+nest.getMaxAphids());
             food.setText("food: " + nest.getFood() + " / " + nest.getMaxFood());
             protein.setText("protein: " + nest.getProtein() + " / " + nest.getMaxProtein());
-            antsInUse.setText("ants-in-use: " + (nest.getAntsInUse()) + " / " + (nest.getAnts().size() - 1));
+            antsInUse.setText("available ants: " + ((nest.getAnts().size() - 1 ) - (nest.getAntsInUse())) + " / " + (nest.getAnts().size() - 1));
             ants.setText("ants: "+(nest.getAnts().size()-1)+" / "+(nest.getMaxAnts()-1));
             population.setText("population: "+(nest.getPopulation()));
             map.draw(gc);
@@ -1033,13 +1069,16 @@ public class AntGameView extends Application {
         requirements2 = new Text();
         proteinStorageButton = new Button("protein storage");
         requirements3 = new Text();
+        aphidFarmButton = new Button("aphid farm");
+        requirements4 = new Text();
 
         // 3. Add components to the root
         root.getChildren().addAll(canvas,aphids,food,population,protein,buildButton,nextDay,name,confName,ants,eggs,larvas,
                 barracksButton,build1.getBuildButton(), build2.getBuildButton(), build3.getBuildButton(),mapButton,
                 build4.getBuildButton(), pathsButton, build5.getBuildButton(), build6.getBuildButton(),
                 build7.getBuildButton(), requirements1, antsInUse, foodStorageButton, requirements2, mapSelect,
-                mapSelectButton, cancelSelection,createAntButton,layEggButton,requirements3,proteinStorageButton);
+                mapSelectButton, cancelSelection,createAntButton,layEggButton,requirements3,proteinStorageButton,
+                aphidFarmButton, requirements4);
 
         // 4. Configure the components (this is now done within the startGameMethod
         nextDay.relocate(-100,-100);
@@ -1065,6 +1104,9 @@ public class AntGameView extends Application {
         proteinStorageButton.relocate(-100,-100);
         requirements3.relocate(usx+10,usy+370);
         requirements3.setFill(Color.WHITE);
+        aphidFarmButton.relocate(-100,-100);
+        requirements4.relocate(usx+10, usy+430);
+        requirements4.setFill(Color.WHITE);
 
         /*build spots*/
         build2.relocate();
@@ -1092,6 +1134,7 @@ public class AntGameView extends Application {
         pathsButton.setOnAction(this::buildAPath);
         foodStorageButton.setOnAction(this::buildAFoodStorage);
         proteinStorageButton.setOnAction(this::buildAProteinStorage);
+        aphidFarmButton.setOnAction(this::buildAAphidFarm);
         mapSelect.addEventHandler(KeyEvent.KEY_PRESSED, this::sendings);
         build1.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere1);
         build2.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere2);

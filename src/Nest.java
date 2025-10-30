@@ -105,6 +105,7 @@ public class Nest {
         return food;
     }
     public int getProtein(){
+        calcFood();
         return protein;
     }
     public int getMaxFood(){
@@ -129,6 +130,7 @@ public class Nest {
         return days;
     }
     public int getAphids() {
+        calcFood();
         return this.aphids;
     }
     public int getMaxAphids(){
