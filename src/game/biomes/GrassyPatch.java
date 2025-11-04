@@ -1,5 +1,6 @@
+package game.biomes;
 
-public class GrassyPatch extends Biomes{
+public class GrassyPatch extends Biomes {
 
     public GrassyPatch(double usx,double usy,double x,double y){
         //array of contents

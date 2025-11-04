@@ -1,8 +1,9 @@
-import javafx.scene.canvas.GraphicsContext;
+package game.shapes;
+
 import javafx.scene.paint.Color;
 
 //this class is to contain a shorthand for drawing rectangles
-public class RectS extends Shape{
+public class RectS extends Shape {
     private Color color;
     private double x;
     private double y;

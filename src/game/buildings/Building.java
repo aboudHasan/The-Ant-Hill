@@ -1,5 +1,14 @@
+package game.buildings;
+
+import game.Eggs;
+import game.Larva;
+import game.ants.Ants;
+import game.shapes.Circle;
+import game.shapes.Rect;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import game.shapes.Shape;
+
 import java.util.ArrayList;
 
 

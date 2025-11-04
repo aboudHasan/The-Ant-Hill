@@ -1,4 +1,6 @@
-public class Images extends Shape{
+package game.shapes;
+
+public class Images extends Shape {
 
     public Images(double x, double y, String name) {
         super(x, y, name);

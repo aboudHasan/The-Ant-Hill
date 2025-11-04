@@ -1,5 +1,8 @@
+package game.shapes;
+
 import javafx.scene.paint.Color;
-public class Texts extends Shape{
+
+public class Texts extends Shape {
     public Texts(double x, double y, int text, Color color){
         super(x,y, String.valueOf(text),color);
 

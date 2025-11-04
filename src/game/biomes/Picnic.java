@@ -1,6 +1,7 @@
+package game.biomes;
 
 //the picnic spot will also every once in a while have a random human appear on it, which will prevent you from using the space.
-public class Picnic extends Biomes{
+public class Picnic extends Biomes {
 
     public Picnic(double usx,double usy,double x,double y){
         //array of contents
