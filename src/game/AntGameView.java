@@ -1161,14 +1161,5 @@ public class AntGameView extends Application {
         // 7. Show the stage
         stage.show();
     }
-
-    /**
-     * Make no changes here.
-     *
-     * @param args unused
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
 
