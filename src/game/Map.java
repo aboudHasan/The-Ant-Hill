@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import game.shapes.Rect;
 import game.shapes.RectS;
+import javafx.stage.Screen;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,6 +18,8 @@ public class Map {
     private final double usy;
     private final double usw;
     private final double ush;
+    private final double screenY = (Screen.getPrimary().getVisualBounds()).getHeight();
+    private final double screenX = (Screen.getPrimary().getVisualBounds()).getWidth();
 
     ArrayList<Biomes> biomes = new ArrayList<>(); //this will be a list to contain the maps biomes
 
@@ -26,6 +29,7 @@ public class Map {
         this.usy = usy;
         this.usw = usw;
         this.ush = ush;
+
 
         //the loop that generates the map. currently, we aren't recording its seeds
         double y = (ush/2-11235); //first row
@@ -131,6 +135,11 @@ public class Map {
         }
         new Rect(usx+5,usy+5,225,80,Color.WHITE).draw(gc);
         new RectS(usx+5,usy+5,225,80,Color.BLACK).draw(gc);
+        //ensuring the screen is just black at the edges. (temp solution to not having any scaling from one computer to another)
+        new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
+        new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
+        new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
+        new Rect(0,usx+ush,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
     }
 
     /**
