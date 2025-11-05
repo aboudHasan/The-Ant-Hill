@@ -3,6 +3,7 @@ package game.biomes;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import game.shapes.*;
+import javafx.stage.Screen;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,6 +14,8 @@ public class Biomes {
     private boolean nest = false;
     //universal variables (location stuff and some graphics related things) (also the randomizer)
     private Random rand = new Random();
+    private final double screenY = (Screen.getPrimary().getVisualBounds()).getHeight();
+    private final double screenX = (Screen.getPrimary().getVisualBounds()).getWidth();
     private double usx;
     private double usy;
     private double usw;
@@ -154,6 +157,10 @@ public class Biomes {
     public void selected(GraphicsContext gc){
         new Circle(usx + (x) - 103, usy + (y) - 103, 103, Color.WHITE).draw(gc);
         draw(gc);
+        new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK);
+        new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK);
+        new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK);
+        new Rect(0,usy+ush,screenX,screenY-(ush + usy),Color.BLACK);
     }
 
     //graphics
@@ -399,10 +406,10 @@ public class Biomes {
     //location
     public double[] location(){
         double[] location = new double[4];
-        location[0] = this.x - 100;
-        location[1] = this.x + 100;
-        location[2] = this.y - 100;
-        location[3] = this.y + 100;
+        location[0] = this.x - 100 + usx;
+        location[1] = this.x + 100 + usx;
+        location[2] = this.y - 100 + usy;
+        location[3] = this.y + 100 + usy;
         return location;
     }
 

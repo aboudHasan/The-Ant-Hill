@@ -911,7 +911,7 @@ public class AntGameView extends Application {
     public void selecting(MouseEvent me){
         mapSelect.requestFocus();
         if (mapDrawn) {
-            int select = map.selected(me.getX() + usx, me.getY() + usy);
+            int select = map.selected(me.getX(), me.getY());
             if (select != -1) {
                 mapSelect.getValueFactory().setValue(select);
                 cancelSelectionMethod(null);
@@ -1044,7 +1044,11 @@ public class AntGameView extends Application {
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         gc.fillRect(usx,usy, screenX, screenY); //this just gives you the original black screen that we will turn into a menu screen
-
+        //esuring
+        new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
+        new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
+        new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
+        new Rect(0,usy+ush,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
 
         // 2. Create the GUI components
         name = new TextField("Nest Name");
