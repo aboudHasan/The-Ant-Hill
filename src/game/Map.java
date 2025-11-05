@@ -139,7 +139,7 @@ public class Map {
         new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
         new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
         new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
-        new Rect(0,usx+ush,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
+        new Rect(0,usy+ush,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
     }
 
     /**
