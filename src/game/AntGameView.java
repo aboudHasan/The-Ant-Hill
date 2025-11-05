@@ -883,20 +883,20 @@ public class AntGameView extends Application {
         if (mapDrawn) {
 
             if (mousex > me.getX()) {
-                map.right(gc, (int) (mousex - me.getX() + usx));
+                map.right(gc, (int) (mousex - me.getX()));
                 mousex = me.getX();
                 map.draw(gc);
             } else if (mousex < me.getX()) {
-                map.left(gc, (int) (me.getX() - mousex + usx));
+                map.left(gc, (int) (me.getX() - mousex));
                 mousex = me.getX();
                 map.draw(gc);
             }
             if (mousey < me.getY()) {
-                map.up(gc, (int) (me.getY() - mousey + usy));
+                map.up(gc, (int) (me.getY() - mousey));
                 mousey = me.getY();
                 map.draw(gc);
             } else if (mousey > me.getY()) {
-                map.down(gc, (int) (mousey - me.getY() + usy));
+                map.down(gc, (int) (mousey - me.getY()));
                 mousey = me.getY();
                 map.draw(gc);
             }
@@ -911,7 +911,7 @@ public class AntGameView extends Application {
     public void selecting(MouseEvent me){
         mapSelect.requestFocus();
         if (mapDrawn) {
-            int select = map.selected(me.getX(), me.getY());
+            int select = map.selected(me.getX() + usx, me.getY() + usy);
             if (select != -1) {
                 mapSelect.getValueFactory().setValue(select);
                 cancelSelectionMethod(null);
