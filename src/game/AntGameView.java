@@ -925,7 +925,7 @@ public class AntGameView extends Application {
 
 
 
-    ///adding game.ants and eggs code and stuff, and what not. graphics for these things will be located in the game.ants.Ants, or game.Eggs file.
+    ///adding game. ants and eggs code and stuff, and what not. graphics for these things will be located in the game.ants.Ants, or game.Eggs file.
     public void layingEgg(ActionEvent e) {
         if (nest.getProtein() >= 5) {
             nest.minusProtein(5);
