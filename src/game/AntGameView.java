@@ -320,7 +320,7 @@ public class AntGameView extends Application {
     public void buildABarrack(ActionEvent e){
         if (nest.AddAntsInUse(5)){
             if (nest.minusFood(10)) {
-                nest.addBuilding(new Barracks(usx + buildingX, usx + buildingY, flip, spot));
+                nest.addBuilding(new Barracks(buildingX, buildingY, flip, spot));
                 title = "Building Completed";
                 messege1 = "You built a barrack";
                 messege2 = "+10 max ants";

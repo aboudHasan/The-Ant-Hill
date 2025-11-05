@@ -22,9 +22,9 @@ public class BuildingSpot {
         this.buildingX = buildingX + usx;
         this.buildingY = buildingY + usy;
         if (!flip) {
-            build = new Rect(buildingX -20, usy + buildingY, 170, 75, Color.SADDLEBROWN);
+            build = new Rect(buildingX -20, buildingY, 170, 75, Color.SADDLEBROWN);
         } else {
-            build = new Rect(buildingX, usy + buildingY, 170, 75, Color.SADDLEBROWN);
+            build = new Rect(buildingX, buildingY, 170, 75, Color.SADDLEBROWN);
         }
         buildButton = new Button("build here");
     }
