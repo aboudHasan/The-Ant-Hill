@@ -107,23 +107,23 @@ public class Map {
             if (!biomes.get(i).isAdjacent()) {
                 if (i == 0) {//first area/biome
                     if (biomes.get(i + 1).getFound() || biomes.get(i + 100).getFound()) {
-                        biomes.get(i).adjacent(true);
+                        biomes.get(i).setAdjacent(true);
                     }
                 }else if (i < 100){//top row (first row)
                     if (biomes.get(i - 1).getFound() || biomes.get(i + 1).getFound() || biomes.get(i + 100).getFound()){
-                        biomes.get(i).adjacent(true);
+                        biomes.get(i).setAdjacent(true);
                     }
                 } else if (i == biomes.size() - 1) {//last area/biome
                     if (biomes.get(i - 1).getFound() || biomes.get(i - 100).getFound()) {
-                        biomes.get(i).adjacent(true);
+                        biomes.get(i).setAdjacent(true);
                     }
                 }else if (i >= 9900){//bottom row (last row)
                     if (biomes.get(i - 1).getFound() || biomes.get(i - 100).getFound() || biomes.get(i + 1).getFound()){
-                        biomes.get(i).adjacent(true);
+                        biomes.get(i).setAdjacent(true);
                     }
                 } else if (biomes.get(i - 1).getFound() || biomes.get(i + 1).getFound() || //all the rest of the areas/biomes
                          biomes.get(i + 100).getFound() || biomes.get(i - 100).getFound()) {
-                    biomes.get(i).adjacent(true);
+                    biomes.get(i).setAdjacent(true);
                 }
             }
             //the following 2 if statements optimize the system by only drawing the places 'in frame'.

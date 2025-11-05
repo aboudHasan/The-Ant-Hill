@@ -379,7 +379,8 @@ public class Biomes {
     public void setFound(boolean found){
         this.found = found;
     }
-    public void adjacent(boolean adjacent){
+
+    public void setAdjacent(boolean adjacent) {
         this.adjacent = adjacent;
     }
 
