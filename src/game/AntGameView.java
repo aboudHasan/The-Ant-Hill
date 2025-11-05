@@ -656,7 +656,7 @@ public class AntGameView extends Application {
             //noinspection unchecked
             mapSelect.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000000000));
             //noinspection unchecked
-            mapSelect.getValueFactory().setValue(null); // resetting the spinner
+            mapSelect.getValueFactory().setValue(0); // resetting the spinner
 
             //end of selecting function
             if (!selected) {
