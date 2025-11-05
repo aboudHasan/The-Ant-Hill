@@ -1,6 +1,6 @@
 package game;
 
-import game.ants.Ants;
+import game.ants.IAnt;
 import game.buildings.Building;
 import javafx.scene.paint.Color;
 import game.shapes.Circle;
@@ -14,7 +14,7 @@ public class Nest {
     //more complex stats (not just numbers/integers)
     private String name;
     private ArrayList<Building> buildings = new ArrayList<Building>();
-    private ArrayList<Ants> ants = new ArrayList<Ants>();
+    private ArrayList<IAnt> ants = new ArrayList<IAnt>();
     private ArrayList<Eggs> eggs = new ArrayList<Eggs>();
     private ArrayList<Larva> larva = new ArrayList<Larva>();
     //basic stats
@@ -92,7 +92,7 @@ public class Nest {
     public ArrayList<Building> getBuildings(){
         return this.buildings;
     }
-    public ArrayList<Ants> getAnts(){
+    public ArrayList<IAnt> getAnts(){
         calcPopulation();
         return this.ants;
     }
