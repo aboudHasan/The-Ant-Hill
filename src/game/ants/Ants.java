@@ -1,7 +1,8 @@
+package game.ants;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
+import game.shapes.Circle;
 
 public class Ants {
 

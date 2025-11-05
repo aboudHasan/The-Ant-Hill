@@ -1,5 +1,9 @@
+package game.biomes;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import game.shapes.*;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -139,7 +143,7 @@ public class Biomes {
 
     //drawing everything method (cycles through stuff)
     public void draw(GraphicsContext gc){
-        loadGraphics(); //ensuring that what we print is the most up to date thing.
+        loadGraphics(); //ensuring that what we print is the most up-to-date thing.
         for (int i = 0; i < graphics.size(); i++){
             graphics.get(i).draw(gc);
         }

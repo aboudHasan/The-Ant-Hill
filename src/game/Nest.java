@@ -1,4 +1,11 @@
+package game;
+
+import game.ants.Ants;
+import game.buildings.Building;
 import javafx.scene.paint.Color;
+import game.shapes.Circle;
+import game.shapes.Rect;
+import game.shapes.Shape;
 
 import java.util.ArrayList;
 
@@ -348,7 +355,7 @@ public class Nest {
     public Boolean addAnt(){
         for (int i = 0; i < buildings.size(); i++) {
             if (buildings.get(i).getAnts().size() < buildings.get(i).getMaxAnts()){
-                //buildings.get(i).addAnts(new Ants()); //for some reason, doing this doesn't allow graphics for ants to work, so just use this function to check if the main can add another ant... until we can fix it.
+                //game.buildings.get(i).addAnts(new game.ants.Ants()); //for some reason, doing this doesn't allow graphics for game.ants to work, so just use this function to check if the main can add another ant... until we can fix it.
                 return true;
             }
         }

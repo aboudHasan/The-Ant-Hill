@@ -1,5 +1,10 @@
+package game;
+
+import game.biomes.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import game.shapes.Rect;
+import game.shapes.RectS;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -57,11 +62,11 @@ public class Map {
         y += 220;
         for (int i = 100; i > 0; i--){
             if (i == 50) {
-                biomes.add(new AntHill(usx,usy,x,y));
+                add(AntHill(usx,usy,x,y));
             } else if (rand.nextInt(0,3) <= 1){
-                biomes.add(new Picnic(usx,usy,x,y));
+                game.biomes.add(new Picnic(usx,usy,x,y));
             } else {
-                biomes.add(new GrassyPatch(usx,usy,x,y));
+                add(new GrassyPatch(usx,usy,x,y));
             }
             x += 220;
         }
@@ -70,9 +75,9 @@ public class Map {
         y += 220;
         for (int i = 100; i > 0; i--){
             if (rand.nextInt(0,3) <= 1){
-                biomes.add(new Picnic(usx,usy,x,y));
+                add(new Picnic(usx,usy,x,y));
             } else {
-                biomes.add(new GrassyPatch(usx,usy,x,y));
+                add(new GrassyPatch(usx,usy,x,y));
             }
             x += 220;
         }
@@ -81,9 +86,9 @@ public class Map {
         y += 220;
         for (int i = 100; i > 0; i--){
             if (rand.nextInt(0,3) <= 1){
-                biomes.add(new Picnic(usx,usy,x,y));
+                add(new Picnic(usx,usy,x,y));
             } else {
-                biomes.add(new GrassyPatch(usx,usy,x,y));
+                add(new GrassyPatch(usx,usy,x,y));
             }
             x += 220;
         }

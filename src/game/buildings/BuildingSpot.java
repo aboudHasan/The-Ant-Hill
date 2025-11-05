@@ -1,3 +1,7 @@
+package game.buildings;
+
+import game.shapes.Rect;
+import game.shapes.Shape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;

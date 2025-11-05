@@ -1,6 +1,10 @@
+package game.buildings;
+
+import game.shapes.Rect;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import game.shapes.Shape;
 
 public class PathSpot {
     private boolean buildingDone = false;

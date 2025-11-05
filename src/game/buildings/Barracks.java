@@ -1,3 +1,5 @@
+package game.buildings;
+
 public class Barracks extends Building{
 
     public Barracks(double x, double y,boolean flip){
