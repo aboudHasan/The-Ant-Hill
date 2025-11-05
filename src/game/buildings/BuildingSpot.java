@@ -13,8 +13,6 @@ public class BuildingSpot {
     private boolean flip;
     private double buildingX;
     private double buildingY;
-    private double usx;
-    private double usy;
     //UI stuff
     private Shape build; //little highlighted area
     private Button buildButton;
@@ -22,9 +20,7 @@ public class BuildingSpot {
     public BuildingSpot(boolean flip, int buildingX, int buildingY,double usx,double usy) {
         this.flip = flip;
         this.buildingX = buildingX + usx;
-        this.buildingY = buildingY +usy;
-        this.usx = usx;
-        this.usy = usy;
+        this.buildingY = buildingY + usy;
         if (!flip) {
             build = new Rect(buildingX -20, usy + buildingY, 170, 75, Color.SADDLEBROWN);
         } else {
@@ -37,9 +33,9 @@ public class BuildingSpot {
         if(!buildingDone){
             build.draw(gc);
             if (!flip) {
-                buildButton.relocate(this.usx + buildingX + 25, this.usy + buildingY + 25);
+                buildButton.relocate(buildingX + 25, buildingY + 25);
             } else {
-                buildButton.relocate(this.usx + buildingX + 50, this.usy + buildingY + 25);
+                buildButton.relocate(buildingX + 50, buildingY + 25);
             }
         }
     }
@@ -66,12 +62,6 @@ public class BuildingSpot {
     }
     public double getBuildingY() {
         return buildingY;
-    }
-    public double getUsx() {
-        return usx;
-    }
-    public double getUsy() {
-        return usy;
     }
 
     public Shape getBuild() {

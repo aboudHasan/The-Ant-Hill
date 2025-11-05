@@ -140,7 +140,7 @@ public class AntGameView extends Application {
         background.add(nest.Graphics(usx,usy).get(1));
         background.add(nest.Graphics(usx,usy).get(2));
         background.add(new Rect(usx,usy+780,usw,100,Color.DARKGRAY));
-        background.add(new Circle(-20,-20,50,Color.YELLOW));
+        background.add(new Circle(usx-20,usy-20,50,Color.YELLOW));
         background.add(new Rect(usx+5,usy+5,225,80,Color.WHITE));
         background.add(new RectS(usx+5,usy+5,225,80,Color.BLACK));
         background.add(new Texts(usw-usx - 95,usy + 264,"             5 Protein",Color.WHITE)); //don't touch this. (it's for egg laying)
@@ -180,6 +180,10 @@ public class AntGameView extends Application {
                         gc, j);
             }
         }
+        new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
+        new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
+        new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
+        new Rect(0,usx+ush,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
     }
 
     //building methods (take up most of the file honestly... def was a MUCH better way to do this.)
@@ -448,7 +452,7 @@ public class AntGameView extends Application {
         requirements1.setText("");
         foodStorageButton.relocate(-100,-100);
         requirements2.setText("");
-        proteinStorageButton.relocate(-100,usy -100);
+        proteinStorageButton.relocate(-100,-100);
         requirements3.setText("");
         aphidFarmButton.relocate(-100,-100);
         requirements4.setText("");
