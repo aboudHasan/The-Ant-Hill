@@ -879,24 +879,24 @@ public class AntGameView extends Application {
         }
         cancelSelection.relocate(-100, -100);
 
-        ///making the map move using the mouse... does work right YET
+        //making the map move using the mouse... does work right YET
         if (mapDrawn) {
 
             if (mousex > me.getX()) {
-                map.right(gc, (int) (mousex - me.getX()));
+                map.right(gc, (int) (mousex - me.getX() + usx));
                 mousex = me.getX();
                 map.draw(gc);
             } else if (mousex < me.getX()) {
-                map.left(gc, (int) (me.getX() - mousex));
+                map.left(gc, (int) (me.getX() - mousex + usx));
                 mousex = me.getX();
                 map.draw(gc);
             }
             if (mousey < me.getY()) {
-                map.up(gc, (int) (me.getY() - mousey));
+                map.up(gc, (int) (me.getY() - mousey + usy));
                 mousey = me.getY();
                 map.draw(gc);
             } else if (mousey > me.getY()) {
-                map.down(gc, (int) (mousey - me.getY()));
+                map.down(gc, (int) (mousey - me.getY() + usy));
                 mousey = me.getY();
                 map.draw(gc);
             }
