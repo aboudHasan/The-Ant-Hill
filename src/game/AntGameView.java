@@ -320,7 +320,7 @@ public class AntGameView extends Application {
     public void buildABarrack(ActionEvent e){
         if (nest.AddAntsInUse(5)){
             if (nest.minusFood(10)) {
-                nest.addBuilding(new Barracks(usx + buildingX, usx + buildingY, flip, spot));
+                nest.addBuilding(new Barracks(buildingX, buildingY, flip, spot));
                 title = "Building Completed";
                 messege1 = "You built a barrack";
                 messege2 = "+10 max ants";
@@ -879,7 +879,7 @@ public class AntGameView extends Application {
         }
         cancelSelection.relocate(-100, -100);
 
-        ///making the map move using the mouse... does work right YET
+        //making the map move using the mouse... does work right YET
         if (mapDrawn) {
 
             if (mousex > me.getX()) {
@@ -1044,7 +1044,11 @@ public class AntGameView extends Application {
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         gc.fillRect(usx,usy, screenX, screenY); //this just gives you the original black screen that we will turn into a menu screen
-
+        //esuring
+        new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
+        new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
+        new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
+        new Rect(0,usy+ush,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
 
         // 2. Create the GUI components
         name = new TextField("Nest Name");
@@ -1156,15 +1160,6 @@ public class AntGameView extends Application {
 
         // 7. Show the stage
         stage.show();
-    }
-
-    /**
-     * Make no changes here.
-     *
-     * @param args unused
-     */
-    public static void main(String[] args) {
-        launch(args);
     }
 }
 
