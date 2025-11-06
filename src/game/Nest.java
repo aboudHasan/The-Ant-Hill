@@ -10,6 +10,7 @@ import game.shapes.Shape;
 import java.util.ArrayList;
 
 public class Nest {
+    private boolean cheatMode = false; //gets updated on AntGameView
 
     //more complex stats (not just numbers/integers)
     private String name;
@@ -40,6 +41,12 @@ public class Nest {
         this.name = name;
     }
 
+    public void cheatMode() {
+        this.food = 100000;
+        this.aphids = 10000;
+        this.protein = 10000;
+        this.cheatMode = true;
+    }
 
 
 
@@ -59,19 +66,21 @@ public class Nest {
     }
 
     public void calcFood(){
-        this.aphids = 0;
-        this.food = 0;
-        this.protein = 0;
-        this.maxFood = 0;
-        this.maxProtein = 0;
-        this.maxAphids = 0;
-        for (int i = 0; i < buildings.size(); i++) {
-            this.aphids += buildings.get(i).getAphids();
-            this.food += buildings.get(i).getFood();
-            this.protein += buildings.get(i).getProtein();
-            this.maxProtein += buildings.get(i).getMaxProtein();
-            this.maxFood += buildings.get(i).getMaxFood();
-            this.maxAphids += buildings.get(i).getMaxAphids();
+        if (!cheatMode) {
+            this.aphids = 0;
+            this.food = 0;
+            this.protein = 0;
+            this.maxFood = 0;
+            this.maxProtein = 0;
+            this.maxAphids = 0;
+            for (int i = 0; i < buildings.size(); i++) {
+                this.aphids += buildings.get(i).getAphids();
+                this.food += buildings.get(i).getFood();
+                this.protein += buildings.get(i).getProtein();
+                this.maxProtein += buildings.get(i).getMaxProtein();
+                this.maxFood += buildings.get(i).getMaxFood();
+                this.maxAphids += buildings.get(i).getMaxAphids();
+            }
         }
     }
     public void calcMaxAnts(){

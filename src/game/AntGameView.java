@@ -33,6 +33,8 @@ import java.util.Objects;
  * add more usful comments, remove/move logic code into appropriate classes, also, fix the way buildings are recongise as built...
  */
 public class AntGameView extends Application {
+    private final boolean cheatMode = false; //set to true to test game
+
     // TODO: Instance Variables for View Components and Model
     //variables for start up/set up
     private GraphicsContext gc;
@@ -126,11 +128,17 @@ public class AntGameView extends Application {
         nest.addBuilding(new ThroneRoom(usx+550,usy+350));
         nest.getBuildings().get(0).addAnts(new Queen());
         nest.addBuilding(new Barracks(usx+760,usy+350,flip));
-        nest.getBuildings().get(1).addAnts(new Ant());
-        nest.getBuildings().get(1).addAnts(new Ant());
-        nest.getBuildings().get(1).addAnts(new Ant());
-        nest.getBuildings().get(1).addAnts(new Ant());
-        nest.getBuildings().get(1).addAnts(new Ant());
+        //checks if cheats on to give amount of ants
+        int antAmount;
+        if (cheatMode) {
+            antAmount = 500;
+            nest.cheatMode();
+        } else {
+            antAmount = 5;
+        }
+        for (int i = 0; i < antAmount; i++) {
+            nest.getBuildings().get(1).addAnts(new Ant());
+        }
         nest.calcAll();
         //the background (don't touch unless your improving graphics)
         background.add(new Rect(usx,usy,usw,ush,Color.rgb(135, 206, 235)));
