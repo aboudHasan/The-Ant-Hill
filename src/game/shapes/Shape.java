@@ -2,7 +2,6 @@ package game.shapes;
 
 import game.IDrawable;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class Shape implements IDrawable {
@@ -15,17 +14,8 @@ public class Shape implements IDrawable {
     private boolean stroke = false;
     private String oval = "not oval"; //this also gets reused for the text making thing.
     private boolean texts = false;
-    private Image image;
-    private static Image clouds = new Image("clouds.png", 225, 225, true, true); // scale this thing...
-    private static Image clouds_transparent = new Image("clouds_transparent.png", 225, 225, true, true);
-    //image
-    public Shape(double x, double y, String name){
-        if (name.equals("clouds")) {
-            image = clouds;
-        }
-        if (name.equals("clouds_transparent")) {
-            image = clouds_transparent;
-        }
+
+    public Shape(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -76,9 +66,7 @@ public class Shape implements IDrawable {
     }
 
     public void draw(GraphicsContext gc) {
-        if (this.image != null) {
-            gc.drawImage(image, x, y);
-        } else if (oval.equals("oval")) {
+        if (oval.equals("oval")) {
             gc.setFill(color);
             gc.fillOval(x, y, w, h);
         } else if (texts) {
