@@ -4,7 +4,11 @@ import game.IDrawable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.HashMap;
+
 public class Images implements IDrawable {
+
+    private static final HashMap<String, Image> imageCache = new HashMap<>();
 
     private final double x, y;
     private final Image image;
@@ -12,7 +16,14 @@ public class Images implements IDrawable {
     public Images(double x, double y, String fileName) {
         this.x = x;
         this.y = y;
-        image = new Image(fileName, 225, 225, true, true); // scale this thing...
+
+        if (imageCache.containsKey(fileName)) {
+            image = imageCache.get(fileName);
+        } else {
+            Image img = new Image(fileName, 225, 225, true, true);
+            imageCache.put(fileName, img);
+            image = img;
+        }
     }
 
     @Override
