@@ -2,7 +2,7 @@ package game.buildings;
 
 import game.Eggs;
 import game.Larva;
-import game.ants.Ants;
+import game.ants.IAnt;
 import game.shapes.Circle;
 import game.shapes.Rect;
 import javafx.scene.canvas.GraphicsContext;
@@ -25,7 +25,7 @@ public class Building {
     private int protein = 0;
     private int maxEggs = 0;
     private int maxLarva = 0;
-    private ArrayList<Ants> ants = new ArrayList<Ants>();; //all the ants in the building.
+    private ArrayList<IAnt> ants = new ArrayList<IAnt>();; //all the ants in the building.
     private ArrayList<Eggs> eggs = new ArrayList<Eggs>();; //all the eggs in the building.
     private ArrayList<Larva> larva = new ArrayList<Larva>();; //all the larva in the building.
     private ArrayList<Shape> graphics = new ArrayList<Shape>();
@@ -168,7 +168,7 @@ public class Building {
 
 
     //getters
-    public ArrayList<Ants> getAnts(){
+    public ArrayList<IAnt> getAnts(){
         return ants;
     }
     public ArrayList<Eggs> getEggs(){
@@ -221,7 +221,7 @@ public class Building {
 
 
     //setters/adders/subtractors
-    public void addAnts(Ants ant){
+    public void addAnts(IAnt ant){
         this.ants.add(ant);
         calcPopulation();
     }
