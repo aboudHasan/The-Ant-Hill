@@ -66,10 +66,7 @@ public class Shape implements IDrawable {
     }
 
     public void draw(GraphicsContext gc) {
-        if (oval.equals("oval")) {
-            gc.setFill(color);
-            gc.fillOval(x, y, w, h);
-        } else if (texts) {
+        if (texts) {
             gc.setFill(color);
             gc.fillText(oval, x, y);
         } else if (stroke) {
@@ -78,9 +75,6 @@ public class Shape implements IDrawable {
         } else if (r == -1111111) {
             gc.setFill(color);
             gc.fillRect(x, y, w, h);
-        } else {
-            gc.setFill(color);
-            gc.fillOval(x, y, r * 2, r * 2);
         }
     }
 }

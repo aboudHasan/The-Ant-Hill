@@ -47,6 +47,7 @@ public class Biomes implements IDrawable {
         number = number + 1;
     }
 
+    //this is only used by the AntHill biome
     public Biomes(double usx, double usy, double x, double y) {
         this(usx, usy, x, y, 0);
     }

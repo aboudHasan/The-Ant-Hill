@@ -165,8 +165,10 @@ public class Nest {
             for (int i = 0; i < buildings.get(j).getEggs().size(); i++) { //this will only run if the building contains eggs
                 //for each egg, check if it can turn into a larva;
                 if (buildings.get(j).getEggs().get(i).getDaysAlive() >= 2) {
-                    numEggsHatching++;
-                    buildings.get(j).addLarva(new Larva());
+                    if (larva.size() != maxLarva) {
+                        numEggsHatching++;
+                        buildings.get(j).addLarva(new Larva());
+                    }
                 } else {
                     buildings.get(j).getEggs().get(i).addDaysAlive();
                 }
