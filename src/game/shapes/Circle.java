@@ -1,5 +1,6 @@
 package game.shapes;
 
+import game.IDrawable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -14,14 +15,14 @@ public class Circle extends Shape {
     private double h;
 
     public Circle(double x, double y, double radius, Color color) {
-        super(x,y,radius,color);
+        super();
         this.x = x;
         this.y = y;
         this.r = radius;
         this.color = color;
     }
     public Circle(double x, double y, double width, double height, Color color) {
-        super(x,y,width,height,color, "oval");
+        super();
         this.x = x;
         this.y = y;
         this.color = color;

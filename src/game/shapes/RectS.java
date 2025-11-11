@@ -1,5 +1,7 @@
 package game.shapes;
 
+import game.IDrawable;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 //this class is to contain a shorthand for drawing rectangles
@@ -11,11 +13,17 @@ public class RectS extends Shape {
     private double h;
 
     public RectS(double x, double y, double width, double height, Color color) {
-        super(x,y,width,height,color,true);
+        super();
         this.h = height;
         this.y = y;
         this.w = width;
         this.x = x;
         this.color = color;
+    }
+
+    @Override
+    public void draw(GraphicsContext gc) {
+        gc.setStroke(color);
+        gc.strokeRect(x, y, w, h);
     }
 }

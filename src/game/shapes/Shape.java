@@ -4,77 +4,10 @@ import game.IDrawable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Shape implements IDrawable {
-    private Color color;
-    private double x;
-    private double y;
-    private double w;
-    private double h;
-    private double r = -1111111; // i cant remember why but don't touch, it works.
-    private boolean stroke = false;
-    private String oval = "not oval"; //this also gets reused for the text making thing.
-    private boolean texts = false;
+public abstract class Shape implements IDrawable {
 
-    public Shape(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
+    public Shape(){}
 
-    //square
-    public Shape(double x, double y, double w, double h, Color color) {
-        this.color = color;
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
-    }
-
-    //circle
-    public Shape(double x, double y, double radius, Color color) {
-        this.x = x;
-        this.color = color;
-        this.y = y;
-        this.r = radius;
-    }
-
-    public Shape(double x, double y, double w, double h, Color color, boolean s) {
-        this.color = color;
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
-        this.stroke = s;
-    }
-
-    //Oval
-    public Shape(double x, double y, double w, double h, Color color, String oval) {
-        this.color = color;
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
-        this.oval = oval;
-    }
-
-    //Text
-    public Shape(double x, double y, String text, Color color) {
-        this.texts = true;
-        this.oval = text;
-        this.color = color;
-        this.x = x;
-        this.y = y;
-    }
-
-    public void draw(GraphicsContext gc) {
-        if (texts) {
-            gc.setFill(color);
-            gc.fillText(oval, x, y);
-        } else if (stroke) {
-            gc.setStroke(color);
-            gc.strokeRect(x, y, w, h);
-        } else if (r == -1111111) {
-            gc.setFill(color);
-            gc.fillRect(x, y, w, h);
-        }
-    }
+    @Override
+    public void draw(GraphicsContext gc) {}
 }
