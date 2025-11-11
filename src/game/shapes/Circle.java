@@ -21,11 +21,11 @@ public class Circle extends Shape {
         this.color = color;
     }
     public Circle(double x, double y, double width, double height, Color color) {
-        super(x,y,width,height,color,"oval");
+        super(x,y,width,height,color, "oval");
         this.x = x;
         this.y = y;
         this.color = color;
-        this.oval = oval;
+        this.oval = "oval";
         this.h = height;
         this.w = width;
     }
