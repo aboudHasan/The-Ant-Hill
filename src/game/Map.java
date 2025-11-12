@@ -200,4 +200,10 @@ public class Map {
         return biomes.get(num);
     }
 
+    /// this method enables cheat mode, which causes clouds to disappear, and every biome to be found.
+    public void cheatMode() {
+        for (Biomes biome : biomes){
+            biome.setFound(true);
+        }
+    }
 }

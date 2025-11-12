@@ -41,14 +41,14 @@ public class Nest {
         this.name = name;
     }
 
+
+    //overrides calculate food (not any other calculate)
     public void cheatMode() {
         this.food = 100000;
         this.aphids = 10000;
         this.protein = 10000;
         this.cheatMode = true;
     }
-
-
 
 
     //calculating resources and such (constantly re-occurring methods)
