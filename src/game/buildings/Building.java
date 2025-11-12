@@ -28,11 +28,12 @@ public class Building {
     private ArrayList<IAnt> ants = new ArrayList<IAnt>();; //all the ants in the building.
     private ArrayList<Eggs> eggs = new ArrayList<Eggs>();; //all the eggs in the building.
     private ArrayList<Larva> larva = new ArrayList<Larva>();; //all the larva in the building.
-    private ArrayList<Shape> graphics = new ArrayList<Shape>();
     private double x = 0;
     private double y = 0;
     private BuildingSpot spot = new BuildingSpot(false,0,0,0,0);
     private PathSpot pathSpot = new PathSpot(0,0,0,0);
+    protected ArrayList<Shape> graphics = new ArrayList<Shape>();
+
 
     //Throne room
     public Building(int maxFood, int maxEggs, int maxLarva, int maxProtein, double x, double y){
@@ -46,27 +47,11 @@ public class Building {
         this.food = 25;
         this.x = x;
         this.y = y;
-        //below is where you create its graphics
-        graphics.add(new Circle(x,y,150,75, Color.rgb(186, 155, 74)));
-        graphics.add(new Rect(x+125,y+34,60,20,Color.rgb(186, 155, 74)));
-        graphics.add(new Circle(x+25,y+55,5,Color.RED));
-        graphics.add(new Circle(x+15,y+50,3,Color.RED));
-        graphics.add(new Circle(x+110,y+13,3,Color.RED));
-        graphics.add(new Circle(x+120,y+18,4,Color.BISQUE));
-        graphics.add(new Circle(x+131,y+18,3,Color.BISQUE));
-        graphics.add(new Circle(x+120,y+58,3,Color.BISQUE));
     }
     //starting barrack
     public Building(int maxAnts, double x, double y,boolean flip){
         this.maxAnts = maxAnts;
         calcPopulation();
-        if (flip == false) {
-            graphics.add(new Circle(x, y, 150, 75, Color.rgb(186, 155, 74)));
-            graphics.add(new Rect(x - 25, y + 34, 60, 20, Color.rgb(186, 155, 74)));
-        } else {
-            graphics.add(new Circle(x, y, 150, 75, Color.rgb(186, 155, 74)));
-            graphics.add(new Rect(x+125,y+34,60,20,Color.rgb(186, 155, 74)));
-        }
         this.x = x;
         this.y = y;
     }
@@ -75,13 +60,6 @@ public class Building {
         this.maxAnts = maxAnts;
         this.spot = spot;
         calcPopulation();
-        if (flip == false) {
-            graphics.add(new Circle(x, y, 150, 75, Color.rgb(186, 155, 74)));
-            graphics.add(new Rect(x - 25, y + 34, 60, 20, Color.rgb(186, 155, 74)));
-        } else {
-            graphics.add(new Circle(x, y, 150, 75, Color.rgb(186, 155, 74)));
-            graphics.add(new Rect(x+125,y+34,60,20,Color.rgb(186, 155, 74)));
-        }
         this.x = x;
         this.y = y;
     }
@@ -90,7 +68,6 @@ public class Building {
         this.x = x;
         this.y = y;
         this.pathSpot = spot;
-        graphics.add(new Rect(x,y,20,250,Color.rgb(186, 155, 74)));
     }
     //food storage
     public Building(double x, double y, boolean flip, int maxStuff, BuildingSpot spot){
@@ -98,23 +75,6 @@ public class Building {
         this.y = y;
         this.spot = spot;
         this.maxFood = maxStuff;
-        if (flip == true){
-            graphics.add(new Circle(x, y, 175, 75, Color.rgb(186, 155, 74)));
-            graphics.add(new Circle(x+25,y+55,5,Color.BISQUE));
-            graphics.add(new Circle(x+15,y+50,3,Color.BISQUE));
-            graphics.add(new Circle(x+110,y+13,3,Color.BISQUE));
-            graphics.add(new Circle(x+120,y+18,4,Color.BISQUE));
-            graphics.add(new Circle(x+131,y+18,3,Color.BISQUE));
-            graphics.add(new Circle(x+120,y+58,3,Color.BISQUE));
-        } else {
-            graphics.add(new Circle(x-25, y, 175, 75, Color.rgb(186, 155, 74)));
-            graphics.add(new Circle(x+25,y+55,5,Color.BISQUE));
-            graphics.add(new Circle(x+15,y+50,3,Color.BISQUE));
-            graphics.add(new Circle(x+110,y+13,3,Color.BISQUE));
-            graphics.add(new Circle(x+120,y+18,4,Color.BISQUE));
-            graphics.add(new Circle(x+131,y+18,3,Color.BISQUE));
-            graphics.add(new Circle(x+120,y+58,3,Color.BISQUE));
-        }
     }
     //protein storage
     public Building(double x, double y, boolean flip, double maxStuff, BuildingSpot spot){
@@ -122,47 +82,13 @@ public class Building {
         this.y = y;
         this.spot = spot;
         this.maxProtein = (int)maxStuff;
-        if (flip){
-            graphics.add(new Circle(x, y, 175, 75, Color.rgb(186, 155, 74)));
-            graphics.add(new Circle(x+25,y+55,5,Color.RED));
-            graphics.add(new Circle(x+15,y+50,3,Color.RED));
-            graphics.add(new Circle(x+110,y+13,3,Color.RED));
-            graphics.add(new Circle(x+120,y+18,4,Color.RED));
-            graphics.add(new Circle(x+131,y+18,3,Color.RED));
-            graphics.add(new Circle(x+120,y+58,3,Color.RED));
-        } else {
-            graphics.add(new Circle(x-25, y, 175, 75, Color.rgb(186, 155, 74)));
-            graphics.add(new Circle(x+25,y+55,5,Color.RED));
-            graphics.add(new Circle(x+15,y+50,3,Color.RED));
-            graphics.add(new Circle(x+110,y+13,3,Color.RED));
-            graphics.add(new Circle(x+120,y+18,4,Color.RED));
-            graphics.add(new Circle(x+131,y+18,3,Color.RED));
-            graphics.add(new Circle(x+120,y+58,3,Color.RED));
-        }
     }
-    //food storage
+    //Aphid farm
     public Building(double x, double y, boolean flip, BuildingSpot spot, String notUsed){
         this.x = x;
         this.y = y;
         this.spot = spot;
         this.maxAphids = 5;
-        if (flip){
-            graphics.add(new Circle(x, y, 175, 75, Color.rgb(186, 155, 74)));
-            graphics.add(new Circle(x+25,y+55,5,Color.YELLOWGREEN));
-            graphics.add(new Circle(x+15,y+50,3,Color.BISQUE));
-            graphics.add(new Circle(x+110,y+13,3,Color.BISQUE));
-            graphics.add(new Circle(x+120,y+18,4,Color.BISQUE));
-            graphics.add(new Circle(x+131,y+18,3,Color.BISQUE));
-            graphics.add(new Circle(x+120,y+58,3,Color.BISQUE));
-        } else {
-            graphics.add(new Circle(x-25, y, 175, 75, Color.rgb(186, 155, 74)));
-            graphics.add(new Circle(x+25,y+55,5,Color.YELLOWGREEN));
-            graphics.add(new Circle(x+15,y+50,3,Color.BISQUE));
-            graphics.add(new Circle(x+110,y+13,3,Color.BISQUE));
-            graphics.add(new Circle(x+120,y+18,4,Color.BISQUE));
-            graphics.add(new Circle(x+131,y+18,3,Color.BISQUE));
-            graphics.add(new Circle(x+120,y+58,3,Color.BISQUE));
-        }
     }
 
 
@@ -201,9 +127,6 @@ public class Building {
     public int getFood(){
         return food;
     }
-    public ArrayList<Shape> getGraphics() {
-        return graphics;
-    }
     public double getX() {
         return x;
     }
@@ -218,6 +141,9 @@ public class Building {
     }
     public int getMaxAphids(){return this.maxAphids;}
     public int getAphids(){return this.aphids;}
+    public ArrayList<Shape> getGraphics() {
+        return graphics;
+    }
 
 
     //setters/adders/subtractors
@@ -273,9 +199,6 @@ public class Building {
     }
     public void minusAphids(int num){this.aphids -= (int) num;}
 
-
-
-    //actual methods
     public void draw(GraphicsContext gc){
         for (int i = 0; i < graphics.size(); i++) {
             graphics.get(i).draw(gc);
@@ -296,7 +219,6 @@ public class Building {
                 ", ants=" + ants +
                 ", eggs=" + eggs +
                 ", larva=" + larva +
-                ", graphics=" + graphics +
                 '}';
     }
 }
