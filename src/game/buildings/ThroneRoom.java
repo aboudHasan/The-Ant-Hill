@@ -2,15 +2,17 @@ package game.buildings;
 
 import game.shapes.Circle;
 import game.shapes.Rect;
-import game.shapes.Shape;
-import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class ThroneRoom extends Building {
 
     public ThroneRoom(double x, double y){
-        super(25,5,5,25,x,y);
+        super(x,y);
+        maxFood = 25;
+        food = 25;
+        maxEggs = 5;
+        maxLarva = 5;
+        maxProtein = 25;
         //below is where you create its graphics
         graphics.add(new Circle(x,y,150,75, Color.rgb(186, 155, 74)));
         graphics.add(new Rect(x+125,y+34,60,20,Color.rgb(186, 155, 74)));

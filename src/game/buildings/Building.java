@@ -15,51 +15,27 @@ import java.util.ArrayList;
 //this class is for grouping buildings. (using extends)
 public class Building {
     //storage related stats
-    private int aphids = 0;
-    private int maxAphids = 0;
-    private int maxAnts = 0;
-    private int population = 0; // general population including all living things in Nest
-    private int maxFood = 0;
-    private int food = 0;
-    private int maxProtein = 0;
-    private int protein = 0;
-    private int maxEggs = 0;
-    private int maxLarva = 0;
+    protected int aphids = 0;
+    protected int maxAphids = 0;
+    protected int maxAnts = 0;
+    protected int population = 0; // general population including all living things in Nest
+    protected int maxFood = 0;
+    protected int food = 0;
+    protected int maxProtein = 0;
+    protected int protein = 0;
+    protected int maxEggs = 0;
+    protected int maxLarva = 0;
     private ArrayList<IAnt> ants = new ArrayList<IAnt>();; //all the ants in the building.
     private ArrayList<Eggs> eggs = new ArrayList<Eggs>();; //all the eggs in the building.
     private ArrayList<Larva> larva = new ArrayList<Larva>();; //all the larva in the building.
-    private double x = 0;
-    private double y = 0;
+    protected double x = 0;
+    protected double y = 0;
     private BuildingSpot spot = new BuildingSpot(false,0,0,0,0);
     private PathSpot pathSpot = new PathSpot(0,0,0,0);
     protected ArrayList<Shape> graphics = new ArrayList<Shape>();
 
-
-    //Throne room
-    public Building(int maxFood, int maxEggs, int maxLarva, int maxProtein, double x, double y){
-        this.maxAnts = 1;
-        calcPopulation();
-        this.maxFood = maxFood;
-        this.maxProtein = maxProtein;
-        this.maxEggs = maxEggs;
-        this.maxLarva = maxLarva;
-        this.protein = 0;
-        this.food = 25;
-        this.x = x;
-        this.y = y;
-    }
     //starting barrack
-    public Building(int maxAnts, double x, double y,boolean flip){
-        this.maxAnts = maxAnts;
-        calcPopulation();
-        this.x = x;
-        this.y = y;
-    }
-    //barracks
-    public Building(int maxAnts, double x, double y,boolean flip, BuildingSpot spot){
-        this.maxAnts = maxAnts;
-        this.spot = spot;
-        calcPopulation();
+    public Building(double x, double y){
         this.x = x;
         this.y = y;
     }
@@ -69,28 +45,12 @@ public class Building {
         this.y = y;
         this.pathSpot = spot;
     }
-    //food storage
-    public Building(double x, double y, boolean flip, int maxStuff, BuildingSpot spot){
+    //other buildings
+    public Building(double x, double y, BuildingSpot spot){
+        this.spot = spot;
         this.x = x;
         this.y = y;
-        this.spot = spot;
-        this.maxFood = maxStuff;
     }
-    //protein storage
-    public Building(double x, double y, boolean flip, double maxStuff, BuildingSpot spot){
-        this.x = x;
-        this.y = y;
-        this.spot = spot;
-        this.maxProtein = (int)maxStuff;
-    }
-    //Aphid farm
-    public Building(double x, double y, boolean flip, BuildingSpot spot, String notUsed){
-        this.x = x;
-        this.y = y;
-        this.spot = spot;
-        this.maxAphids = 5;
-    }
-
 
 
     //getters

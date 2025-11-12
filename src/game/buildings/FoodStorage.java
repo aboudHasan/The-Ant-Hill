@@ -10,7 +10,8 @@ import java.util.ArrayList;
 public class FoodStorage extends Building {
 
     public FoodStorage(double x, double y, boolean flip, BuildingSpot spot){
-        super(x,y,flip,25,spot);
+        super(x,y,spot);
+        this.maxFood = 25;
         if (flip == true){
             graphics.add(new Circle(x, y, 175, 75, Color.rgb(186, 155, 74)));
             graphics.add(new Circle(x+25,y+55,5,Color.BISQUE));

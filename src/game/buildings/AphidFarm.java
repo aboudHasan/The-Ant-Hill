@@ -1,16 +1,13 @@
 package game.buildings;
 
 import game.shapes.Circle;
-import game.shapes.Shape;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
 
 public class AphidFarm extends Building {
 
     public AphidFarm(double x, double y,boolean flip, BuildingSpot spot){
-        super(x,y,flip,spot,"aphids");
+        super(x,y,spot);
+        super.maxAphids = 5;
         if (flip){
             graphics.add(new Circle(x, y, 175, 75, Color.rgb(186, 155, 74)));
             graphics.add(new Circle(x+25,y+55,5,Color.YELLOWGREEN));

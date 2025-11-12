@@ -12,19 +12,21 @@ public class Barracks extends Building{
 
     //starting barrack
     public Barracks(double x, double y,boolean flip){
-        super(10,x,y,flip);
-        if (flip == false) {
-            graphics.add(new Circle(x, y, 150, 75, Color.rgb(186, 155, 74)));
-            graphics.add(new Rect(x - 25, y + 34, 60, 20, Color.rgb(186, 155, 74)));
-        } else {
-            graphics.add(new Circle(x, y, 150, 75, Color.rgb(186, 155, 74)));
-            graphics.add(new Rect(x+125,y+34,60,20,Color.rgb(186, 155, 74)));
-        }
+        super(x,y);
+        maxAnts = 10;
+        setGraphics(flip);
+        calcPopulation();
     }
 
     //other barracks
     public Barracks(double x, double y,boolean flip, BuildingSpot spot){
-        super(10,x,y,flip,spot);
+        super(x,y,spot);
+        maxAnts = 10;
+        setGraphics(flip);
+        calcPopulation();
+    }
+
+    public void setGraphics(boolean flip){
         if (flip == false) {
             graphics.add(new Circle(x, y, 150, 75, Color.rgb(186, 155, 74)));
             graphics.add(new Rect(x - 25, y + 34, 60, 20, Color.rgb(186, 155, 74)));

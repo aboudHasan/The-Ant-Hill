@@ -6,7 +6,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 
-//will eventually be what handles the buildings!
 public class BuildingSpot {
     //variables
     private boolean buildingDone = false;
