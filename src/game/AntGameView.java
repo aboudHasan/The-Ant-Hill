@@ -33,9 +33,8 @@ import java.util.Objects;
  * add more usful comments, remove/move logic code into appropriate classes, also, fix the way buildings are recongise as built...
  */
 public class AntGameView extends Application {
-    private final boolean cheatMode = true; //set to true to test game
+    private final boolean cheatMode = false; //set to true to test game
 
-    // TODO: Instance Variables for View Components and Model
     //variables for start up/set up
     private GraphicsContext gc;
     private final double screenY = (Screen.getPrimary().getVisualBounds()).getHeight();
@@ -700,6 +699,10 @@ public class AntGameView extends Application {
                 }
                 //end of un-found area interaction
 
+                //for when you are sending no ants
+            } else if (mapSelect.getValue() == null || mapSelect.getValue().equals(0)){
+                title = "No ants sent";
+                messege1 = "You sent no ants.";
 
             } else if (mapSelect.getValue() != null && nest.AddAntsInUse((Integer) mapSelect.getValue())) {
                 if (map.biome(num).getAmount() == 0) { //for when it is an empty space or has been used up
@@ -810,32 +813,41 @@ public class AntGameView extends Application {
 
                     //start of aphid interaction
                 } else if (map.biome(num).getContent().equals("aphids")) {
-                    if (map.biome(num).getAmount() >= ((Integer) mapSelect.getValue())) {
-                    map.biome(num).subtractAmount((Integer) mapSelect.getValue());
-                    int aphidsLeft = nest.addAphids((Integer) mapSelect.getValue());
-                    title = "Ants Sent :  " + mapSelect.getValue();
-                    messege1 = "You collected " + ((int) mapSelect.getValue() - aphidsLeft) + " aphids";
-                    if (aphidsLeft > 0) {
-                        map.biome(num).addAmount(aphidsLeft);
-                        messege2 = aphidsLeft + " protein left behind. (storage is full)";
-                    }
-                    complete = true;
-                }
-                if (!complete) {
-                    nest.minusAntsInUse((Integer) mapSelect.getValue());
-                    title = "To Many Ants!";
-                    messege1 = "You tried sending more ants then";
-                    messege2 = "needed";
-                }
-                    //end of aphids interaction
-                } else { // end of interactions, catching if a 'bug' occurs and returning your game.ants (not using them up)
+                    if (nest.getMaxAphids() > 0) {
+                        if (map.biome(num).getAmount() >= ((Integer) mapSelect.getValue())) {
+                            map.biome(num).subtractAmount((Integer) mapSelect.getValue());
+                            int aphidsLeft = nest.addAphids((Integer) mapSelect.getValue());
+                            title = "Ants Sent :  " + mapSelect.getValue();
+                            messege1 = "You collected " + ((int) mapSelect.getValue() - aphidsLeft) + " aphids";
+                            if (aphidsLeft > 0) {
+                                map.biome(num).addAmount(aphidsLeft);
+                                messege2 = aphidsLeft + " aphid(s) left behind. (storage is full)";
+                            }
+                            complete = true;
+                        }
+                        if (!complete) {
+                            nest.minusAntsInUse((Integer) mapSelect.getValue());
+                            title = "To Many Ants!";
+                            messege1 = "You tried sending more ants then";
+                            messege2 = "needed";
+                        }
+                    } else {
                         nest.minusAntsInUse((Integer) mapSelect.getValue());
-                        title = "Error";
-                        messege1 = "'Bug' occurred, all ants returned";
+                        title = "No Aphid storage!";
+                        messege1 = "Your ant nest needs an aphid farm";
+                        messege2 = "in-order to store aphids.";
+                    }
+                    //end of aphids interaction
+
+                } else { // end of interactions, catching if a 'bug' occurs and returning your game.ants (not using them up)
+                    nest.minusAntsInUse((Integer) mapSelect.getValue());
+                    title = "Error";
+                    messege1 = "'Bug' occurred, all ants returned";
                 }
             } else { //nothing could be done, as you don't have enough game.ants
                 title = "Cannot Send";
                 messege1 = "You don't have enough unused ants";
+                System.out.println(mapSelect.getValue());
             }
 
             //end of sending function (drawing an updated version of everything)

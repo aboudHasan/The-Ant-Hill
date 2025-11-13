@@ -13,6 +13,7 @@ public class ThroneRoom extends Building {
         maxEggs = 5;
         maxLarva = 5;
         maxProtein = 25;
+        maxAnts = 1;
         //below is where you create its graphics
         graphics.add(new Circle(x,y,150,75, Color.rgb(186, 155, 74)));
         graphics.add(new Rect(x+125,y+34,60,20,Color.rgb(186, 155, 74)));
