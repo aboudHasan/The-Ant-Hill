@@ -13,14 +13,14 @@ public class Images implements IDrawable {
     private final double x, y;
     private final Image image;
 
-    public Images(double x, double y, String fileName) {
+    public Images(double x, double y, String fileName,double scale) {
         this.x = x;
         this.y = y;
 
         if (imageCache.containsKey(fileName)) {
             image = imageCache.get(fileName);
         } else {
-            Image img = new Image(fileName, 225, 225, true, true);
+            Image img = new Image(fileName, 225 * scale, 225 * scale, true, true);
             imageCache.put(fileName, img);
             image = img;
         }

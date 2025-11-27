@@ -76,9 +76,9 @@ public class Biomes implements IDrawable {
         //for the clouds when a place isn't discovered yet.
         if (!this.found) {
             if (this.isAdjacent()) {
-                drawables.add(new Images(usx - 110 + x, usy - 100 + y, "clouds_transparent.png"));
+                drawables.add(new Images(usx - 110 + x, usy - 100 + y, "clouds_transparent.png", 1));
             } else {
-                drawables.add(new Images(usx - 110 + x, usy - 100 + y, "clouds.png"));
+                drawables.add(new Images(usx - 110 + x, usy - 100 + y, "clouds.png", 1));
             }
         }
         //printing the numbers, but not for the nest, which will handle it by itself, because otherwise it doesn't print right...

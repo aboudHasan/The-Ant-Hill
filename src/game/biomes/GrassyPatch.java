@@ -1,6 +1,7 @@
 package game.biomes;
 
 import game.shapes.Circle;
+import game.shapes.Images;
 import game.shapes.Rect;
 import javafx.scene.paint.Color;
 
@@ -64,12 +65,12 @@ public class GrassyPatch extends Biomes {
                     drawables.add(new Rect(usx + x - 18, usy + y - 20, 5, 10, Color.WHITE));
                 }
                 case BEETLES -> {
-                    drawables.add(new Circle(usx + x - 25, usy + y - 5, 20, 10, Color.BLACK));
-                    drawables.add(new Circle(usx + x - 30, usy + y - 4, 18, 6, Color.GREEN));
-                    drawables.add(new Circle(usx + x - 6, usy + y - 8, 30, 20, Color.BLACK));
-                    drawables.add(new Rect(usx + x + 10, usy + y + 11, 2, 9, Color.BLACK));
+                    drawables.add(new Images(usx - 50 + x, usy - 50 + y, "beetle.png", 0.1));
                 }
-                case GRASSHOPPERS -> drawables.add(new Circle(usx + x, usy + y, 20, 10, Color.BLACK));
+                case GRASSHOPPERS -> {
+                    drawables.add(new Circle(usx + x, usy + y, 10, 40, Color.BLACK));
+                    drawables.add(new Circle(usx + x, usy + y, 10, 40, Color.BLACK));
+                }
                 case PROTEIN -> {
                     drawables.add(new Circle(usx + x - 35, usy + y + 35, 10, Color.RED));
                     drawables.add(new Circle(usx + x + 25, usy + y + 40, 10, Color.RED));
