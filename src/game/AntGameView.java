@@ -217,18 +217,18 @@ public class AntGameView extends Application {
                     build2.used();
                 }
                 if (!build4.isBuildingDone()){//this is for a road path
-                    if (nest.getBuildings().get(i).getPathSpot().equals(build4)) {
+                    if (nest.getBuildings().get(i).getPathSpot().equals(build4)) { //if path IS built
                         build4.used();
                         build3.unused();
                         build5.unused();
                         build6.unused();
                         build7.unused();
-                    } else {
+                    } /*else { // if path isn't built
                     build3.used();
                     build5.used();
                     build6.used();
                     build7.used();
-                    }
+                    }*/
                 }
                 //this is where we display things that require a path to be built
                 if (!build3.isBuildingDone()){ //only runs if build4 (a path) has been completed
@@ -286,7 +286,7 @@ public class AntGameView extends Application {
         flip = building.getFlip();
         spot = building;
     }
-    /// This is for recording which building spot you are selecting to build on, and then displaying what you can build.
+    /// This is for recording which building spot (for only paths) you are selecting to build on, and then displaying what you can build.
     public void theBuildSpace(PathSpot building){ //for only paths
         buildingX = building.getBuildingX();
         buildingY = building.getBuildingY();
@@ -849,7 +849,6 @@ public class AntGameView extends Application {
                 } else { //nothing could be done, as you don't have enough game.ants
                     title = "Cannot Send";
                     messege1 = "You don't have enough unused ants";
-                    System.out.println(mapSelect.getValue());
                 }
 
                 //end of sending function (drawing an updated version of everything)
