@@ -9,10 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -24,6 +21,7 @@ import javafx.stage.Stage;
 import game.shapes.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -58,6 +56,9 @@ public class AntGameView extends Application {
     private double buildingX;
     private double buildingY;
     private boolean flip = false; //determines the direction of a new building.
+    private List<BuildingSpot> build = new ArrayList<BuildingSpot>();
+    private List<PathSpot> path = new ArrayList<PathSpot>();
+
     private final BuildingSpot build1 = new BuildingSpot(true ,550,225,usx,usy);
     private final BuildingSpot build2 = new BuildingSpot(false,760,225,usx,usy);
     private final BuildingSpot build3 = new BuildingSpot(true ,550,475,usx,usy);
@@ -223,12 +224,12 @@ public class AntGameView extends Application {
                         build5.unused();
                         build6.unused();
                         build7.unused();
-                    } /*else { // if path isn't built
+                    } else { // if path isn't built
                     build3.used();
                     build5.used();
                     build6.used();
                     build7.used();
-                    }*/
+                    }
                 }
                 //this is where we display things that require a path to be built
                 if (!build3.isBuildingDone()){ //only runs if build4 (a path) has been completed
@@ -1055,25 +1056,22 @@ public class AntGameView extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        // Create the screen and things
         Pane root = new Pane();
         Scene scene = new Scene(root, screenX, screenY); // set the size here
         stage.setTitle("The Ant Hill"); // set the window title here
         stage.setResizable(false);
         stage.setScene(scene);
-        // TODO: Add your GUI-building code here
-
-        // 1. Create the model
         Canvas canvas = new Canvas(screenX, screenY);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         gc.fillRect(usx,usy, screenX, screenY); //this just gives you the original black screen that we will turn into a menu screen
-        //esuring
         new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
         new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
         new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
         new Rect(0,usy+ush,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
 
-        // 2. Create the GUI components
+        // Create the GUI components
         name = new TextField("Nest Name");
         confName = new Button("confirm");
         nextDay = new Button("End Day");
@@ -1089,7 +1087,21 @@ public class AntGameView extends Application {
         mapSelectButton = new Button("Select");
         cancelSelection = new Button("Cancel");
 
-        /*building buttons*/
+        //building things
+        //making the building spots
+        int tempY = 225;
+        for (int i = 0; i < 4; i++){
+            if (tempY != 350) { //ensuring that you don't put building spots on top of the starter buildings.
+                build.add(new BuildingSpot(true, 550, tempY, usx, usy)); //left side
+                build.add(new BuildingSpot(false, 760, tempY, usx, usy)); //right side
+            }
+            tempY += 125;
+        }
+        //making the buildingPaths
+        for (int i = 0; i < 1; i++){
+            path.add(new PathSpot(720,404,usx,usy));
+        }
+        //other building things
         buildButton = new Button("Build");
         barracksButton = new Button("Barrack");
         pathsButton = new Button("Path");
@@ -1116,7 +1128,13 @@ public class AntGameView extends Application {
                 build7.getBuildButton(), requirements1, antsInUse, foodStorageButton, requirements2, mapSelect,
                 mapSelectButton, cancelSelection,createAntButton,layEggButton,requirements3,proteinStorageButton,
                 aphidFarmButton, requirements4);
-
+        //adding building elements
+        for (BuildingSpot buildingSpot : build) {
+            root.getChildren().add(buildingSpot.getBuildButton());
+        }
+        for (PathSpot pathSpot : path) {
+            root.getChildren().add(pathSpot.getBuildButton());
+        }
         // 4. Configure the components (this is now done within the startGameMethod
         nextDay.relocate(-100,-100);
         hideButtons();
@@ -1153,6 +1171,12 @@ public class AntGameView extends Application {
         build5.relocate();
         build7.relocate();
         build6.relocate();
+        for (BuildingSpot buildingSpot : build) {
+            buildingSpot.relocate();
+        }
+        for (PathSpot pathSpot : path) {
+            pathSpot.relocate();
+        }
 
         // 5. Add Event Handlers and do final setup
         nextDay.setOnAction(this::nextDayMethod);
@@ -1180,6 +1204,12 @@ public class AntGameView extends Application {
         build5.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere5);
         build7.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere7);
         build6.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere6);
+        for (BuildingSpot buildingSpot : build) {
+
+        }
+        for (PathSpot pathSpot : path) {
+            pathSpot.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere4);
+        }
 
         // 7. Show the stage
         stage.show();
