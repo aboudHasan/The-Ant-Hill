@@ -3,7 +3,6 @@ package game.buildings;
 import game.shapes.Rect;
 import game.shapes.Shape;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 
 public class BuildingSpot {
@@ -14,7 +13,6 @@ public class BuildingSpot {
     private double buildingY;
     //UI stuff
     private Shape build; //little highlighted area
-    private Button buildButton;
 
     public BuildingSpot(boolean flip, int buildingX, int buildingY,double usx,double usy) {
         this.flip = flip;
@@ -25,17 +23,11 @@ public class BuildingSpot {
         } else {
             build = new Rect(buildingX, buildingY, 170, 75, Color.SADDLEBROWN);
         }
-        buildButton = new Button("build here");
     }
 
     public void spaceOpen(GraphicsContext gc){
         if(!buildingDone){
             build.draw(gc);
-            if (!flip) {
-                buildButton.relocate(buildingX + 25, buildingY + 25);
-            } else {
-                buildButton.relocate(buildingX + 50, buildingY + 25);
-            }
         }
     }
     public void used(){
@@ -43,10 +35,6 @@ public class BuildingSpot {
     }
     public void unused(){
         buildingDone = false;
-    }
-
-    public void relocate(){
-        buildButton.relocate(-100,-100);
     }
 
     //getters
@@ -62,12 +50,7 @@ public class BuildingSpot {
     public double getBuildingY() {
         return buildingY;
     }
-
     public Shape getBuild() {
         return build;
     }
-    public Button getBuildButton() {
-        return buildButton;
-    }
-
 }

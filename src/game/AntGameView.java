@@ -304,26 +304,22 @@ public class AntGameView extends Application {
     }
 
     /// these are all for assigning the buildHere buttons functions...
-    public void buildHere1(MouseEvent me) {
-        theBuildSpace(build1);
-    }
-    public void buildHere2(MouseEvent me) {
-        theBuildSpace(build2);
-    }
-    public void buildHere3(MouseEvent me) {
-        theBuildSpace(build3);
-    }
-    public void buildHere4(MouseEvent me){
-        theBuildSpace(build4);
-    }
-    public void buildHere5(MouseEvent me){
-        theBuildSpace(build5);
-    }
-    public void buildHere6(MouseEvent me){
-        theBuildSpace(build6);
-    }
-    public void buildHere7(MouseEvent me){
-        theBuildSpace(build7);
+    public void buildHere(MouseEvent me) {
+        for(PathSpot pathSpot : path){
+            if (me.getX() >= pathSpot.getBuildingX() && me.getX() <= pathSpot.getBuildingX() + 20 &&
+                    me.getY() >= pathSpot.getBuildingY() && me.getY() <= pathSpot.getBuildingY() + 250){
+                theBuildSpace(pathSpot);
+                break;
+            }
+        }
+        for(BuildingSpot buildingSpot : build){
+            if (me.getX() >= buildingSpot.getBuildingX() && me.getX() <= buildingSpot.getBuildingX() + 150 &&
+                    me.getY() >= buildingSpot.getBuildingY() && me.getY() <= buildingSpot.getBuildingY() + 75){
+                theBuildSpace(buildingSpot);
+                break;
+            }
+        }
+
     }
 
     /// the function that runs when you select that you want to build a Barrack.
@@ -466,13 +462,6 @@ public class AntGameView extends Application {
         requirements3.setText("");
         aphidFarmButton.relocate(-100,-100);
         requirements4.setText("");
-        build2.relocate();
-        build1.relocate();
-        build3.relocate();
-        build4.relocate();
-        build5.relocate();
-        build7.relocate();
-        build6.relocate();
         if (!Objects.equals(title, "")) {
             showTextBox();
         }
@@ -1124,17 +1113,11 @@ public class AntGameView extends Application {
         // 3. Add components to the root
         root.getChildren().addAll(canvas,aphids,food,population,protein,buildButton,nextDay,name,confName,ants,eggs,larvas,
                 barracksButton,build1.getBuildButton(), build2.getBuildButton(), build3.getBuildButton(),mapButton,
-                build4.getBuildButton(), pathsButton, build5.getBuildButton(), build6.getBuildButton(),
+                 pathsButton, build5.getBuildButton(), build6.getBuildButton(),
                 build7.getBuildButton(), requirements1, antsInUse, foodStorageButton, requirements2, mapSelect,
                 mapSelectButton, cancelSelection,createAntButton,layEggButton,requirements3,proteinStorageButton,
                 aphidFarmButton, requirements4);
-        //adding building elements
-        for (BuildingSpot buildingSpot : build) {
-            root.getChildren().add(buildingSpot.getBuildButton());
-        }
-        for (PathSpot pathSpot : path) {
-            root.getChildren().add(pathSpot.getBuildButton());
-        }
+
         // 4. Configure the components (this is now done within the startGameMethod
         nextDay.relocate(-100,-100);
         hideButtons();
@@ -1163,21 +1146,6 @@ public class AntGameView extends Application {
         requirements4.relocate(usx+10, usy+430);
         requirements4.setFill(Color.WHITE);
 
-        /*build spots*/
-        build2.relocate();
-        build1.relocate();
-        build3.relocate();
-        build4.relocate();
-        build5.relocate();
-        build7.relocate();
-        build6.relocate();
-        for (BuildingSpot buildingSpot : build) {
-            buildingSpot.relocate();
-        }
-        for (PathSpot pathSpot : path) {
-            pathSpot.relocate();
-        }
-
         // 5. Add Event Handlers and do final setup
         nextDay.setOnAction(this::nextDayMethod);
         confName.setOnAction(this::startNewGame);
@@ -1197,19 +1165,7 @@ public class AntGameView extends Application {
         proteinStorageButton.setOnAction(this::buildAProteinStorage);
         aphidFarmButton.setOnAction(this::buildAAphidFarm);
         mapSelect.addEventHandler(KeyEvent.KEY_PRESSED, this::sendings);
-        build1.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere1);
-        build2.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere2);
-        build3.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere3);
-        build4.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere4);
-        build5.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere5);
-        build7.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere7);
-        build6.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere6);
-        for (BuildingSpot buildingSpot : build) {
-
-        }
-        for (PathSpot pathSpot : path) {
-            pathSpot.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere4);
-        }
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, this::buildHere);
 
         // 7. Show the stage
         stage.show();
