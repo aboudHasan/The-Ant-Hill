@@ -18,7 +18,7 @@ public class PathSpot {
         this.buildingY = buildingY;
         this.usx = usx;
         this.usy = usy;
-        build = new Rect(buildingX,buildingY,20,250,Color.SADDLEBROWN);
+        build = new Rect(buildingX,buildingY-1,20,250,Color.SADDLEBROWN);
     }
 
     public void spaceOpen(GraphicsContext gc){
@@ -48,6 +48,6 @@ public class PathSpot {
         return usy;
     }
     public Shape getBuild() {
-        return build;
+        return new Rect(buildingX,buildingY-1,20,250,Color.SANDYBROWN);
     }
 }

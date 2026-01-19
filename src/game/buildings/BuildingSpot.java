@@ -51,6 +51,10 @@ public class BuildingSpot {
         return buildingY;
     }
     public Shape getBuild() {
-        return build;
+        if (!flip) {
+            return new Rect(buildingX -20, buildingY+1, 170, 75, Color.SANDYBROWN);
+        } else {
+            return new Rect(buildingX, buildingY+1, 170, 75, Color.SANDYBROWN);
+        }
     }
 }
