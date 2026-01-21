@@ -9,10 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -22,8 +19,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import game.shapes.*;
+import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -52,20 +51,13 @@ public class AntGameView extends Application {
     private Nest nest;
     private Map map = new Map(usx,usy,usw,ush);
     /*building stuff*/
-    private PathSpot pathSpot;
-    private BuildingSpot spot;
+    private int spot;
     private boolean buildCancel = false;
     private double buildingX;
     private double buildingY;
     private boolean flip = false; //determines the direction of a new building.
-    private final BuildingSpot build1 = new BuildingSpot(true ,550,225,usx,usy);
-    private final BuildingSpot build2 = new BuildingSpot(false,760,225,usx,usy);
-    private final BuildingSpot build3 = new BuildingSpot(true ,550,475,usx,usy);
-    private final PathSpot build4 = new PathSpot(720,404,usx,usy);//for a path only
-    private final BuildingSpot build5 = new BuildingSpot(true ,550,600,usx,usy);
-    private final BuildingSpot build6 = new BuildingSpot(false,760,475,usx,usy);
-    private final BuildingSpot build7 = new BuildingSpot(false,760,600,usx,usy);
-
+    private List<BuildingSpot> build = new ArrayList<BuildingSpot>();
+    private List<PathSpot> path = new ArrayList<PathSpot>();
 
     //start up ui features
     private TextField name;
@@ -206,62 +198,17 @@ public class AntGameView extends Application {
         mapDrawn = false;
         cancelSelectionMethod(e);
         reDraw();
-        if (!buildCancel) {
-            // checking if a building is already built, and ONLY that.
-            for(int i = 0; i < nest.getBuildings().size(); i++) {
-
-                if (nest.getBuildings().get(i).getSpot().equals(build1)) {
-                    build1.used();
-                }
-                if (nest.getBuildings().get(i).getSpot().equals(build2)) {
-                    build2.used();
-                }
-                if (!build4.isBuildingDone()){//this is for a road path
-                    if (nest.getBuildings().get(i).getPathSpot().equals(build4)) { //if path IS built
-                        build4.used();
-                        build3.unused();
-                        build5.unused();
-                        build6.unused();
-                        build7.unused();
-                    } /*else { // if path isn't built
-                    build3.used();
-                    build5.used();
-                    build6.used();
-                    build7.used();
-                    }*/
-                }
-                //this is where we display things that require a path to be built
-                if (!build3.isBuildingDone()){ //only runs if build4 (a path) has been completed
-                    if (nest.getBuildings().get(i).getX() == build3.getBuildingX() && nest.getBuildings().get(i).getY() == build3.getBuildingY()) {
-                        build3.used();
-                    }
-                }
-                if (!build5.isBuildingDone()){ //only runs if build4 (a path) has been completed
-                    if (nest.getBuildings().get(i).getX() == build5.getBuildingX() && nest.getBuildings().get(i).getY() == build5.getBuildingY()) {
-                        build5.used();
-                    }
-                }
-                if (!build6.isBuildingDone()){ //only runs if build4 (a path) has been completed
-                    if (nest.getBuildings().get(i).getX() == build6.getBuildingX() && nest.getBuildings().get(i).getY() == build6.getBuildingY()) {
-                        build6.used();
-                    }
-                }
-                if (!build7.isBuildingDone()){ //only runs if build4 (a path) has been completed
-                    if (nest.getBuildings().get(i).getX() == build7.getBuildingX() && nest.getBuildings().get(i).getY() == build7.getBuildingY()) {
-                        build7.used();
-                    }
-                }
+        //displaying the building places
+        for(int i = 0; i < build.size(); i++){
+            if ((i < 2 || path.getFirst().isBuildingDone())) {
+                build.get(i).spaceOpen(gc);
             }
-            //all the starting places you can build
-            build1.spaceOpen(gc);
-            build2.spaceOpen(gc);
-            build4.spaceOpen(gc);
-            //use space open plus for places that require a path to be built first
-            spaceOpenPlus(build3);
-            spaceOpenPlus(build5);
-            spaceOpenPlus(build6);
-            spaceOpenPlus(build7);
-
+        }
+        for(int i = 0; i < path.size(); i++){
+            path.get(i).spaceOpen(gc);
+        }
+        //deciding if it is canceling building, or not.
+        if (!buildCancel) {
             //turning the build button into a cancel button
             buildButton.setText("Cancel");
             buildCancel = true;
@@ -271,7 +218,7 @@ public class AntGameView extends Application {
     }
 
     /// This is for recording which building spot you are selecting to build on, and then displaying what you can build.
-    public void theBuildSpace(BuildingSpot building){ //for other buildings (not paths)
+    public void theBuildSpace(BuildingSpot building, int i){ //for other buildings (not paths)
         buildingX = building.getBuildingX();
         buildingY = building.getBuildingY();
         barracksButton.relocate(usx + 10, usy + 220);
@@ -284,10 +231,10 @@ public class AntGameView extends Application {
         requirements4.setText("10 Ants not working, 10 protein");
         pathsButton.relocate(-100,-100);
         flip = building.getFlip();
-        spot = building;
+        spot = i;
     }
     /// This is for recording which building spot (for only paths) you are selecting to build on, and then displaying what you can build.
-    public void theBuildSpace(PathSpot building){ //for only paths
+    public void theBuildSpace(PathSpot building, int i){ //for only paths
         buildingX = building.getBuildingX();
         buildingY = building.getBuildingY();
         barracksButton.relocate(-100,-100);
@@ -299,40 +246,58 @@ public class AntGameView extends Application {
         requirements3.setText("");
         aphidFarmButton.relocate(-100,-100);
         requirements4.setText("");
-        pathSpot = building;
+        spot = i;
     }
 
     /// these are all for assigning the buildHere buttons functions...
-    public void buildHere1(MouseEvent me) {
-        theBuildSpace(build1);
-    }
-    public void buildHere2(MouseEvent me) {
-        theBuildSpace(build2);
-    }
-    public void buildHere3(MouseEvent me) {
-        theBuildSpace(build3);
-    }
-    public void buildHere4(MouseEvent me){
-        theBuildSpace(build4);
-    }
-    public void buildHere5(MouseEvent me){
-        theBuildSpace(build5);
-    }
-    public void buildHere6(MouseEvent me){
-        theBuildSpace(build6);
-    }
-    public void buildHere7(MouseEvent me){
-        theBuildSpace(build7);
+    public void buildHere(MouseEvent me) {
+        if(buildCancel) {
+            //displaying the building plots
+            for(int i = 0; i < build.size(); i++){
+                if ((i < 2 || path.getFirst().isBuildingDone())) {
+                    build.get(i).spaceOpen(gc);
+                }
+            }
+            for(int i = 0; i < path.size(); i++){
+                path.get(i).spaceOpen(gc);
+            }
+            boolean complete = false;
+            for (int i = 0; i < path.size() && !complete; i++) {
+                if (me.getX() >= path.get(i).getBuildingX() && me.getX() <= path.get(i).getBuildingX() + 20 &&
+                        me.getY() >= path.get(i).getBuildingY() && me.getY() <= path.get(i).getBuildingY() + 250) {
+                    if (!path.get(i).isBuildingDone()) {
+                        theBuildSpace(path.get(i),i);
+                        complete = true;
+                        path.get(i).getBuild().draw(gc);
+                    }
+                }
+            }
+            for (int i = 0; i < build.size() && !complete; i++) {
+                if (me.getX() >= build.get(i).getBuildingX() && me.getX() <= build.get(i).getBuildingX() + 150 &&
+                        me.getY() >= build.get(i).getBuildingY() && me.getY() <= build.get(i).getBuildingY() + 75) {
+                    if (!build.get(i).isBuildingDone() && (i < 2 || path.getFirst().isBuildingDone())) {
+                        theBuildSpace(build.get(i), i);
+                        complete = true;
+                        build.get(i).getBuild().draw(gc);
+                    }
+                }
+            }
+            if (!complete){
+                hideBuildButtons();
+            }
+        }
+
     }
 
     /// the function that runs when you select that you want to build a Barrack.
     public void buildABarrack(ActionEvent e){
         if (nest.AddAntsInUse(5)){
             if (nest.minusFood(10)) {
-                nest.addBuilding(new Barracks(buildingX, buildingY, flip, spot));
+                nest.addBuilding(new Barracks(buildingX, buildingY, flip, build.get(spot)));
                 title = "Building Completed";
                 messege1 = "You built a barrack";
                 messege2 = "+10 max ants";
+                build.get(spot).used();
             } else {
                 nest.minusAntsInUse(5);
                 title = "Insufficient Resources";
@@ -352,10 +317,11 @@ public class AntGameView extends Application {
         if (nest.AddAntsInUse(5)) {
             if (nest.minusFood(5)) {
                 if (nest.minusProtein(5)) {
-                    nest.addBuilding(new FoodStorage(buildingX, buildingY, flip, spot));
+                    nest.addBuilding(new FoodStorage(buildingX, buildingY, flip, build.get(spot)));
                     title = "Building Completed";
                     messege1 = "You built a food storage";
                     messege2 = "+25 max food";
+                    build.get(spot).used();
                 } else {
                     nest.addFood(5);
                     nest.minusAntsInUse(5);
@@ -381,10 +347,11 @@ public class AntGameView extends Application {
         if (nest.AddAntsInUse(5)) {
             if (nest.minusFood(5)) {
                 if (nest.minusProtein(5)) {
-                    nest.addBuilding(new ProteinStorage(buildingX, buildingY, flip, spot));
+                    nest.addBuilding(new ProteinStorage(buildingX, buildingY, flip, build.get(spot)));
                     title = "Building Completed";
                     messege1 = "You built a protein storage";
                     messege2 = "+25 max protein";
+                    build.get(spot).used();
                 } else {
                     nest.addFood(5);
                     nest.minusAntsInUse(5);
@@ -409,10 +376,11 @@ public class AntGameView extends Application {
     public void buildAAphidFarm(ActionEvent e){
         if (nest.AddAntsInUse(10)) {
             if (nest.minusProtein(10)) {
-                nest.addBuilding(new AphidFarm(buildingX, buildingY, flip, spot));
+                nest.addBuilding(new AphidFarm(buildingX, buildingY, flip, build.get(spot)));
                 title = "Building Completed";
                 messege1 = "You built an aphid farm";
                 messege2 = "+5 aphid storage space";
+                build.get(spot).used();
             } else {
                 nest.minusAntsInUse(10);
                 title = "Insufficient Resources";
@@ -431,10 +399,11 @@ public class AntGameView extends Application {
     public void buildAPath(ActionEvent e){
         if (nest.AddAntsInUse(5)){
             if (nest.minusFood(5)) {
-                nest.addBuilding(new Path(usx + buildingX, usy + buildingY, pathSpot));
+                nest.addBuilding(new Path(usx + buildingX, usy + buildingY, path.get(spot)));
                 title = "Building Completed";
                 messege1 = "You built a new path";
                 messege2 = "new building spots available";
+                path.get(spot).used();
             } else {
                 nest.minusAntsInUse(5);
                 title = "Insufficient Resources";
@@ -453,9 +422,16 @@ public class AntGameView extends Application {
         background.add(nest.Graphics(usx,usy).get(0));
         background.add(nest.Graphics(usx,usy).get(1));
         background.add(nest.Graphics(usx,usy).get(2));
+        hideBuildButtons();
         reDraw();
         buildCancel = false;
         buildButton.setText("Build");
+        if (!Objects.equals(title, "")) {
+            showTextBox();
+        }
+    }
+    //hides the build buttons (like build barrack, or build path)
+    public void hideBuildButtons(){
         barracksButton.relocate(-100,-100);
         pathsButton.relocate(-100,-100);
         requirements1.setText("");
@@ -465,16 +441,6 @@ public class AntGameView extends Application {
         requirements3.setText("");
         aphidFarmButton.relocate(-100,-100);
         requirements4.setText("");
-        build2.relocate();
-        build1.relocate();
-        build3.relocate();
-        build4.relocate();
-        build5.relocate();
-        build7.relocate();
-        build6.relocate();
-        if (!Objects.equals(title, "")) {
-            showTextBox();
-        }
     }
     ///extra checker for checking if space open can run (used for when a path is needed before you can build).
     public void spaceOpenPlus(BuildingSpot building){
@@ -1055,25 +1021,23 @@ public class AntGameView extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        // Create the screen and things
         Pane root = new Pane();
-        Scene scene = new Scene(root, screenX, screenY); // set the size here
         stage.setTitle("The Ant Hill"); // set the window title here
-        stage.setResizable(false);
+        stage.setFullScreenExitKeyCombination(javafx.scene.input.KeyCombination.NO_MATCH);
+        stage.initStyle(StageStyle.UNDECORATED);
+        Scene scene = new Scene(root, screenX, screenY); // set the size here
         stage.setScene(scene);
-        // TODO: Add your GUI-building code here
-
-        // 1. Create the model
         Canvas canvas = new Canvas(screenX, screenY);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         gc.fillRect(usx,usy, screenX, screenY); //this just gives you the original black screen that we will turn into a menu screen
-        //esuring
         new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
         new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
         new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
         new Rect(0,usy+ush,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
 
-        // 2. Create the GUI components
+        // Create the GUI components
         name = new TextField("Nest Name");
         confName = new Button("confirm");
         nextDay = new Button("End Day");
@@ -1089,7 +1053,21 @@ public class AntGameView extends Application {
         mapSelectButton = new Button("Select");
         cancelSelection = new Button("Cancel");
 
-        /*building buttons*/
+        //building things
+        //making the building spots
+        int tempY = 225;
+        for (int i = 0; i < 4; i++){
+            if (tempY != 350) { //ensuring that you don't put building spots on top of the starter buildings.
+                build.add(new BuildingSpot(true, 550, tempY, usx, usy)); //left side
+                build.add(new BuildingSpot(false, 760, tempY, usx, usy)); //right side
+            }
+            tempY += 125;
+        }
+        //making the buildingPaths
+        for (int i = 0; i < 1; i++){
+            path.add(new PathSpot(720,404,usx,usy));
+        }
+        //other building things
         buildButton = new Button("Build");
         barracksButton = new Button("Barrack");
         pathsButton = new Button("Path");
@@ -1110,12 +1088,10 @@ public class AntGameView extends Application {
         requirements4 = new Text();
 
         // 3. Add components to the root
-        root.getChildren().addAll(canvas,aphids,food,population,protein,buildButton,nextDay,name,confName,ants,eggs,larvas,
-                barracksButton,build1.getBuildButton(), build2.getBuildButton(), build3.getBuildButton(),mapButton,
-                build4.getBuildButton(), pathsButton, build5.getBuildButton(), build6.getBuildButton(),
-                build7.getBuildButton(), requirements1, antsInUse, foodStorageButton, requirements2, mapSelect,
-                mapSelectButton, cancelSelection,createAntButton,layEggButton,requirements3,proteinStorageButton,
-                aphidFarmButton, requirements4);
+        root.getChildren().addAll(canvas,aphids,food,population,protein,buildButton,nextDay,name,confName,ants,eggs,
+                larvas,barracksButton,mapButton, pathsButton, requirements1, antsInUse, foodStorageButton,
+                requirements2, mapSelect, mapSelectButton, cancelSelection,createAntButton,layEggButton,requirements3,
+                proteinStorageButton, aphidFarmButton, requirements4);
 
         // 4. Configure the components (this is now done within the startGameMethod
         nextDay.relocate(-100,-100);
@@ -1145,15 +1121,6 @@ public class AntGameView extends Application {
         requirements4.relocate(usx+10, usy+430);
         requirements4.setFill(Color.WHITE);
 
-        /*build spots*/
-        build2.relocate();
-        build1.relocate();
-        build3.relocate();
-        build4.relocate();
-        build5.relocate();
-        build7.relocate();
-        build6.relocate();
-
         // 5. Add Event Handlers and do final setup
         nextDay.setOnAction(this::nextDayMethod);
         confName.setOnAction(this::startNewGame);
@@ -1173,13 +1140,7 @@ public class AntGameView extends Application {
         proteinStorageButton.setOnAction(this::buildAProteinStorage);
         aphidFarmButton.setOnAction(this::buildAAphidFarm);
         mapSelect.addEventHandler(KeyEvent.KEY_PRESSED, this::sendings);
-        build1.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere1);
-        build2.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere2);
-        build3.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere3);
-        build4.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere4);
-        build5.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere5);
-        build7.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere7);
-        build6.getBuildButton().addEventHandler(MouseEvent.MOUSE_RELEASED, this::buildHere6);
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, this::buildHere);
 
         // 7. Show the stage
         stage.show();
