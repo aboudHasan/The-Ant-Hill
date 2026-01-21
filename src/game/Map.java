@@ -105,7 +105,7 @@ public class Map {
          */
     }
 
-    //this is the map getting drawn, adn for the adjacency of biomes/areas getting checked (not super efficient, but... ill fix it later so that it doesn't check for adjacency here.
+    //this is the map getting drawn, and for the adjacency of biomes/areas getting checked (not super efficient, but... ill fix it later so that it doesn't check for adjacency here.
     public void draw(GraphicsContext gc){
         new Rect(usx,usy,usw,ush, Color.rgb(10,160,10)).draw(gc);
         for (int i = 0; i < biomes.size(); i++){

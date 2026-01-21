@@ -19,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import game.shapes.*;
+import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -1022,9 +1023,10 @@ public class AntGameView extends Application {
     public void start(Stage stage) throws Exception {
         // Create the screen and things
         Pane root = new Pane();
-        Scene scene = new Scene(root, screenX, screenY); // set the size here
         stage.setTitle("The Ant Hill"); // set the window title here
-        stage.setResizable(false);
+        stage.setFullScreenExitKeyCombination(javafx.scene.input.KeyCombination.NO_MATCH);
+        stage.initStyle(StageStyle.UNDECORATED);
+        Scene scene = new Scene(root, screenX, screenY); // set the size here
         stage.setScene(scene);
         Canvas canvas = new Canvas(screenX, screenY);
         gc = canvas.getGraphicsContext2D();
