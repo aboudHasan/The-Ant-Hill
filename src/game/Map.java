@@ -60,21 +60,17 @@ public class Map {
 
     //this is the map getting drawn
     public void draw(GraphicsContext gc){
-        new Rect(usx,usy,usw,ush, Color.rgb(10,160,10)).draw(gc);
+        new Rect(0,0, screenX, screenY, Color.rgb(10,160,10)).draw(gc);
         for (int i = 0; i < biomes.size(); i++){
             //the following 2 if statements optimize the system by only drawing the places 'in frame'.
-            if (biomes.get(i).getY() >= usy - 200 && biomes.get(i).getX() >= usx - 200) {
-                if ( biomes.get(i).getY() <= ush + 200 && biomes.get(i).getX() <= usw + 200) {
+            if (biomes.get(i).getY() >= -350 && biomes.get(i).getY() <= ush + 350) {
+                if (biomes.get(i).getX() >= -350 && biomes.get(i).getX() <= usw + 350) {
                     biomes.get(i).draw(gc);
                 }
             }
         }
-        new Rect(usx+5,usy+5,225,80,Color.WHITE).draw(gc);
-        new RectS(usx+5,usy+5,225,80,Color.BLACK).draw(gc);
-        //ensuring the screen is just black at the edges. (temp solution to not having any scaling from one computer to another)
-        for (Shape blackSide : blackSides) {
-            blackSide.draw(gc);
-        }
+        new Rect(5,5,225,80,Color.WHITE).draw(gc);
+        new RectS(5,5,225,80,Color.BLACK).draw(gc);
     }
 
     /**

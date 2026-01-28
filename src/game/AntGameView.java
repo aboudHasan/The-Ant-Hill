@@ -142,8 +142,8 @@ public class AntGameView extends Application {
         background.add(nest.Graphics(usx,usy).get(2));
         background.add(new Rect(usx,usy+780,usw,100,Color.DARKGRAY));
         background.add(new Circle(usx-20,usy-20,50,Color.YELLOW));
-        background.add(new Rect(usx+5,usy+5,225,80,Color.WHITE));
-        background.add(new RectS(usx+5,usy+5,225,80,Color.BLACK));
+        background.add(new Rect(5,5,225,80,Color.WHITE));
+        background.add(new RectS(5,5,225,80,Color.BLACK));
         background.add(new Texts(usx+1377,usy + 264,"5 Protein",Color.WHITE)); // Egg Laying
         background.add(new Texts(usx+1377 - 88,usy + 324,"1 Larva, 5 Protein, 5 Food",Color.WHITE)); // hatching larva
                 //drawing background first
@@ -155,14 +155,14 @@ public class AntGameView extends Application {
         buildButton.relocate(usx+1310,usy+10);
         mapButton.relocate(usx+1258,usy+10);
         nextDay.relocate(usx+1365,usy+10);
-        aphids.relocate(usx + 15, usy+30);
-        population.relocate(usx+15,usy+10);
-        food.relocate(usx+15,usy+45);
-        protein.relocate(usx+15,usy+60);
-        ants.relocate(usx+125,usy+30);
-        larvas.relocate(usx+125,usy+45);
-        eggs.relocate(usx+125,usy+60);
-        antsInUse.relocate(usx+125,usy+10);
+        aphids.relocate(15, 30);
+        population.relocate(15,10);
+        food.relocate(15,45);
+        protein.relocate(15,60);
+        ants.relocate(125,30);
+        larvas.relocate(125,45);
+        eggs.relocate(125,60);
+        antsInUse.relocate(125,10);
         updateStats();
         showButtons();
     }
@@ -181,10 +181,12 @@ public class AntGameView extends Application {
                         gc, j);
             }
         }
+        /*
         new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
         new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
         new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
         new Rect(0,usx+ush,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
+         */
     }
 
     //building methods (take up most of the file honestly... def was a MUCH better way to do this.)
@@ -1025,11 +1027,13 @@ public class AntGameView extends Application {
         Canvas canvas = new Canvas(screenX, screenY);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
-        gc.fillRect(usx,usy, screenX, screenY); //this just gives you the original black screen that we will turn into a menu screen
+        gc.fillRect(0,0, screenX, screenY); //this just gives you the original black screen that we will turn into a menu screen
+        /*
         new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
         new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
         new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
         new Rect(0,usy+ush,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
+         */
 
         // Create the GUI components
         name = new TextField("Nest Name");
