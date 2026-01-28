@@ -22,6 +22,7 @@ public class Map {
     private final double screenY = (Screen.getPrimary().getVisualBounds()).getHeight();
     private final double screenX = (Screen.getPrimary().getVisualBounds()).getWidth();
     private ArrayList<Shape> blackSides = new ArrayList<>();
+    private int[] seed = new int[10000];
 
     ArrayList<Biomes> biomes = new ArrayList<>(); //this will be a list to contain the maps biomes
 
@@ -37,7 +38,7 @@ public class Map {
         blackSides.add(new Rect(0,usy+ush,screenX,screenY-(ush + usy),Color.BLACK));
 
 
-        //the loop that generates the map. currently, we aren't recording its seeds
+        //the loop that generates the map. currently, seeds aren't recorded or usable
         double y = (ush/2-11235); //first row
         for (int j = 100; j > 0; j--){
             double x = -10280; //first column
@@ -55,58 +56,32 @@ public class Map {
                 x += 220;
             }
         }
-        /*
-        //row 2
-        x = -10280;
-        y += 220;
-        for (int i = 100; i > 0; i--){
-            if (rand.nextInt(0,3) <= 1){
-                biomes.add(new Picnic(usx,usy,x,y));
-            } else {
-                biomes.add(new GrassyPatch(usx,usy,x,y));
-            }
-            x += 220;
-        }
-        //row 3
-        x = -10280;
-        y += 220;
-        for (int i = 100; i > 0; i--){
-            if (i == 50) {
-                add(AntHill(usx,usy,x,y));
-            } else if (rand.nextInt(0,3) <= 1){
-                game.biomes.add(new Picnic(usx,usy,x,y));
-            } else {
-                add(new GrassyPatch(usx,usy,x,y));
-            }
-            x += 220;
-        }
-        //row 4
-        x = -10280;
-        y += 220;
-        for (int i = 100; i > 0; i--){
-            if (rand.nextInt(0,3) <= 1){
-                add(new Picnic(usx,usy,x,y));
-            } else {
-                add(new GrassyPatch(usx,usy,x,y));
-            }
-            x += 220;
-        }
-        //row 5
-        x = -10280;
-        y += 220;
-        for (int i = 100; i > 0; i--){
-            if (rand.nextInt(0,3) <= 1){
-                add(new Picnic(usx,usy,x,y));
-            } else {
-                add(new GrassyPatch(usx,usy,x,y));
-            }
-            x += 220;
-        }
-         */
     }
 
-    //this is the map getting drawn, and for the adjacency of biomes/areas getting checked (not super efficient, but... ill fix it later so that it doesn't check for adjacency here.
+    //this is the map getting drawn
     public void draw(GraphicsContext gc){
+        new Rect(usx,usy,usw,ush, Color.rgb(10,160,10)).draw(gc);
+        for (int i = 0; i < biomes.size(); i++){
+            //the following 2 if statements optimize the system by only drawing the places 'in frame'.
+            if (biomes.get(i).getY() >= usy - 200 && biomes.get(i).getX() >= usx - 200) {
+                if ( biomes.get(i).getY() <= ush + 200 && biomes.get(i).getX() <= usw + 200) {
+                    biomes.get(i).draw(gc);
+                }
+            }
+        }
+        new Rect(usx+5,usy+5,225,80,Color.WHITE).draw(gc);
+        new RectS(usx+5,usy+5,225,80,Color.BLACK).draw(gc);
+        //ensuring the screen is just black at the edges. (temp solution to not having any scaling from one computer to another)
+        for (Shape blackSide : blackSides) {
+            blackSide.draw(gc);
+        }
+    }
+
+    /**
+     * This will draw the map, and save its new values (concerning adjacency)
+     * @param gc: graphics context, the screen we are drawing to.
+     */
+    public void updateDraw(GraphicsContext gc){
         new Rect(usx,usy,usw,ush, Color.rgb(10,160,10)).draw(gc);
         for (int i = 0; i < biomes.size(); i++){
             //checking if its adjacency should be set to true (needs to be fixed at some point to be better...
@@ -128,23 +103,12 @@ public class Map {
                         biomes.get(i).setAdjacent(true);
                     }
                 } else if (biomes.get(i - 1).getFound() || biomes.get(i + 1).getFound() || //all the rest of the areas/biomes
-                         biomes.get(i + 100).getFound() || biomes.get(i - 100).getFound()) {
+                        biomes.get(i + 100).getFound() || biomes.get(i - 100).getFound()) {
                     biomes.get(i).setAdjacent(true);
                 }
             }
-            //the following 2 if statements optimize the system by only drawing the places 'in frame'.
-            if (biomes.get(i).getY() >= usy - 200 && biomes.get(i).getX() >= usx - 200) {
-                if ( biomes.get(i).getY() <= ush + 200 && biomes.get(i).getX() <= usw + 200) {
-                    biomes.get(i).draw(gc);
-                }
-            }
         }
-        new Rect(usx+5,usy+5,225,80,Color.WHITE).draw(gc);
-        new RectS(usx+5,usy+5,225,80,Color.BLACK).draw(gc);
-        //ensuring the screen is just black at the edges. (temp solution to not having any scaling from one computer to another)
-        for (Shape blackSide : blackSides) {
-            blackSide.draw(gc);
-        }
+        draw(gc);
     }
 
     /**

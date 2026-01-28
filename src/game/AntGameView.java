@@ -545,7 +545,7 @@ public class AntGameView extends Application {
             if (buildCancel) {
                 build(e);
             }
-            map.draw(gc);
+            map.updateDraw(gc);
             hideButtons();
             mapDrawn = true;
             mapButton.setText("Nest");
@@ -822,7 +822,7 @@ public class AntGameView extends Application {
                 antsInUse.setText("available ants: " + ((nest.getAnts().size() - 1) - (nest.getAntsInUse())) + " / " + (nest.getAnts().size() - 1));
                 ants.setText("ants: " + (nest.getAnts().size() - 1) + " / " + (nest.getMaxAnts() - 1));
                 population.setText("population: " + (nest.getPopulation()));
-                map.draw(gc);
+                map.updateDraw(gc);
                 showTextBox();
                 //noinspection unchecked
                 mapSelect.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, map.biomes.size() - 1));

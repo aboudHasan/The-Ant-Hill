@@ -17,7 +17,7 @@ public class GrassyPatch extends Biomes {
             APHIDS
     };
 
-    private final BiomeType type;
+    private BiomeType type;
 
     public GrassyPatch(double usx, double usy, double x, double y) {
         //array of contents
@@ -51,6 +51,9 @@ public class GrassyPatch extends Biomes {
 
     @Override
     public void loadGraphics() {
+        if(super.getContent().equals("protein")){
+            type = PROTEIN;
+        }
         drawables.clear();
         drawables.add(new Circle(usx + (x) - 100, usy + (y) - 100, 100, Color.GREEN));
 

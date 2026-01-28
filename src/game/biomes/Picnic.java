@@ -1,6 +1,7 @@
 package game.biomes;
 
 import game.shapes.Circle;
+import game.shapes.Images;
 import game.shapes.Rect;
 import game.shapes.RectS;
 import javafx.scene.paint.Color;
@@ -18,7 +19,7 @@ public class Picnic extends Biomes {
     };
 
 
-    private final BiomeType type;
+    private BiomeType type;
 
     public Picnic(double usx, double usy, double x, double y) {
         //array of contents
@@ -44,6 +45,9 @@ public class Picnic extends Biomes {
 
     @Override
     public void loadGraphics() {
+        if(super.getContent().equals("protein")){
+            type = PROTEIN;
+        }
         drawables.clear();
         drawables.add(new Circle(usx + (x) - 100, usy + (y) - 100, 100, Color.GREEN));
         int yCord = 50;
@@ -75,10 +79,7 @@ public class Picnic extends Biomes {
                     drawables.add(new Circle(usx + x - 6 + 11, usy + y - 8 + 25, 17, 10, Color.BEIGE));
                 }
                 case BEETLES -> {
-                    drawables.add(new Circle(usx + x - 25, usy + y - 5, 20, 10, Color.BLACK));
-                    drawables.add(new Circle(usx + x - 30, usy + y - 4, 18, 6, Color.GREEN));
-                    drawables.add(new Circle(usx + x - 6, usy + y - 8, 30, 20, Color.BLACK));
-                    drawables.add(new Rect(usx + x + 10, usy + y + 11, 2, 9, Color.BLACK));
+                    drawables.add(new Images(usx - 50 + x, usy - 50 + y, "beetle.png", 0.1));
                 }
                 case PROTEIN -> {
                     drawables.add(new Circle(usx + x - 35, usy + y + 35, 10, Color.RED));

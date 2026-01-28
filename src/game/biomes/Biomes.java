@@ -60,7 +60,6 @@ public class Biomes implements IDrawable {
         }
     }
 
-
     //selected method
     public void selected(GraphicsContext gc) {
         new Circle(usx + (x) - 103, usy + (y) - 103, 103, Color.WHITE).draw(gc);
@@ -81,10 +80,6 @@ public class Biomes implements IDrawable {
                 drawables.add(new Images(usx - 110 + x, usy - 100 + y, "clouds.png", 1));
             }
         }
-        //printing the numbers, but not for the nest, which will handle it by itself, because otherwise it doesn't print right...
-        if (!(this instanceof AntHill)) {
-            drawables.add(new Texts(usx + (x) - 10, usy + (y) - 80, thisNumber, Color.BLACK));
-        }
     }
 
     //battling and aftermath
@@ -97,7 +92,6 @@ public class Biomes implements IDrawable {
             this.amount = amount * strength;
             this.isBug = false;
             this.strength = 0;
-            loadGraphics();
             return numOfAnts - bugPower + rand.nextInt(0, bugPower);
         } else {
             return numOfAnts;
@@ -107,22 +101,18 @@ public class Biomes implements IDrawable {
     //methods for movement of the map
     public void right(int num) {
         this.x = this.x - num;
-        loadGraphics();
     }
 
     public void left(int num) {
         this.x = this.x + num;
-        loadGraphics();
     }
 
     public void up(int num) {
         this.y = this.y + num;
-        loadGraphics();
     }
 
     public void down(int num) {
         this.y = this.y - num;
-        loadGraphics();
     }
 
 
