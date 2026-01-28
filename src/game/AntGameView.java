@@ -96,7 +96,7 @@ public class AntGameView extends Application {
 
     // stuff for the map (everything here except for the map button
     private boolean mapDrawn = false;
-    private Spinner mapSelect;
+    private Spinner mapSelect = new Spinner(0,(map.biomes.size())-1,0);
     private Button mapSelectButton;
     private boolean selected = false;
     private Button cancelSelection;
@@ -176,8 +176,8 @@ public class AntGameView extends Application {
             nest.getBuildings().get(i).draw(gc);
             for (int j = 0; j < nest.getBuildings().get(i).getAnts().size(); j++){
                 nest.getBuildings().get(i).getAnts().get(j).drawAnt(
-                        nest.getBuildings().get(i).getX() + usx,
-                        nest.getBuildings().get(i).getY() + usy,
+                        nest.getBuildings().get(i).getX(), //no need for usx since the building already has these added.
+                        nest.getBuildings().get(i).getY(), //no need for usx since the building already has these added.
                         gc, j);
             }
         }
@@ -442,12 +442,6 @@ public class AntGameView extends Application {
         aphidFarmButton.relocate(-100,-100);
         requirements4.setText("");
     }
-    ///extra checker for checking if space open can run (used for when a path is needed before you can build).
-    public void spaceOpenPlus(BuildingSpot building){
-        if (!building.isBuildingDone()){
-            building.spaceOpen(gc);
-        }
-    }
 
 
 
@@ -579,7 +573,7 @@ public class AntGameView extends Application {
     /// It also handles all the interactions between the nest and map, and all prints concerning that... will move SOME
     /// of these into the map file.
     public void sending(ActionEvent e){ // the action can be null, so don't program anything here that would need a non-null event...
-        if (mapDrawn == true) {
+        if (mapDrawn) {
             map.draw(gc); // just ensuring that all graphics are correct... for if a bug occurred... (one was occurring, but putting this here fixed it)
             boolean complete = false; //tracts if the actual sending function is completed.
             int exploreNum = 5; //the minimum number of game.ants it takes to explore an area
@@ -1017,7 +1011,7 @@ public class AntGameView extends Application {
     }
     /**
      * @param stage The main stage
-     * @throws Exception
+     * @throws Exception: IDK
      */
     @Override
     public void start(Stage stage) throws Exception {
@@ -1046,7 +1040,6 @@ public class AntGameView extends Application {
 
         /*map stuffs*/
         mapButton = new Button("Map");
-        mapSelect = new Spinner(0,(map.biomes.size())-1,0);
         //noinspection unchecked
         mapSelect.getValueFactory().setValue(null); // ensuring there is no value in it.
         mapSelect.setEditable(true);

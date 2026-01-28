@@ -34,7 +34,7 @@ public class Building {
     private PathSpot pathSpot = new PathSpot(0,0,0,0);
     protected ArrayList<Shape> graphics = new ArrayList<Shape>();
 
-    //starting barrack, dont touch unless you intend on changing how the game starts a new account.
+    //starting barrack, don't touch unless you intend on changing how the game starts a new account.
     public Building(double x, double y){
         this.x = x;
         this.y = y;
