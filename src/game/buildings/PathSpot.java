@@ -7,18 +7,14 @@ import game.shapes.Shape;
 
 public class PathSpot {
     private boolean buildingDone = false;
-    private int buildingX;
-    private int buildingY;
-    private double usx;
-    private double usy;
+    private double buildingX;
+    private double buildingY;
     private Shape build; //little highlighted area
 
     public PathSpot(int buildingX, int buildingY, double usx, double usy) {
-        this.buildingX = buildingX;
-        this.buildingY = buildingY;
-        this.usx = usx;
-        this.usy = usy;
-        build = new Rect(buildingX,buildingY-1,20,250,Color.SADDLEBROWN);
+        this.buildingX = buildingX + usx;
+        this.buildingY = buildingY + usy;
+        build = new Rect(this.buildingX,this.buildingY,20,250,Color.SADDLEBROWN);
     }
 
     public void spaceOpen(GraphicsContext gc){
@@ -35,19 +31,13 @@ public class PathSpot {
     public boolean isBuildingDone() {
         return buildingDone;
     }
-    public int getBuildingX() {
+    public double getBuildingX() {
         return buildingX;
     }
-    public int getBuildingY() {
+    public double getBuildingY() {
         return buildingY;
     }
-    public double getUsx() {
-        return usx;
-    }
-    public double getUsy() {
-        return usy;
-    }
     public Shape getBuild() {
-        return new Rect(buildingX,buildingY-1,20,250,Color.SANDYBROWN);
+        return new Rect(buildingX+2,buildingY+2,16,246,Color.SANDYBROWN);
     }
 }

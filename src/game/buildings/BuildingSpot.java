@@ -19,9 +19,9 @@ public class BuildingSpot {
         this.buildingX = buildingX + usx;
         this.buildingY = buildingY + usy;
         if (!flip) {
-            build = new Rect(buildingX -20, buildingY, 170, 75, Color.SADDLEBROWN);
+            build = new Rect(this.buildingX -20, this.buildingY, 170, 75, Color.SADDLEBROWN);
         } else {
-            build = new Rect(buildingX, buildingY, 170, 75, Color.SADDLEBROWN);
+            build = new Rect(this.buildingX, this.buildingY, 170, 75, Color.SADDLEBROWN);
         }
     }
 
@@ -52,9 +52,9 @@ public class BuildingSpot {
     }
     public Shape getBuild() {
         if (!flip) {
-            return new Rect(buildingX -20, buildingY+1, 170, 75, Color.SANDYBROWN);
+            return new Rect(buildingX -17, buildingY+2, 165, 71, Color.SANDYBROWN);
         } else {
-            return new Rect(buildingX, buildingY+1, 170, 75, Color.SANDYBROWN);
+            return new Rect(buildingX +2, buildingY+2, 165, 71, Color.SANDYBROWN);
         }
     }
 }

@@ -144,8 +144,8 @@ public class AntGameView extends Application {
         background.add(new Circle(usx-20,usy-20,50,Color.YELLOW));
         background.add(new Rect(usx+5,usy+5,225,80,Color.WHITE));
         background.add(new RectS(usx+5,usy+5,225,80,Color.BLACK));
-        background.add(new Texts(usw-usx - 95,usy + 264,"             5 Protein",Color.WHITE)); //don't touch this. (it's for egg laying)
-        background.add(new Texts(usw-usx - 147,usy + 324,"1 Larva, 5 Protein, 5 Food",Color.WHITE)); // hatching larva
+        background.add(new Texts(usx+1365 - 48,usy + 264,"                 5 Protein",Color.WHITE)); // Egg Laying
+        background.add(new Texts(usx+1365 - 78,usy + 324,"1 Larva, 5 Protein, 5 Food",Color.WHITE)); // hatching larva
                 //drawing background first
         reDraw();
         new Texts(usx + usw - 40, usy + ush - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc); // this changes all everyday, so we don't add it to the background.
@@ -993,8 +993,8 @@ public class AntGameView extends Application {
     }
     /// shows the buttons that hide because of the last method.
     private void showButtons(){
-        layEggButton.relocate(usw-usx -70,usy + 220);
-        createAntButton.relocate(usw-usx -93,usy + 280);
+        layEggButton.relocate(usx+1366,usy + 220);
+        createAntButton.relocate(usx +1345,usy + 280);
     }
     /// this shows the text box, for updates to what happened. 
     private void showTextBox(){
