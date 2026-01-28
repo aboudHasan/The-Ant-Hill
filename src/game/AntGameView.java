@@ -144,8 +144,8 @@ public class AntGameView extends Application {
         background.add(new Circle(usx-20,usy-20,50,Color.YELLOW));
         background.add(new Rect(usx+5,usy+5,225,80,Color.WHITE));
         background.add(new RectS(usx+5,usy+5,225,80,Color.BLACK));
-        background.add(new Texts(usx+1365 - 48,usy + 264,"                 5 Protein",Color.WHITE)); // Egg Laying
-        background.add(new Texts(usx+1365 - 78,usy + 324,"1 Larva, 5 Protein, 5 Food",Color.WHITE)); // hatching larva
+        background.add(new Texts(usx+1377,usy + 264,"5 Protein",Color.WHITE)); // Egg Laying
+        background.add(new Texts(usx+1377 - 88,usy + 324,"1 Larva, 5 Protein, 5 Food",Color.WHITE)); // hatching larva
                 //drawing background first
         reDraw();
         new Texts(usx + usw - 40, usy + ush - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc); // this changes all everyday, so we don't add it to the background.
