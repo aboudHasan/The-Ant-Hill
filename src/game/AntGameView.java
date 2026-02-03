@@ -32,8 +32,8 @@ import java.util.Objects;
  * add more usful comments, remove/move logic code into appropriate classes, also, fix the way buildings are recongise as built...
  */
 public class AntGameView extends Application {
-    private final boolean cheatMode = false
-            ; //set to true to test game
+
+    private final boolean cheatMode = false; //set to true to test game
 
     //variables for start up/set up
     private GraphicsContext gc;
