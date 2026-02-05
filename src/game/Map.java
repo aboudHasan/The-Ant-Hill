@@ -69,8 +69,8 @@ public class Map {
                 }
             }
         }
-        new Rect(5,5,225,80,Color.WHITE).draw(gc);
-        new RectS(5,5,225,80,Color.BLACK).draw(gc);
+        new Rect(5,5,235,80,Color.WHITE).draw(gc);
+        new RectS(5,5,235,80,Color.BLACK).draw(gc);
     }
 
     /**

@@ -142,8 +142,8 @@ public class AntGameView extends Application {
         background.add(nest.Graphics(usx,usy).get(2));
         background.add(new Rect(usx,usy+780,usw,100,Color.DARKGRAY));
         background.add(new Circle(usx-20,usy-20,50,Color.YELLOW));
-        background.add(new Rect(5,5,225,80,Color.WHITE));
-        background.add(new RectS(5,5,225,80,Color.BLACK));
+        background.add(new Rect(5,5,235,80,Color.WHITE));
+        background.add(new RectS(5,5,235,80,Color.BLACK));
         background.add(new Texts(usx+1377,usy + 264,"5 Protein",Color.WHITE)); // Egg Laying
         background.add(new Texts(usx+1377 - 88,usy + 324,"1 Larva, 5 Protein, 5 Food",Color.WHITE)); // hatching larva
                 //drawing background first
@@ -1000,12 +1000,12 @@ public class AntGameView extends Application {
     }
     /// this shows the text box, for updates to what happened. 
     private void showTextBox(){
-        new Rect((usx)+235,usy+5,220,80,Color.WHITE).draw(gc);
-        new RectS((usx)+235,usy+5,220,80,Color.BLACK).draw(gc);
-        new Texts((usx)+244,usy+24,title).draw(gc);
-        new Texts((usx)+244,usy+39, messege1).draw(gc);
-        new Texts((usx)+244,usy+54, messege2).draw(gc);
-        new Texts((usx)+244,usy+69, messege3).draw(gc);
+        new Rect((usx)+245,5,220,80,Color.WHITE).draw(gc);
+        new RectS((usx)+245,5,220,80,Color.BLACK).draw(gc);
+        new Texts((usx)+254,24,title).draw(gc);
+        new Texts((usx)+254,39, messege1).draw(gc);
+        new Texts((usx)+254,54, messege2).draw(gc);
+        new Texts((usx)+254,69, messege3).draw(gc);
         title = "";
         messege1 = "";
         messege2 = "";
