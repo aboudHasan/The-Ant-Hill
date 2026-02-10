@@ -115,6 +115,11 @@ public class AntGameView extends Application {
     /// start new game method, for when you are starting a brand-new game.
     public void startNewGame(ActionEvent e){
         confName.setDisable(true);
+        confName.setFocusTraversable(false);
+        name.setFocusTraversable(false);
+        buildButton.setFocusTraversable(true);
+        nextDay.setFocusTraversable(true);
+        mapButton.setFocusTraversable(true);
         nest = new Nest(name.getText());
         //starter buildings
         nest.addBuilding(new ThroneRoom(usx+550,usy+350));
@@ -195,7 +200,9 @@ public class AntGameView extends Application {
     public void build(ActionEvent e){//starting building
         showButtons();
         mapSelectButton.relocate(-100,-100);
+        mapSelectButton.setFocusTraversable(false);
         mapSelect.relocate(-100,-100);
+        mapSelect.setFocusTraversable(false);
         mapButton.setText("Map");
         mapDrawn = false;
         cancelSelectionMethod(e);
@@ -224,14 +231,19 @@ public class AntGameView extends Application {
         buildingX = building.getBuildingX();
         buildingY = building.getBuildingY();
         barracksButton.relocate(usx + 10, usy + 220);
+        barracksButton.setFocusTraversable(true);
         requirements1.setText("5 Ants not working, 10 Food");
         foodStorageButton.relocate(usx+10,usy + 280);
+        foodStorageButton.setFocusTraversable(true);
         requirements2.setText("5 Ants not working, 5 Food, 5 Protein");
         proteinStorageButton.relocate(usx+10,usy + 340);
+        proteinStorageButton.setFocusTraversable(true);
         requirements3.setText("5 Ants not working, 5 Food, 5 Protein");
         aphidFarmButton.relocate(usx+10,usy+400);
+        aphidFarmButton.setFocusTraversable(true);
         requirements4.setText("10 Ants not working, 10 protein");
         pathsButton.relocate(-100,-100);
+        pathsButton.setFocusTraversable(false);
         flip = building.getFlip();
         spot = i;
     }
@@ -239,14 +251,19 @@ public class AntGameView extends Application {
     public void theBuildSpace(PathSpot building, int i){ //for only paths
         buildingX = building.getBuildingX();
         buildingY = building.getBuildingY();
-        barracksButton.relocate(-100,-100);
         pathsButton.relocate(usx + 10, usy + 220);
+        pathsButton.setFocusTraversable(true);
         requirements1.setText("5 Ants not working, 5 Food");
+        barracksButton.relocate(-100,-100);
+        barracksButton.setFocusTraversable(false);
         foodStorageButton.relocate(-100,-100);
+        foodStorageButton.setFocusTraversable(false);
         requirements2.setText("");
         proteinStorageButton.relocate(-100, -100);
+        proteinStorageButton.setFocusTraversable(false);
         requirements3.setText("");
         aphidFarmButton.relocate(-100,-100);
+        aphidFarmButton.setFocusTraversable(false);
         requirements4.setText("");
         spot = i;
     }
@@ -435,13 +452,18 @@ public class AntGameView extends Application {
     //hides the build buttons (like build barrack, or build path)
     public void hideBuildButtons(){
         barracksButton.relocate(-100,-100);
+        barracksButton.setFocusTraversable(false);
         pathsButton.relocate(-100,-100);
+        pathsButton.setFocusTraversable(false);
         requirements1.setText("");
         foodStorageButton.relocate(-100,-100);
+        foodStorageButton.setFocusTraversable(false);
         requirements2.setText("");
         proteinStorageButton.relocate(-100,-100);
+        proteinStorageButton.setFocusTraversable(false);
         requirements3.setText("");
         aphidFarmButton.relocate(-100,-100);
+        aphidFarmButton.setFocusTraversable(false);
         requirements4.setText("");
     }
 
@@ -462,7 +484,9 @@ public class AntGameView extends Application {
     public void nextDayMethod(ActionEvent e){
         //removing the map buttons after returning to main screen, and returning buttons that should appear on the nest screen.
         mapSelectButton.relocate(-100,-100);
+        mapSelectButton.setFocusTraversable(false);
         mapSelect.relocate(-100,-100);
+        mapSelect.setFocusTraversable(false);
         mapButton.setText("Map");
         showButtons();
         //actual end day function
@@ -472,13 +496,13 @@ public class AntGameView extends Application {
         cancelSelectionMethod(e);
         doneBuilding();
         nest.clearAntsInUse();
-        /*calculating, how many game.ants should die (if any)*/
+        /*calculating, how many ants should die (if any)*/
         int remainingFood = nest.getFood();
         if (!nest.minusFood(nest.getAnts().size())){
             nest.minusFood(nest.getFood());
-            //checking for dead game.ants and a loss of the game.
+            //checking for dead ants and a loss of the game.
             int deaths =  nest.getAnts().size() - remainingFood;
-            if (!nest.minusAnts(deaths)){
+            if (!nest.minusAnts(deaths)){ //game lost
                 gc.setFill(Color.BLACK);
                 gc.fillRect(usx,usy,usw,ush);
                 //removing all remaining gui things
@@ -489,6 +513,7 @@ public class AntGameView extends Application {
                 requirements1.relocate(usx + usw/2,usy + ush/2);
                 requirements1.setFill(Color.WHITE);
                 requirements1.setText("YOU LOSE");
+                messege3 = "dead";
             } else {
                 reDraw();
             }
@@ -503,15 +528,17 @@ public class AntGameView extends Application {
                 reDraw(); //redraws for when larva graphics are included.
             }
         }
-        //the next day method also handles whether an egg will hatch.
-        messege2 = "Larva hatched: " + nest.nextDay();
-        title = "DAY : " + (nest.getDays()-1) + " ~> " + nest.getDays();
-        messege1 = "Total Ants Lost: " + (nest.getAnts().size() - previousAnts);
-        if (nest.getAphids() > 0) {
-            messege2 = "Food generated by farms: " + foodGenerated;
+        if(!messege3.equals("dead")) {
+            //the next day method also handles whether an egg will hatch.
+            messege2 = "Larva hatched: " + nest.nextDay();
+            title = "DAY : " + (nest.getDays() - 1) + " ~> " + nest.getDays();
+            messege1 = "Total Ants Lost: " + (nest.getAnts().size() - previousAnts);
+            if (nest.getAphids() > 0) {
+                messege2 = "Food generated by farms: " + foodGenerated;
+            }
+            showTextBox();
+            updateStats();
         }
-        updateStats();
-        showTextBox();
         new Texts(usx + usw - 40, usy + ush - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc);
     }
     /// this updates all the states being displayed on the screen, to match the nests stats.
@@ -544,6 +571,7 @@ public class AntGameView extends Application {
     ///opening and closing map button
     public void drawMap(ActionEvent e){
         if (!mapDrawn) { //opening map
+
             if (buildCancel) {
                 build(e);
             }
@@ -583,46 +611,51 @@ public class AntGameView extends Application {
                 num = (Integer) mapSelect.getValue();
                 map.biome(num).selected(gc);
                 //displaying square
-                new Rect((usx) + 235, usy + 5, 220, 80, Color.WHITE).draw(gc);
-                new RectS((usx) + 235, usy + 5, 220, 80, Color.BLACK).draw(gc);
-                new Texts((usx) + 244, usy + 24, map.biome(num).getType()).draw(gc);
+                new Rect((usx)+245,5,220,80,Color.WHITE).draw(gc);
+                new RectS((usx)+245,5,220,80,Color.BLACK).draw(gc);
+                new Texts((usx) + 254, usy + 24, map.biome(num).getType()).draw(gc);
                 //collecting and displaying info
                 if (!map.biome(num).getFound()) { //current statement for seeing if a biome is found yet.
                     if (map.biome(num).isAdjacent()) {
-                        new Rect((usx) + 235, usy + 5, 220, 80, Color.WHITE).draw(gc);
-                        new RectS((usx) + 235, usy + 5, 220, 80, Color.BLACK).draw(gc);
-                        new Texts((usx) + 244, usy + 24, "Area not yet Explored").draw(gc);
-                        new Texts((usx) + 244, usy + 39, "Send " + exploreNum + " ants to explore this tile?").draw(gc);
+                        new Rect((usx)+245,5,220,80,Color.WHITE).draw(gc);
+                        new RectS((usx)+245,5,220,80,Color.BLACK).draw(gc);
+                        new Texts((usx) + 254, usy + 24, "Area not yet Explored").draw(gc);
+                        new Texts((usx) + 254, usy + 39, "Send " + exploreNum + " ants to explore this tile?").draw(gc);
                         mapSelect.relocate(-100, -100);
+                        mapSelect.setFocusTraversable(false);
                         mapSelectButton.relocate(usx + 675, usy + 10);
+                        mapSelectButton.setFocusTraversable(true);
+                        cancelSelection.setFocusTraversable(true);
                     } else {
-                        new Rect((usx) + 235, usy + 5, 220, 80, Color.WHITE).draw(gc);
-                        new RectS((usx) + 235, usy + 5, 220, 80, Color.BLACK).draw(gc);
-                        new Texts((usx) + 244, usy + 24, "Cannot Explore").draw(gc);
-                        new Texts((usx) + 244, usy + 39, "Area not next to an explored tile.").draw(gc);
+                        new Rect((usx)+245,5,220,80,Color.WHITE).draw(gc);
+                        new RectS((usx)+245,5,220,80,Color.BLACK).draw(gc);
+                        new Texts(254, usy + 24, "Cannot Explore").draw(gc);
+                        new Texts(254, usy + 39, "Area not next to an explored tile.").draw(gc);
                         selected = true; // causes the whole interaction to reset early. (not go through with the sending)
                     }
 
                     // for spots that cannot be interacted with (whether that be changed later or not) (other than spots that contain nothing)
                 } else if (map.biome(num) instanceof AntHill || map.biome(num).getContent().equals("Human, stay away from them...")
                         || map.biome(num).getContent().equals("nothing") || map.biome(num).getAmount() == 0) {
-                    new Texts((usx) + 244, usy + 39, map.biome(num).getContent()).draw(gc);
+                    new Texts(254, usy + 39, map.biome(num).getContent()).draw(gc);
                     if (map.biome(num).getAmount() == 0) {
-                        new Texts((usx) + 244, usy + 54, "Empty").draw(gc);
+                        new Texts(254, usy + 54, "Empty").draw(gc);
                     }
                     selected = true;
                 } else {//other spots typical display for their content.
                     mapSelectButton.relocate(usx + 775, usy + 10);
                     mapSelect.relocate(usx + 600, usy + 10);
-                    new Texts((usx) + 244, usy + 39, map.biome(num).getContent() + " :  " + map.biome(num).getAmount()).draw(gc);
+                    cancelSelection.setFocusTraversable(true);
+                    mapSelect.setFocusTraversable(true);
+                    new Texts(254, usy + 39, map.biome(num).getContent() + " :  " + map.biome(num).getAmount()).draw(gc);
                     if (map.biome(num).getContent().equals("aphids")) {
-                        new Texts((usx) + 244, usy + 54, "items per ant :  " + 1).draw(gc);
+                        new Texts(254, usy + 54, "items per ant :  " + 1).draw(gc);
                     } else {
-                        new Texts((usx) + 244, usy + 54, "items per ant :  " + map.biome(num).getAntMultiplier()).draw(gc);
+                        new Texts(254, usy + 54, "items per ant :  " + map.biome(num).getAntMultiplier()).draw(gc);
                     }
                     // extra info for when a bug is on the space
                     if (map.biome(num).getIsBug()) {
-                        new Texts((usx) + 244, usy + 69, "Total Bug Strength :  " + map.biome(num).getStrength()).draw(gc);
+                        new Texts(254, usy + 69, "Total Bug Strength :  " + map.biome(num).getStrength()).draw(gc);
                     }
                 }
                 //noinspection unchecked
@@ -632,9 +665,10 @@ public class AntGameView extends Application {
 
                 //end of selecting function
                 if (!selected) {
-                    new Rect(usx + 5, usy + 5, 225, 80, Color.WHITE).draw(gc);
-                    new RectS(usx + 5, usy + 5, 225, 80, Color.BLACK).draw(gc);
+                    new Rect(5, 5, 235, 80, Color.WHITE).draw(gc);
+                    new RectS(5,  5, 235, 80, Color.BLACK).draw(gc);
                     mapSelectButton.setText("Send");
+                    mapSelectButton.setFocusTraversable(true);
                     selected = true;
                     if (map.biome(num).isAdjacent() && !map.biome(num).getFound()) {
                         cancelSelection.relocate(usx + 725, usy + 10);
@@ -815,8 +849,11 @@ public class AntGameView extends Application {
 
                 //end of sending function (drawing an updated version of everything)
                 mapSelect.relocate(-100, -100);
+                mapSelect.setFocusTraversable(false);
                 mapSelectButton.relocate(-100, -100);
+                mapSelectButton.setFocusTraversable(false);
                 cancelSelection.relocate(-100, -100);
+                cancelSelection.setFocusTraversable(false);
                 selected = false;
                 aphids.setText("aphids: " + nest.getAphids() + " / " + nest.getMaxAphids());
                 food.setText("food: " + nest.getFood() + " / " + nest.getMaxFood());
@@ -850,8 +887,11 @@ public class AntGameView extends Application {
         }
         //returning buttons to normal
         mapSelectButton.relocate(-100,-100);
+        mapSelectButton.setFocusTraversable(false);
         mapSelect.relocate(-100,-100);
+        mapSelect.setFocusTraversable(false);
         cancelSelection.relocate(-100,-100);
+        cancelSelection.setFocusTraversable(false);
     }
 
     /// detects when the mouse pointer has been pressed, and records that
@@ -863,6 +903,7 @@ public class AntGameView extends Application {
             map.draw(gc);
         }
         cancelSelection.relocate(-100, -100);
+        cancelSelection.setFocusTraversable(false);
 
         //making the map move using the mouse... does work right YET
         if (mapDrawn) {
@@ -991,12 +1032,16 @@ public class AntGameView extends Application {
     /// hides the buttons that don't already hide.
     private void hideButtons(){
         layEggButton.relocate(-100,-100);
+        layEggButton.setFocusTraversable(false);
         createAntButton.relocate(-100,-100);
+        createAntButton.setFocusTraversable(false);
     }
     /// shows the buttons that hide because of the last method.
     private void showButtons(){
         layEggButton.relocate(usx+1366,usy + 220);
+        layEggButton.setFocusTraversable(true);
         createAntButton.relocate(usx +1345,usy + 280);
+        createAntButton.setFocusTraversable(true);
     }
     /// this shows the text box, for updates to what happened. 
     private void showTextBox(){
@@ -1085,36 +1130,48 @@ public class AntGameView extends Application {
         requirements4 = new Text();
 
         // 3. Add components to the root
-        root.getChildren().addAll(canvas,aphids,food,population,protein,buildButton,nextDay,name,confName,ants,eggs,
-                larvas,barracksButton,mapButton, pathsButton, requirements1, antsInUse, foodStorageButton,
-                requirements2, mapSelect, mapSelectButton, cancelSelection,createAntButton,layEggButton,requirements3,
-                proteinStorageButton, aphidFarmButton, requirements4);
+        root.getChildren().addAll(canvas,food,population,protein,ants,eggs,larvas,name,confName,aphids,
+                mapButton,buildButton,nextDay,requirements1,antsInUse,
+                requirements2, mapSelect, mapSelectButton, cancelSelection,layEggButton,createAntButton,requirements3,
+                barracksButton, pathsButton, foodStorageButton, proteinStorageButton, aphidFarmButton, requirements4);
 
         // 4. Configure the components (this is now done within the startGameMethod
         nextDay.relocate(-100,-100);
+        nextDay.setFocusTraversable(false);
         hideButtons();
         name.relocate(usx+(usw/2)-50,usy+(ush/2));
+        name.setFocusTraversable(false);
         confName.relocate(usx+(usw/2),usy+(ush/2)+50);
 
         /*map stuff*/
         mapButton.relocate(-100,-100);
+        mapButton.setFocusTraversable(false);
         mapSelect.relocate(-100,-100);
+        mapSelect.setFocusTraversable(false);
         mapSelectButton.relocate(-100,-100);
+        mapSelectButton.setFocusTraversable(false);
         cancelSelection.relocate(-100,-100);
+        cancelSelection.setFocusTraversable(false);
 
         /*build buttons*/
         buildButton.relocate(-100,-100);
+        buildButton.setFocusTraversable(false);
         barracksButton.relocate(-100,-100);
+        barracksButton.setFocusTraversable(false);
         pathsButton.relocate(-100,-100);
+        pathsButton.setFocusTraversable(false);
         requirements1.relocate(usx + 10,usy + 250);
         requirements1.setFill(Color.WHITE);
         foodStorageButton.relocate(-100,-100);
+        foodStorageButton.setFocusTraversable(false);
         requirements2.relocate(usx+10,usy+310);
         requirements2.setFill(Color.WHITE);
         proteinStorageButton.relocate(-100,-100);
+        proteinStorageButton.setFocusTraversable(false);
         requirements3.relocate(usx+10,usy+370);
         requirements3.setFill(Color.WHITE);
         aphidFarmButton.relocate(-100,-100);
+        aphidFarmButton.setFocusTraversable(false);
         requirements4.relocate(usx+10, usy+430);
         requirements4.setFill(Color.WHITE);
 
