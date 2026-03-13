@@ -146,14 +146,13 @@ public class AntGameView extends Application {
         background.add(nest.Graphics(usx,usy).get(1));
         background.add(nest.Graphics(usx,usy).get(2));
         background.add(new Rect(usx,usy+780,usw,100,Color.DARKGRAY));
-        background.add(new Circle(usx-20,usy-20,50,Color.YELLOW));
+        background.add(new Circle(20,20,55,Color.YELLOW));
         background.add(new Rect(5,5,235,80,Color.WHITE));
         background.add(new RectS(5,5,235,80,Color.BLACK));
-        background.add(new Texts(usx+1377,usy + 264,"5 Protein",Color.WHITE)); // Egg Laying
-        background.add(new Texts(usx+1377 - 88,usy + 324,"1 Larva, 5 Protein, 5 Food",Color.WHITE)); // hatching larva
+        background.add(new Texts(screenX - (usw-1377),264,"5 Protein",Color.WHITE)); // Egg Laying
+        background.add(new Texts(screenX - (usw-1377 + 88),324,"1 Larva, 5 Protein, 5 Food",Color.WHITE)); // hatching larva
                 //drawing background first
         reDraw();
-        new Texts(usx + usw - 40, usy + ush - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc); // this changes all everyday, so we don't add it to the background.
         /*drawing / updating everything else*/
         confName.relocate(screenX + screenX,screenY+screenY);
         name.relocate(screenX + screenX,screenY+screenY);
@@ -186,12 +185,7 @@ public class AntGameView extends Application {
                         gc, j);
             }
         }
-        /*
-        new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
-        new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
-        new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
-        new Rect(0,usx+ush,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
-         */
+        new Texts(screenX - 40, screenY - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc);
     }
 
     //building methods (take up most of the file honestly... def was a MUCH better way to do this.)
@@ -230,16 +224,16 @@ public class AntGameView extends Application {
     public void theBuildSpace(BuildingSpot building, int i){ //for other buildings (not paths)
         buildingX = building.getBuildingX();
         buildingY = building.getBuildingY();
-        barracksButton.relocate(usx + 10, usy + 220);
+        barracksButton.relocate(10, 220);
         barracksButton.setFocusTraversable(true);
         requirements1.setText("5 Ants not working, 10 Food");
-        foodStorageButton.relocate(usx+10,usy + 280);
+        foodStorageButton.relocate(10,280);
         foodStorageButton.setFocusTraversable(true);
         requirements2.setText("5 Ants not working, 5 Food, 5 Protein");
-        proteinStorageButton.relocate(usx+10,usy + 340);
+        proteinStorageButton.relocate(10,340);
         proteinStorageButton.setFocusTraversable(true);
         requirements3.setText("5 Ants not working, 5 Food, 5 Protein");
-        aphidFarmButton.relocate(usx+10,usy+400);
+        aphidFarmButton.relocate(10,400);
         aphidFarmButton.setFocusTraversable(true);
         requirements4.setText("10 Ants not working, 10 protein");
         pathsButton.relocate(-100,-100);
@@ -251,7 +245,7 @@ public class AntGameView extends Application {
     public void theBuildSpace(PathSpot building, int i){ //for only paths
         buildingX = building.getBuildingX();
         buildingY = building.getBuildingY();
-        pathsButton.relocate(usx + 10, usy + 220);
+        pathsButton.relocate(10, 220);
         pathsButton.setFocusTraversable(true);
         requirements1.setText("5 Ants not working, 5 Food");
         barracksButton.relocate(-100,-100);
@@ -538,8 +532,8 @@ public class AntGameView extends Application {
             }
             showTextBox();
             updateStats();
+            new Texts(screenX - 40, screenY - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc);
         }
-        new Texts(usx + usw - 40, usy + ush - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc);
     }
     /// this updates all the states being displayed on the screen, to match the nests stats.
     public void updateStats(){
@@ -587,7 +581,7 @@ public class AntGameView extends Application {
             mapSelect.relocate(-100,-100);
             mapDrawn = false;
             mapButton.setText("Map");
-            new Texts(usx + usw - 40, usy + ush - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc); // this changes all everyday, so we don't add it to the background.
+            new Texts(screenX - 40, screenY - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc);
         }
     }
 
@@ -611,51 +605,51 @@ public class AntGameView extends Application {
                 num = (Integer) mapSelect.getValue();
                 map.biome(num).selected(gc);
                 //displaying square
-                new Rect((usx)+245,5,220,80,Color.WHITE).draw(gc);
-                new RectS((usx)+245,5,220,80,Color.BLACK).draw(gc);
-                new Texts((usx) + 254, usy + 24, map.biome(num).getType()).draw(gc);
+                new Rect(245,5,220,80,Color.WHITE).draw(gc);
+                new RectS(245,5,220,80,Color.BLACK).draw(gc);
+                new Texts(254, 24, map.biome(num).getType()).draw(gc);
                 //collecting and displaying info
                 if (!map.biome(num).getFound()) { //current statement for seeing if a biome is found yet.
                     if (map.biome(num).isAdjacent()) {
-                        new Rect((usx)+245,5,220,80,Color.WHITE).draw(gc);
-                        new RectS((usx)+245,5,220,80,Color.BLACK).draw(gc);
-                        new Texts((usx) + 254, usy + 24, "Area not yet Explored").draw(gc);
-                        new Texts((usx) + 254, usy + 39, "Send " + exploreNum + " ants to explore this tile?").draw(gc);
+                        new Rect(245,5,220,80,Color.WHITE).draw(gc);
+                        new RectS(245,5,220,80,Color.BLACK).draw(gc);
+                        new Texts(254, 24, "Area not yet Explored").draw(gc);
+                        new Texts(254, 39, "Send " + exploreNum + " ants to explore this tile?").draw(gc);
                         mapSelect.relocate(-100, -100);
                         mapSelect.setFocusTraversable(false);
-                        mapSelectButton.relocate(usx + 675, usy + 10);
+                        mapSelectButton.relocate(usx + 675, 10);
                         mapSelectButton.setFocusTraversable(true);
                         cancelSelection.setFocusTraversable(true);
                     } else {
-                        new Rect((usx)+245,5,220,80,Color.WHITE).draw(gc);
-                        new RectS((usx)+245,5,220,80,Color.BLACK).draw(gc);
-                        new Texts(254, usy + 24, "Cannot Explore").draw(gc);
-                        new Texts(254, usy + 39, "Area not next to an explored tile.").draw(gc);
+                        new Rect(245,5,220,80,Color.WHITE).draw(gc);
+                        new RectS(245,5,220,80,Color.BLACK).draw(gc);
+                        new Texts(254, 24, "Cannot Explore").draw(gc);
+                        new Texts(254, 39, "Area not next to an explored tile.").draw(gc);
                         selected = true; // causes the whole interaction to reset early. (not go through with the sending)
                     }
 
                     // for spots that cannot be interacted with (whether that be changed later or not) (other than spots that contain nothing)
                 } else if (map.biome(num) instanceof AntHill || map.biome(num).getContent().equals("Human, stay away from them...")
                         || map.biome(num).getContent().equals("nothing") || map.biome(num).getAmount() == 0) {
-                    new Texts(254, usy + 39, map.biome(num).getContent()).draw(gc);
+                    new Texts(254, 39, map.biome(num).getContent()).draw(gc);
                     if (map.biome(num).getAmount() == 0) {
-                        new Texts(254, usy + 54, "Empty").draw(gc);
+                        new Texts(254, 54, "Empty").draw(gc);
                     }
                     selected = true;
                 } else {//other spots typical display for their content.
-                    mapSelectButton.relocate(usx + 775, usy + 10);
-                    mapSelect.relocate(usx + 600, usy + 10);
+                    mapSelectButton.relocate(usx + 775,  10);
+                    mapSelect.relocate(usx + 600, 10);
                     cancelSelection.setFocusTraversable(true);
                     mapSelect.setFocusTraversable(true);
-                    new Texts(254, usy + 39, map.biome(num).getContent() + " :  " + map.biome(num).getAmount()).draw(gc);
+                    new Texts(254, 39, map.biome(num).getContent() + " :  " + map.biome(num).getAmount()).draw(gc);
                     if (map.biome(num).getContent().equals("aphids")) {
-                        new Texts(254, usy + 54, "items per ant :  " + 1).draw(gc);
+                        new Texts(254, 54, "items per ant :  " + 1).draw(gc);
                     } else {
-                        new Texts(254, usy + 54, "items per ant :  " + map.biome(num).getAntMultiplier()).draw(gc);
+                        new Texts(254, 54, "items per ant :  " + map.biome(num).getAntMultiplier()).draw(gc);
                     }
                     // extra info for when a bug is on the space
                     if (map.biome(num).getIsBug()) {
-                        new Texts(254, usy + 69, "Total Bug Strength :  " + map.biome(num).getStrength()).draw(gc);
+                        new Texts(254,  69, "Total Bug Strength :  " + map.biome(num).getStrength()).draw(gc);
                     }
                 }
                 //noinspection unchecked
@@ -671,9 +665,9 @@ public class AntGameView extends Application {
                     mapSelectButton.setFocusTraversable(true);
                     selected = true;
                     if (map.biome(num).isAdjacent() && !map.biome(num).getFound()) {
-                        cancelSelection.relocate(usx + 725, usy + 10);
+                        cancelSelection.relocate(usx + 725, 10);
                     } else {
-                        cancelSelection.relocate(usx + 835, usy + 10);
+                        cancelSelection.relocate(usx + 835, 10);
                     }
                 } else {
                     selected = false;
@@ -1038,19 +1032,19 @@ public class AntGameView extends Application {
     }
     /// shows the buttons that hide because of the last method.
     private void showButtons(){
-        layEggButton.relocate(usx+1366,usy + 220);
+        layEggButton.relocate(screenX-(usw-1366), 220);
         layEggButton.setFocusTraversable(true);
-        createAntButton.relocate(usx +1345,usy + 280);
+        createAntButton.relocate(screenX-(usw-1345),280);
         createAntButton.setFocusTraversable(true);
     }
     /// this shows the text box, for updates to what happened. 
     private void showTextBox(){
-        new Rect((usx)+245,5,220,80,Color.WHITE).draw(gc);
-        new RectS((usx)+245,5,220,80,Color.BLACK).draw(gc);
-        new Texts((usx)+254,24,title).draw(gc);
-        new Texts((usx)+254,39, messege1).draw(gc);
-        new Texts((usx)+254,54, messege2).draw(gc);
-        new Texts((usx)+254,69, messege3).draw(gc);
+        new Rect(245,5,220,80,Color.WHITE).draw(gc);
+        new RectS(245,5,220,80,Color.BLACK).draw(gc);
+        new Texts(254,24,title).draw(gc);
+        new Texts(254,39, messege1).draw(gc);
+        new Texts(254,54, messege2).draw(gc);
+        new Texts(254,69, messege3).draw(gc);
         title = "";
         messege1 = "";
         messege2 = "";

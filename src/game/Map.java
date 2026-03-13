@@ -32,6 +32,7 @@ public class Map {
         this.usy = usy;
         this.usw = usw;
         this.ush = ush;
+        //unknown if this is still needed
         blackSides.add(new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK));
         blackSides.add(new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK));
         blackSides.add(new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK));
