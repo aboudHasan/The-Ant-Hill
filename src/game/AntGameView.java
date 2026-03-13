@@ -156,9 +156,9 @@ public class AntGameView extends Application {
         /*drawing / updating everything else*/
         confName.relocate(screenX + screenX,screenY+screenY);
         name.relocate(screenX + screenX,screenY+screenY);
-        buildButton.relocate(usx+1310,usy+10);
-        mapButton.relocate(usx+1258,usy+10);
-        nextDay.relocate(usx+1365,usy+10);
+        buildButton.relocate(screenX-(usw-1310),10);
+        mapButton.relocate(screenX-(usw-1258),10);
+        nextDay.relocate(screenX-(usw-1365),10);
         aphids.relocate(15, 30);
         population.relocate(15,10);
         food.relocate(15,45);
@@ -1154,19 +1154,19 @@ public class AntGameView extends Application {
         barracksButton.setFocusTraversable(false);
         pathsButton.relocate(-100,-100);
         pathsButton.setFocusTraversable(false);
-        requirements1.relocate(usx + 10,usy + 250);
+        requirements1.relocate( 10, 250);
         requirements1.setFill(Color.WHITE);
         foodStorageButton.relocate(-100,-100);
         foodStorageButton.setFocusTraversable(false);
-        requirements2.relocate(usx+10,usy+310);
+        requirements2.relocate(10, 310);
         requirements2.setFill(Color.WHITE);
         proteinStorageButton.relocate(-100,-100);
         proteinStorageButton.setFocusTraversable(false);
-        requirements3.relocate(usx+10,usy+370);
+        requirements3.relocate(10, 370);
         requirements3.setFill(Color.WHITE);
         aphidFarmButton.relocate(-100,-100);
         aphidFarmButton.setFocusTraversable(false);
-        requirements4.relocate(usx+10, usy+430);
+        requirements4.relocate(10, 430);
         requirements4.setFill(Color.WHITE);
 
         // 5. Add Event Handlers and do final setup
