@@ -145,7 +145,7 @@ public class AntGameView extends Application {
         background.add(nest.Graphics(usx,usy).get(0));
         background.add(nest.Graphics(usx,usy).get(1));
         background.add(nest.Graphics(usx,usy).get(2));
-        background.add(new Rect(usx,usy+780,usw,100,Color.DARKGRAY));
+        background.add(new Rect(0,screenY-(ush-780),screenX,100,Color.DARKGRAY));
         background.add(new Circle(20,20,55,Color.YELLOW));
         background.add(new Rect(5,5,235,80,Color.WHITE));
         background.add(new RectS(5,5,235,80,Color.BLACK));
