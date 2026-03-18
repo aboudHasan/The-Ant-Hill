@@ -498,7 +498,7 @@ public class AntGameView extends Application {
             int deaths =  nest.getAnts().size() - remainingFood;
             if (!nest.minusAnts(deaths)){ //game lost
                 gc.setFill(Color.BLACK);
-                gc.fillRect(usx,usy,usw,ush);
+                gc.fillRect(0,0,screenX,screenY);
                 //removing all remaining gui things
                 nextDay.relocate(-100,-100);
                 buildButton.relocate(-100,-100);
