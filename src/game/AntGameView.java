@@ -33,7 +33,7 @@ import java.util.Objects;
  */
 public class AntGameView extends Application {
 
-    private final boolean cheatMode = false; //set to true to test game
+    private final boolean cheatMode = true; //set to true to test game
 
     //variables for start up/set up
     private GraphicsContext gc;
@@ -122,9 +122,9 @@ public class AntGameView extends Application {
         mapButton.setFocusTraversable(true);
         nest = new Nest(name.getText());
         //starter buildings
-        nest.addBuilding(new ThroneRoom(usx+550,usy+350));
+        nest.addBuilding(new ThroneRoom(usx+550,350));
         nest.getBuildings().get(0).addAnts(new Queen());
-        nest.addBuilding(new Barracks(usx+760,usy+350,flip));
+        nest.addBuilding(new Barracks(usx+760,350,flip));
         //checks if cheats on to give amount of ants
         int antAmount;
         if (cheatMode) {
@@ -139,12 +139,12 @@ public class AntGameView extends Application {
         }
         nest.calcAll();
         //the background (don't touch unless your improving graphics)
-        background.add(new Rect(usx,usy,usw,ush,Color.rgb(135, 206, 235)));
-        background.add(new Rect(usx,usy+200,usw,ush,Color.GREEN));
-        background.add(new Rect(usx,usy+210,usw,ush,Color.rgb(61, 35, 13)));
-        background.add(nest.Graphics(usx,usy).get(0));
-        background.add(nest.Graphics(usx,usy).get(1));
-        background.add(nest.Graphics(usx,usy).get(2));
+        background.add(new Rect(0,0,screenX,screenY,Color.rgb(135, 206, 235)));
+        background.add(new Rect(0,200,screenX,screenY,Color.GREEN));
+        background.add(new Rect(0,210,screenX,screenY,Color.rgb(61, 35, 13)));
+        background.add(nest.Graphics(usx,0).get(0));
+        background.add(nest.Graphics(usx,0).get(1));
+        background.add(nest.Graphics(usx,0).get(2));
         background.add(new Rect(0,screenY-(ush-780),screenX,100,Color.DARKGRAY));
         background.add(new Circle(20,20,55,Color.YELLOW));
         background.add(new Rect(5,5,235,80,Color.WHITE));
@@ -432,9 +432,9 @@ public class AntGameView extends Application {
     }
     ///universal shut down for building
     public void doneBuilding(){
-        background.add(nest.Graphics(usx,usy).get(0));
-        background.add(nest.Graphics(usx,usy).get(1));
-        background.add(nest.Graphics(usx,usy).get(2));
+        background.add(nest.Graphics(usx,0).get(0));
+        background.add(nest.Graphics(usx,0).get(1));
+        background.add(nest.Graphics(usx,0).get(2));
         hideBuildButtons();
         reDraw();
         buildCancel = false;
@@ -1094,14 +1094,14 @@ public class AntGameView extends Application {
         int tempY = 225;
         for (int i = 0; i < 4; i++){
             if (tempY != 350) { //ensuring that you don't put building spots on top of the starter buildings.
-                build.add(new BuildingSpot(true, 550, tempY, usx, usy)); //left side
-                build.add(new BuildingSpot(false, 760, tempY, usx, usy)); //right side
+                build.add(new BuildingSpot(true, 550, tempY, usx, 0)); //left side
+                build.add(new BuildingSpot(false, 760, tempY, usx, 0)); //right side
             }
             tempY += 125;
         }
         //making the buildingPaths
         for (int i = 0; i < 1; i++){
-            path.add(new PathSpot(720,404,usx,usy));
+            path.add(new PathSpot(720,404,usx,0));
         }
         //other building things
         buildButton = new Button("Build");
