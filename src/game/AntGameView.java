@@ -24,6 +24,7 @@ import javafx.stage.StageStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Owen Culver
@@ -63,6 +64,7 @@ public class AntGameView extends Application {
     private TextField name;
     private Button confName;
     //UI features
+    Alert alert = new Alert(Alert.AlertType.INFORMATION); // the alert
     private Button nextDay;
     private Button layEggButton;
     private Button createAntButton;
@@ -170,6 +172,21 @@ public class AntGameView extends Application {
         antsInUse.relocate(125,10);
         updateStats();
         showButtons();
+        // tutorial stuff
+        new Texts(10,130,"^ ^ ^", Color.RED,50).draw(gc);
+
+
+
+        alert.setTitle("Tutorial: Resource Bar");
+        alert.setHeaderText("See Red Arrows"); // Set to null for no header
+        alert.setContentText("This is your resource bar. \n It lets you know what you currently have stored in your nest.");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // User clicked OK
+            //continue tutorial
+        } else {
+            //use exits tutorial
+        }
     }
 
     /// redDraw method that draws the background, then the majority of the foreground.
@@ -1200,6 +1217,14 @@ public class AntGameView extends Application {
 
         // 7. Show the stage
         stage.show();
+
+        // starting tutorial text
+        new Texts( screenX/2-50,screenY/2 - 300,"Welcome to 'The Ant Hill!'", Color.WHITE).draw(gc);
+        new Texts( screenX/2-40,screenY/2 - 285,"(Alpha version DEMO)", Color.WHITE).draw(gc);
+        new Texts( screenX/2-275,screenY/2 - 260,"In this game, your goal is to create the largest, self sustaining ant colony," +
+                " and survive the most amount of days.", Color.WHITE).draw(gc);
+        new Texts(screenX/2-90,screenY/2 - 242,"The following tutorial will help show you how (a bit).",Color.WHITE).draw(gc);
+        new Texts(screenX/2-40,screenY/2 -15,"Name your nest to begin",Color.WHITE).draw(gc);
     }
 
     public static void main(String[] args) {
