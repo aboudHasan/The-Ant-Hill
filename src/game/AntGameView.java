@@ -33,7 +33,7 @@ import java.util.Objects;
  */
 public class AntGameView extends Application {
 
-    private final boolean cheatMode = true; //set to true to test game
+    private final boolean cheatMode = false; //set to true to test game
 
     //variables for start up/set up
     private GraphicsContext gc;
@@ -103,6 +103,7 @@ public class AntGameView extends Application {
     private int num = 0;//this is just for sending stuff and selecting stuff, and storing that number.
     private double mousex = 0;
     private double mousey = 0;
+    private boolean click = true;
 
 
 
@@ -890,6 +891,9 @@ public class AntGameView extends Application {
 
     /// detects when the mouse pointer has been pressed, and records that
     public void mouseMoving(MouseEvent me) {
+        //deciding if the mouse moved far enough for the next click to not count.
+        if (Math.abs(Math.abs(mousex) - Math.abs(me.getX())) > 15  || Math.abs(Math.abs(mousey) - Math.abs(me.getY())) > 15)
+            click = false;
         //canceling your selection
         mapSelectButton.setText("Select");
         selected = false;
@@ -929,14 +933,18 @@ public class AntGameView extends Application {
      * @param me (mouseEvent)
      */
     public void selecting(MouseEvent me){
-        mapSelect.requestFocus();
-        if (mapDrawn) {
-            int select = map.selected(me.getX(), me.getY());
-            if (select != -1) {
-                mapSelect.getValueFactory().setValue(select);
-                cancelSelectionMethod(null);
-                sending(null);
+        if(click) {
+            mapSelect.requestFocus();
+            if (mapDrawn) {
+                int select = map.selected(me.getX(), me.getY());
+                if (select != -1) {
+                    mapSelect.getValueFactory().setValue(select);
+                    cancelSelectionMethod(null);
+                    sending(null);
+                }
             }
+        } else {
+            click = true;
         }
     }
 
