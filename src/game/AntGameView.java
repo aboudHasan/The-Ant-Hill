@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -182,12 +183,14 @@ public class AntGameView extends Application {
 
     // Helper method to reduce repeat code
     private boolean showStep() {
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == okButton;
     }
 
     // The Tutorial Sequence
     public void tutorial() {
+        alert.setTitle("Tutorial: Resources");
         alert.setHeaderText("Welcome to The Ant Hill Tutorial!");
         alert.setContentText("Click okay to continue! \n(click 'close' to end tutorial)");
         reDraw();
@@ -202,10 +205,14 @@ public class AntGameView extends Application {
         if (!showStep()) return;
 
         alert.setHeaderText("Population");
-        alert.setContentText("Each time you click end day, you lose this much food.");
+        alert.setContentText("This is the amount of food consumers in your nest.\nEach time you click end day, you lose this much food.");
         reDraw();
-        new Rect(245, 0, screenX, 90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
-        new Rect(0, 90, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(105, 0, screenX, 30, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, 30, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        alert.setHeaderText("Population");
+        alert.setContentText("Your ant Queen is counted in this number, plus your 5 worker ants.\nThis also includes your larvae (baby ants), BUT NOT EGGS.");
         if (!showStep()) return;
     }
 
@@ -1113,12 +1120,6 @@ public class AntGameView extends Application {
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         gc.fillRect(0,0, screenX, screenY); //this just gives you the original black screen that we will turn into a menu screen
-        /*
-        new Rect(usx+usw,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
-        new Rect(0,0,screenX-(usw + usx),screenY,Color.BLACK).draw(gc);
-        new Rect(0,0,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
-        new Rect(0,usy+ush,screenX,screenY-(ush + usy),Color.BLACK).draw(gc);
-         */
 
         // Create the GUI components
         name = new TextField("Nest Name");
