@@ -65,6 +65,8 @@ public class AntGameView extends Application {
     private Button confName;
     //UI features
     Alert alert = new Alert(Alert.AlertType.INFORMATION); // the alert
+    ButtonType closeButton = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
+    ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
     private Button nextDay;
     private Button layEggButton;
     private Button createAntButton;
@@ -172,22 +174,41 @@ public class AntGameView extends Application {
         antsInUse.relocate(125,10);
         updateStats();
         showButtons();
+
         // tutorial stuff
-        new Texts(10,130,"^ ^ ^", Color.RED,50).draw(gc);
-
-
-
-        alert.setTitle("Tutorial: Resource Bar");
-        alert.setHeaderText("See Red Arrows"); // Set to null for no header
-        alert.setContentText("This is your resource bar. \n It lets you know what you currently have stored in your nest.");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            // User clicked OK
-            //continue tutorial
-        } else {
-            //use exits tutorial
-        }
+        tutorial();
+        reDraw();
     }
+
+    // Helper method to reduce repeat code
+    private boolean showStep() {
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == okButton;
+    }
+
+    // The Tutorial Sequence
+    public void tutorial() {
+        alert.setHeaderText("Welcome to The Ant Hill Tutorial!");
+        alert.setContentText("Click okay to continue! \n(click 'close' to end tutorial)");
+        reDraw();
+        new Rect(0, 0, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        alert.setHeaderText("See Your Resource Bar");
+        alert.setContentText("This is your resource bar...");
+        reDraw();
+        new Rect(245, 0, screenX, 90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, 90, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        alert.setHeaderText("Population");
+        alert.setContentText("Each time you click end day, you lose this much food.");
+        reDraw();
+        new Rect(245, 0, screenX, 90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, 90, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+    }
+
 
     /// redDraw method that draws the background, then the majority of the foreground.
     public void reDraw(){
@@ -1105,6 +1126,7 @@ public class AntGameView extends Application {
         nextDay = new Button("End Day");
         createAntButton = new Button("Hatch Larva");
         layEggButton = new Button("Lay Egg");
+        alert.getButtonTypes().setAll(okButton, closeButton);
 
         /*map stuffs*/
         mapButton = new Button("Map");
@@ -1223,8 +1245,8 @@ public class AntGameView extends Application {
         new Texts( screenX/2-40,screenY/2 - 285,"(Alpha version DEMO)", Color.WHITE).draw(gc);
         new Texts( screenX/2-275,screenY/2 - 260,"In this game, your goal is to create the largest, self sustaining ant colony," +
                 " and survive the most amount of days.", Color.WHITE).draw(gc);
-        new Texts(screenX/2-90,screenY/2 - 242,"The following tutorial will help show you how (a bit).",Color.WHITE).draw(gc);
-        new Texts(screenX/2-40,screenY/2 -15,"Name your nest to begin",Color.WHITE).draw(gc);
+        new Texts(screenX/2-120,screenY/2 - 242,"The following tutorial will help show you how (a bit).",Color.WHITE).draw(gc);
+        new Texts(screenX/2-43,screenY/2 -15,"Name your nest to begin",Color.WHITE).draw(gc);
     }
 
     public static void main(String[] args) {
