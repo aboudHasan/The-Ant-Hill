@@ -349,13 +349,8 @@ public class AntGameView extends Application {
 
         nextDayMethod(null);
         nest.addFood(6);
-        alert.setHeaderText("Next Day");
-        alert.setContentText("I will click 'Next Day' for you, but will return any food that is consumed");
-        new Rect(0, 0, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
-        if (!showStep()) return;
-
-        nextDayMethod(null);
-        nest.addFood(6);
+        System.out.println(nest.getFood());
+        updateStats();
 
         alert.setHeaderText("Day Counter");
         alert.setContentText("This is your day counter, for keeping track of how long you have survived.");
@@ -734,6 +729,7 @@ public class AntGameView extends Application {
             }
             showTextBox();
             updateStats();
+            new Rect(screenX - 20,screenY - 60,40,20,Color.rgb(61, 35, 13)).draw(gc);
             new Texts(screenX - 40, screenY - 43, "Day " + nest.getDays(), Color.WHITE).draw(gc);
         }
     }
