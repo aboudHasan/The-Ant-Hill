@@ -190,7 +190,7 @@ public class AntGameView extends Application {
 
     // The Tutorial Sequence
     public void tutorial() {
-        alert.setTitle("Tutorial: Resources");
+        alert.setTitle("Tutorial: The Ant Hill");
         alert.setHeaderText("Welcome to The Ant Hill Tutorial!");
         alert.setContentText("Click okay to continue! \n(click 'close' to end tutorial)");
         reDraw();
@@ -198,7 +198,7 @@ public class AntGameView extends Application {
         if (!showStep()) return;
 
         alert.setHeaderText("See Your Resource Bar");
-        alert.setContentText("This is your resource bar...");
+        alert.setContentText("This is your resource bar...\nIt holds the information concerning your nest.");
         reDraw();
         new Rect(245, 0, screenX, 90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
         new Rect(0, 90, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
@@ -212,8 +212,164 @@ public class AntGameView extends Application {
         if (!showStep()) return;
 
         alert.setHeaderText("Population");
-        alert.setContentText("Your ant Queen is counted in this number, plus your 5 worker ants.\nThis also includes your larvae (baby ants), BUT NOT EGGS.");
+        alert.setContentText("Your ant Queen is counted in this number, plus your 5 worker ants.\nThis also includes your larva.");
         if (!showStep()) return;
+
+        alert.setHeaderText("Food");
+        alert.setContentText("The first number is the food you have stored. \nThe second is the maximum you can store (according to your nests food storages) ");
+        reDraw();
+        new Rect(0, 0, screenX, 45, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(105, 45, screenX, 15, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, 60, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        alert.setHeaderText("Food");
+        alert.setContentText("The first number is the food you have stored. \nThe second is the maximum you can store (according to your nests food storages) ");
+        if (!showStep()) return;
+
+        alert.setHeaderText("Food");
+        alert.setContentText("Running out of food results in your ants dying.\nIf all ants die (population 0), you loose your nest. (restarts game)");
+        if (!showStep()) return;
+
+        alert.setHeaderText("Map");
+        alert.setContentText("This button takes you to the map. \nThis is where you can explore and collect more resources!");
+        reDraw();
+        new Rect(0, 0, screenX-(usw-1254), 40, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(screenX-(usw-1304), 0, screenX, 40, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, 40, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        drawMap(null);
+        alert.setHeaderText("Map");
+        alert.setContentText("The Map is comprised of biomes with different resources and enemies. \nBiomes that haven't been explored are covered by a cloud.");
+        new Rect(0, 0, screenX, screenY/2-125, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, screenY/2-125, screenX/2-555, 225, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(screenX/2-555+225, screenY/2-125, screenX, 225, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, screenY/2-125+225, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        drawMap(null);
+        drawMap(null);
+        alert.setHeaderText("Map");
+        alert.setContentText("Biomes right next to an explored biome have more transparent clouds.\n Use this to your advantage.");
+        new Rect(0, 0, screenX, screenY/2-125, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, screenY/2-125, screenX/2-325, 225, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(screenX/2-325+225, screenY/2-125, screenX, 225, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, screenY/2-125+225, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        drawMap(null);
+        drawMap(null);
+        alert.setHeaderText("Exploration");
+        alert.setContentText("Clicking on a biome will allow you to explore it. \n (I'll clicked it for you)");
+        new Rect(0, 0, screenX, 90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, 90, screenX, screenY/2-125-90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, screenY/2-125, screenX/2-325, 225, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(screenX/2-325+225, screenY/2-125, screenX, 225, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, screenY/2-125+225, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        alert.setHeaderText("Exploration");
+        alert.setContentText("exploring a new biome takes 5 ants.\nI'll click the 'send' button for you");
+        mapSelect.getValueFactory().setValue(map.selected(screenX/2-200, screenY/2));
+        cancelSelectionMethod(null);
+        sending(null);
+        new Rect(0, 0, 243, 90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(465, 0, screenX, 90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, 90, screenX, screenY/2-125-90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, screenY/2-125, screenX/2-325, 225, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(screenX/2-325+225, screenY/2-125, screenX, 225, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, screenY/2-125+225, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        sending(null); //sending to the selected spot.
+
+        alert.setHeaderText("Collecting");
+        alert.setContentText("Once a biome is discovered, information on it can be found next to your resource bar.");
+        mapSelect.getValueFactory().setValue(map.selected(screenX/2-200, screenY/2));
+        cancelSelectionMethod(null);
+        sending(null);
+        new Rect(0, 0, 243, 90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(465, 0, screenX, 90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, 90, screenX, screenY/2-125-90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, screenY/2-125, screenX/2-325, 225, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(screenX/2-325+225, screenY/2-125, screenX, 225, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, screenY/2-125+225, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        alert.setHeaderText("Collecting");
+        alert.setContentText("You can see its name, \nwhat is held there, \nand how many items per ant you can collect.");
+        mapSelect.getValueFactory().setValue(map.selected(screenX/2-200, screenY/2));
+        cancelSelectionMethod(null);
+        sending(null);
+        new Rect(0, 0, 243, 90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(465, 0, screenX, 90, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, 90, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        alert.setHeaderText("Collecting");
+        alert.setContentText("When collecting resources you will be stopped from sending to many ants.\n" +
+                "However, if your storage is full, your ants will still be sent, but will fail to store the food.");
+        mapSelect.getValueFactory().setValue(map.selected(screenX/2-200, screenY/2));
+        cancelSelectionMethod(null);
+        sending(null);
+        new Rect(0, 0, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+
+        alert.setHeaderText("Available Ants");
+        alert.setContentText("Throughout the game, you will need to use your ants to complete tasks");
+        drawMap(null);
+        drawMap(null);
+        new Rect(0, 0, 115, 27, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(245, 0, screenX, 27, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, 27, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        alert.setHeaderText("Available Ants");
+        alert.setContentText("This is where you can see how many ants you can still use this day. \nToday we used all 5");
+        if (!showStep()) return;
+
+        drawMap(null);
+        drawMap(null);
+        new Rect(0, 0, screenX-80, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(screenX-80, 40, 80, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        alert.setHeaderText("Next Day");
+        alert.setContentText("To get your ants back, click the 'next day' button.\n" +
+                "This will cause the population of your nest to eat food, but will make all live ants available for work.");
+        if (!showStep()) return;
+
+        drawMap(null);
+        drawMap(null);
+        new Rect(0, 0, screenX-80, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(screenX-80, 40, 80, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        alert.setHeaderText("Next Day");
+        alert.setContentText("I will click 'Next Day' for you, but will return any food that is consumed");
+        if (!showStep()) return;
+
+        nextDayMethod(null);
+        nest.addFood(6);
+        alert.setHeaderText("Next Day");
+        alert.setContentText("I will click 'Next Day' for you, but will return any food that is consumed");
+        new Rect(0, 0, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        nextDayMethod(null);
+        nest.addFood(6);
+
+        alert.setHeaderText("Day Counter");
+        alert.setContentText("This is your day counter, for keeping track of how long you have survived.");
+        new Rect(0, 0, screenX, screenY-80, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        new Rect(0, screenY-80, screenX-50, 80, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
+        reDraw();
+        alert.setHeaderText("Tutorial End");
+        alert.setContentText("There is much more for you to experience and learn but now is not the time,\n Good luck!" +
+                "Tutorial completed for: "+nest.getName());
+        new Rect(0, 0, screenX, screenY, Color.rgb(128, 128, 128, 0.8)).draw(gc);
+        if (!showStep()) return;
+
     }
 
 
@@ -787,7 +943,6 @@ public class AntGameView extends Application {
                                         map.biome(num).addAmount(proteinLeft);
                                         messege3 = proteinLeft + " seeds left behind. (storage is full)";
                                     }
-
                                 }
                                 complete = true;
                                 break;
